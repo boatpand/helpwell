@@ -1,0 +1,20 @@
+.helpbutton{
+    float: right;
+    margin-right: 100px;
+    font-size: 16px;
+}
+
+.helpheader{
+    font-size: 20px;
+    color: #FFB172;
+    font-weight: bold;
+}
+
+.helpinfo p{
+    font-size: 16px;
+    color: #B4B6BB;
+}
+
+.helpinfo hr{
+    margin-right: 100px;
+}
