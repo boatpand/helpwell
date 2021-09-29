@@ -1,0 +1,85 @@
+.helpertopic{
+    margin-top: 5rem;
+    margin-left: 2%;
+    text-align: left;
+    color: #FFB172;
+}
+
+/* .helpertopic h2{
+    position: fixed;
+} */
+
+.filter{
+    margin-top: 4rem;
+    /* border-radius: 20px;
+    border: 2px solid #B4B6BB; */
+    width: 250px; 
+    height: 400px;
+    position: fixed;
+}
+
+.filter h4{
+    color: #FFB172;
+    margin-top: 5%;
+    margin-left: 7%;
+}
+
+.clear{
+    width: 60px;
+    height: 30px;
+    border-radius: 20px;
+    border: 2px solid #B4B6BB;
+    background-color: #ffffff;
+    color: #B4B6BB;
+    margin-top: 5%;
+    margin-left: 40%;
+}
+
+.filter_clear{
+    display: flex;
+}
+
+.filter-form-check{
+    margin-top: 20px;
+    margin-left: 40px;
+}
+
+
+.filter-form-check .filter-check-label{
+    margin-left: 10px; 
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.filter-form-check .filter-check-input:checked {
+    box-shadow: inset 0 0 0 20px #FFB172;
+  }
+
+.helplist{
+    margin-top: 4rem;
+    margin-left: 300px;
+    /* border-radius: 20px;
+    border: 2px solid #B4B6BB; */
+    width: 1050px; 
+    height: 650px;
+    /* position: fixed; */
+}
+
+.helpbutton{
+    width: 100px;
+    height: 30px;
+    border-radius: 20px;
+    border: 2px solid #FFB172;
+    background-color: #ffffff;
+    color: #FFB172;
+}
+
+.helplist table{
+    margin-left: 50px;
+    margin-top: 20px;
+}
+
+.helplist hr{
+    border: 2px solid #B4B6BB;
+    border-radius: 20px;
+}
