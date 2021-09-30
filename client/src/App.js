@@ -3,15 +3,16 @@ import './App.css';
 import { BrowserRouter as Router , Switch , Route, Link } from 'react-router-dom';
 import Signin from './signin/signin';
 import Helper from './helper/helper';
-import Header_Vic from './victim/header_vic';
+import Helps from './victim/Helps';
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Switch>
-          <Route exact path="/" component={Header_Vic}/>
+          <Route exact path="/" component={Helps}/>
           <Route path="/helper" component={Helper}/>
+          <Route exact path="/victims" component={Helps}/>
         </Switch>
       </div>
     </Router>
