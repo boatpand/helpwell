@@ -5,28 +5,23 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { makeStyles } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/core/styles";
+import { ThemeProvider } from '@mui/material/styles';
 import theme_vic from "./theme_vic";
 import logo_white from "./image/logo_white_crop.png";
 
 const useStyles = makeStyles((theme) => ({
   logoImage: {
-    width: 90,
+    width: 120,
     height: 50,
   },
   Header: {
     height: "4rem",
     weight: "100%",
     padding: "0 5%",
-    top: "1rem",
     justifyContent: "center",
   },
   spancer: {
     flexGrow: 1,
-  },
-  dash: {
-    justifyContent: "center",
-    marginRight: theme.spacing(5),
   },
 }));
 
@@ -41,15 +36,15 @@ export default function Header_Vic() {
         sx={{ flexGrow: 1 }}
       >
         <AppBar position="static" className={classes.Header}>
-          <Toolbar variant="dense">
+          <Toolbar >
             <Typography>
               <img src={logo_white} className={classes.logoImage} />
             </Typography>
             <div className={classes.spancer} />
-            <Button color="inherit">Type of help</Button>
+            <Button fontFamily="Kanit" color="inherit">ความต้องการ</Button>
             <Button color="inherit">map</Button>
-            <Typography className={classes.dash}>|</Typography>
-            <Button marginLeft="10px" color="inherit">
+            <Typography >|&nbsp;</Typography>
+            <Button  color="inherit">
               Profile
             </Button>
           </Toolbar>

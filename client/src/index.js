@@ -6,23 +6,11 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#2F4A8A',
-    },
-    secondary: {
-      main: '#2F4A8A',
-    },
-  },
-});
-
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ThemeProvider theme={theme}>
+      
         <App />
-      </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
