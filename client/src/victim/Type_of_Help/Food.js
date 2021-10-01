@@ -77,39 +77,52 @@ export default function Food() {
       </Card>
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>อาหาร</DialogTitle>
+        <DialogTitle
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          sx={{ flexGrow: 1 }}
+        >
+          อาหาร
+        </DialogTitle>
         <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="อาหารที่ไม่รับประทาน"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="หมายเหตุ"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="จำนวน (ชุด)"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
+          <form>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="อาหารที่ไม่รับประทาน"
+              type="text"
+              fullWidth
+              variant="standard"
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="หมายเหตุ"
+              type="text"
+              fullWidth
+              variant="standard"
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="จำนวน (ชุด)"
+              type="text"
+              fullWidth
+              variant="standard"
+            />
+          </form>
         </DialogContent>
         <DialogActions>
-          <Button sx={{flex:1}} variant="outlined" onClick={handleClose}>Cancel</Button>
-          <Button sx={{flex:1}} variant="contained" onClick={handleClose}>Add</Button>
+          <Button sx={{ flex: 1 }} variant="outlined" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button sx={{ flex: 1 }} variant="contained" onClick={handleClose}>
+            Add
+          </Button>
         </DialogActions>
       </Dialog>
     </ThemeProvider>

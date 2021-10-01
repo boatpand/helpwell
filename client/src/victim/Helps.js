@@ -1,10 +1,5 @@
 import * as React from "react";
-import {
-  Typography,
-  Grid,
-  Box,
-  Button,
-} from "@mui/material";
+import { Typography, Grid, Box, Button } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@mui/material/styles";
 import theme_vic from "./theme_vic";
@@ -14,6 +9,9 @@ import Header_Vic from "./Header_vic";
 import Food from "./Type_of_Help/Food";
 import Medicine from "./Type_of_Help/Medicine";
 import Hospital from "./Type_of_Help/Hospital";
+import Bed from "./Type_of_Help/Bed";
+import Home from "./Type_of_Help/Home";
+import Other from "./Type_of_Help/Other";
 
 const fontSize = 22;
 const useStyles = makeStyles((theme) => ({
@@ -63,14 +61,14 @@ export default function Helps() {
       <Grid display="flex" className={classes.GridSpacer}>
         <Food />
         <Medicine />
-        <Hospital />
+        <Bed />
       </Grid>
 
       <div className={classes.Spacer} />
       <Grid display="flex" className={classes.GridSpacer}>
-        <Food />
-        <Medicine />
         <Hospital />
+        <Home />
+        <Other />
       </Grid>
     </ThemeProvider>
   );

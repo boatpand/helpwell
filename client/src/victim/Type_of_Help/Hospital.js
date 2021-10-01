@@ -93,26 +93,28 @@ export default function Hospital() {
         </Button> */}
 
         <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="จำนวนผู้ป่วยที่ต้องการนำส่งโรงพยาบาล"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            multiline
-            rows={2}
-            autoFocus
-            margin="dense"
-            id="name"
-            label="หมายเหตุ"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
+          <form>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="จำนวนผู้ป่วยที่ต้องการนำส่งโรงพยาบาล"
+              type="text"
+              fullWidth
+              variant="standard"
+            />
+            <TextField
+              multiline
+              rows={2}
+              autoFocus
+              margin="dense"
+              id="name"
+              label="หมายเหตุ"
+              type="text"
+              fullWidth
+              variant="standard"
+            />
+          </form>
         </DialogContent>
         <DialogActions>
           <Button sx={{ flex: 1 }} variant="outlined" onClick={handleClose}>

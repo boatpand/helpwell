@@ -93,33 +93,35 @@ export default function Medicine() {
         </Button> */}
 
         <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="แพ้ยา"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="หมายเหตุ"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="จำนวน (ชุด)"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
+          <form>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="แพ้ยา"
+              type="text"
+              fullWidth
+              variant="standard"
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="หมายเหตุ"
+              type="text"
+              fullWidth
+              variant="standard"
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="จำนวน (ชุด)"
+              type="text"
+              fullWidth
+              variant="standard"
+            />
+          </form>
         </DialogContent>
         <DialogActions>
           <Button sx={{ flex: 1 }} variant="outlined" onClick={handleClose}>
