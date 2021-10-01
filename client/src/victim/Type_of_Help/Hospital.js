@@ -103,6 +103,8 @@ export default function Hospital() {
             variant="standard"
           />
           <TextField
+            multiline
+            rows={2}
             autoFocus
             margin="dense"
             id="name"
@@ -111,7 +113,6 @@ export default function Hospital() {
             fullWidth
             variant="standard"
           />
-          
         </DialogContent>
         <DialogActions>
           <Button sx={{ flex: 1 }} variant="outlined" onClick={handleClose}>
