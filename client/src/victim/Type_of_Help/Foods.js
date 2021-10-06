@@ -4,11 +4,19 @@ import {
   CardContent,
   CardMedia,
   Typography,
-  CardActionArea,
+  CardActions,
   Modal,
   Box,
   Button,
 } from "@mui/material";
+
+import Badge from "@mui/material/Badge";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import MailIcon from "@mui/icons-material/Mail";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -55,27 +63,68 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function Food() {
   const classes = useStyles();
+
+  const [count, setCount] = React.useState(0);
+  const [invisible, setInvisible] = React.useState(true);
+
+  const handleBadgeVisibility = () => {
+    setInvisible(!invisible);
+  };
+  const handleIncrese = () => {
+    setCount(count + 1);
+  };
+  const handleReduce = () => {
+    setCount(count - 1, 0);
+  };
+  const handleChecked = () => {
+    <Switch checked={!invisible} onChange={handleBadgeVisibility} />;
+  };
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   return (
     <ThemeProvider theme={theme_vic}>
       <Card sx={{ width: 345 }}>
-        <CardActionArea button onClick={handleOpen}>
-          <CardMedia component="img" height="200" image={food_img} alt="food" />
+        <CardMedia component="img" height="200" image={food_img} alt="food" />
 
-          <CardContent>
-            <Typography
-              fontFamily="Kanit"
-              variant="body1"
-              color="text.secondary"
+        <CardContent>
+          <Typography fontFamily="Kanit" variant="body1" color="text.secondary">
+            จำนวนอาหารที่ต้องการ (วัน)
+          </Typography>
+        </CardContent>
+
+        <CardActions>
+          <Badge
+            color="secondary"
+            badgeContent={count}
+            sx={{ display: "flex", alignItems: "center", pl: 4, pb: 1 }}
+            size="medium"
+          >
+            <MailIcon size="large"/>
+          </Badge>
+          <ButtonGroup
+            sx={{ display: "flex", alignItems: "center", pl: 18, pb: 1 }}
+          >
+            <Button
+              aria-label="reduce"
+              onClick={() => {
+                setCount(Math.max(count - 1, 0));
+              }}
             >
-              อาหาร
-            </Typography>
-          </CardContent>
-        </CardActionArea>
+              <RemoveIcon fontSize="small" />
+            </Button>
+            <Button
+              aria-label="increase"
+              onClick={() => {
+                setCount(count + 1);
+              }}
+            >
+              <AddIcon fontSize="small" />
+            </Button>
+          </ButtonGroup>
+        </CardActions>
       </Card>
-
+      {/* 
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle
           display="flex"
@@ -86,7 +135,7 @@ export default function Food() {
           อาหาร
         </DialogTitle>
         <DialogContent>
-          <form >
+          <form>
             <TextField
               autoFocus
               margin="dense"
@@ -124,7 +173,7 @@ export default function Food() {
             Add
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
     </ThemeProvider>
   );
 }

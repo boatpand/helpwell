@@ -12,14 +12,14 @@ const theme_vic = createTheme({
       primary: "#2F4A8A",
     },
   },
-  typography: {
-    fontFamily: [
-      // 'Chilanka',
-      // 'cursive',
-      "Prompt",
-      "Kanit",
-    ],
-  },
+  // typography: {
+  //   fontFamily: [
+  //     // 'Chilanka',
+  //     // 'cursive',
+  //     "Prompt",
+  //     "Kanit",
+  //   ],
+  // },
 });
 
 export default theme_vic;
