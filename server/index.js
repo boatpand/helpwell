@@ -7,6 +7,7 @@ let express = require('express'),
 // Express Route
 const helpoptionstatusRoute = require('../server/routes/helperoptionstatus-route');
 const helpinneedRoute = require('../server/routes/helpinnneed-route');
+const RequestRoute = require('./routes/Request-route');
 
 // Connecting MongoDB Database 
 mongoose.Promise = global.Promise;
@@ -28,6 +29,7 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 app.use('/events', helpoptionstatusRoute);
 app.use('/helpinneeds',helpinneedRoute);
+app.use('/request', RequestRoute);
 
 // PORT
 const port = process.env.PORT || 4000;
