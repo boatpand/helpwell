@@ -13,7 +13,7 @@
     margin-top: 4rem;
     /* border-radius: 20px;
     border: 2px solid #B4B6BB; */
-    width: 250px; 
+    width: 350px; 
     height: 400px;
     position: fixed;
 }
@@ -82,4 +82,31 @@
 .helplist hr{
     border: 2px solid #B4B6BB;
     border-radius: 20px;
+}
+
+.other-check-input{
+    border: 2px solid #B4B6BB;
+    border-radius: 20px;
+}
+
+.filter-form-fil{
+    margin-top: 10px;
+    margin-left: 10px;
+    display:inline-flex;
+}
+
+.filter-form-fil input{
+    width: 180px;
+    height: 30px;
+ 
+}
+
+.searchbutton{
+    width: 80px;
+    height: 30px;
+    border-radius: 20px;
+    border: 2px solid #B4B6BB;
+    background-color: #ffffff;
+    color: #B4B6BB;
+    margin-left: 10px;
 }

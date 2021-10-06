@@ -1,0 +1,28 @@
+.selecttype{
+    /* border-radius: 20px;
+    border: 2px solid #B4B6BB; */
+    margin: 2% 2% 2% 2%;
+    width: 1380px;
+    height: 750px;
+    display: fixed;
+}
+
+.rolelogo img{
+    margin-top: 2%;
+    width: 200px;
+    height: 100px;
+}
+
+.selecttype h1{
+    margin-top: 5%;
+    color: #FFB172;
+}
+
+.roleimg img {
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+    margin-top: 7%;
+    margin-right: 10%;
+    margin-left: 10%;
+}

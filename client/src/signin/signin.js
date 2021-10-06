@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import logo_signin from '../logo_signin.png';
 import './signin.css'
 
 export default class Signin extends Component {
@@ -7,7 +8,7 @@ export default class Signin extends Component {
         <body className="signinbody">
         <div className="signincontainer">
             <form className="signinform">
-                <img src="logo_signin.png" alt="logo of sign in form"/>
+                <img src={logo_signin} alt="logo of sign in form"/>
                 <div className="form-controll">
                     <label>Mobile Number</label>
                     <input type="text" placeholder="   Mobile Number"/>
@@ -21,7 +22,7 @@ export default class Signin extends Component {
                 </div>
                 <div className="signinup">
                 <button className="signinbutton" type="submit">sign in</button>
-                <label><a href="/">sign up</a></label>
+                <label><a href="/signup">sign up</a></label>
                 </div>
             </form>
         </div>    
