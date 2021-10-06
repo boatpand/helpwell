@@ -6,7 +6,7 @@ import theme_vic from "./theme_vic";
 
 import Header_Vic from "./Header_vic";
 
-import Food from "./Type_of_Help/Food";
+import Food from "./Type_of_Help/Foods";
 import Medicine from "./Type_of_Help/Medicine";
 import Hospital from "./Type_of_Help/Hospital";
 import Bed from "./Type_of_Help/Bed";
