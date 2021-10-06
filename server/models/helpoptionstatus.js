@@ -16,6 +16,9 @@ let helpoptionstatusSchema = new Schema({
     },
     status: {
         type:String
+    },
+    helperID: {
+        type:String
     }
 }, {
     collection: "helpoptionstatuses"
