@@ -31,7 +31,7 @@ export default class Organization extends Component {
                 name="helpfil"
                 value="อาหาร"
                 />
-                <label class="filter-check-label" for="flexCheckDefault">
+                <label class="filter-check-label" for="flexCheckDefault" style={{fontFamily:"Kanit"}}>
                 อาหาร
                 </label>
                 </div>
@@ -42,7 +42,7 @@ export default class Organization extends Component {
                 name="helpfil"
                 value="ยา"
                 />
-                <label class="filter-check-label" for="flexCheckDefault">
+                <label class="filter-check-label" for="flexCheckDefault" style={{fontFamily:"Kanit"}}>
                 ยา
                 </label>
                 </div>
@@ -53,7 +53,7 @@ export default class Organization extends Component {
                 name="helpfil"
                 value="นำส่งโรงพยาบาล"
                 />
-                <label class="filter-check-label" for="flexCheckDefault">
+                <label class="filter-check-label" for="flexCheckDefault" style={{fontFamily:"Kanit"}}>
                 นำส่งโรงพยาบาล
                 </label>
                 </div>
@@ -64,7 +64,7 @@ export default class Organization extends Component {
                 name="helpfil"
                 value="นำส่งภูมิลำเนา"
                 />
-                <label class="filter-check-label" for="flexCheckDefault">
+                <label class="filter-check-label" for="flexCheckDefault" style={{fontFamily:"Kanit"}}>
                 นำส่งภูมิลำเนา
                 </label>
                 </div>
@@ -75,7 +75,7 @@ export default class Organization extends Component {
                 name="helpfil"
                 value="หาเตียง"
                 />
-                <label class="filter-check-label" for="flexCheckDefault">
+                <label class="filter-check-label" for="flexCheckDefault" style={{fontFamily:"Kanit"}}>
                 หาเตียง
                 </label>
                 </div>
@@ -86,10 +86,10 @@ export default class Organization extends Component {
                 name="helpfil"
                 value="อื่นๆ"
                 />
-                <label class="filter-check-label" for="flexCheckDefault">
+                <label class="filter-check-label" for="flexCheckDefault" style={{fontFamily:"Kanit"}}>
                 อื่นๆ
                 </label>
-                <input class="othertype" type="text" placeholder="   ระบุ"/>
+                <input class="othertype" type="text" placeholder="   ระบุ" style={{fontFamily:"Kanit"}}/>
                 </div>
                 <div className="form-controll">
                     <label>Mobile Number</label>

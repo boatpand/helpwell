@@ -18,7 +18,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Signin}/>
           <Route path="/helper" component={Helper}/>
-          <Route path="/event-detail/:id" component={EventDetail}/>
+          <Route path="/accept-request/:id" component={EventDetail}/>
           <Route path="/signup" component={Signup}/>
           <Route path="/signup-victim" component={SignupVictim}/>
           <Route path="/helpertype" component={HelperType}/>

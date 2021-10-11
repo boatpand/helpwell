@@ -17,7 +17,7 @@ router.route('/all-event').get((req, res, next) => {
 })
 
 // get all event match filter
-router.route('/match-event/:help').get((req, res, next) => {
+router.route('/match-request/:help').get((req, res, next) => {
     helpoptionstatusSchema.find({$and:[{status:"รอการช่วยเหลือ"},{help:{$regex:req.params.help}}]}, (error,data) => {
         if(error){
             return next(error);
