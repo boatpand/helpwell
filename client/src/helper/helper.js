@@ -10,28 +10,23 @@ class Helper extends Component {
     super(props);
 
     this.state = {
-      helpoptionstatuses:[],
-      helpinneeds:[],
+      // helpoptionstatuses:[],
+      // helpinneeds:[],
+      helpRequest:[],
       search:""
+      // isChecked : false
     }
   }
 
-  componentDidMount(){
-    axios.get('http://localhost:4000/events/all-event').then(res => {
-      this.setState({
-        helpoptionstatuses: res.data
+  async componentDidMount(){
+    await axios.get('http://localhost:4000/request/all-request').then(res => {
+        this.setState({
+        helpRequest: res.data
       })
     }).catch((error)=>{
       console.log(error)
     })
-    axios.get('http://localhost:4000/helpinneeds/helpinneed').then(res => {
-      this.setState({
-        helpinneeds: res.data
-      })
-    }).catch((error)=>{
-      console.log(error)
-    })
-    
+    console.log(this.state.helpRequest)
   }
   
   eventTable = () => {
@@ -39,140 +34,74 @@ class Helper extends Component {
     // console.log(this.state.helpinneeds.length)
     var topics = [];
     var t ="";
-    for (var y = 0; y < this.state.helpinneeds.length; y++) {
-      if (this.state.helpinneeds[y].food === true) {
+    for (var y = 0; y < this.state.helpRequest.length; y++) {
+      if (this.state.helpRequest[y].Food === true) {
         t= t+"อาหาร"+" "
       }
-      if (this.state.helpinneeds[y].ยา === true) {
+      if (this.state.helpRequest[y].Medicine === true) {
         t= t+"ยา"+" "
       }
-      if (this.state.helpinneeds[y].นำส่งโรงพยาบาล === true) {
+      if (this.state.helpRequest[y].Hospital === true) {
         t= t+"นำส่งโรงพยาบาล"+" "
       }
-      if (this.state.helpinneeds[y].นำส่งภูมิลำเนา === true) {
+      if (this.state.helpRequest[y].Home === true) {
         t= t+"นำส่งภูมิลำเนา"+" "
       }
-      if (this.state.helpinneeds[y].หาเตียง === true) {
+      if (this.state.helpRequest[y].Bed === true) {
         t= t+"หาเตียง"+" "
       }
-      t=t+this.state.helpinneeds[y].อื่นๆ+" "
-      var tmp = {help:t ,RequestID: this.state.helpinneeds[y].RequestID }
+      t=t+this.state.helpRequest[y].Other + " "
+      var tmp = {
+        help:t ,
+        Option: this.state.helpRequest[y].Option,
+        RequestID:this.state.helpRequest[y]._id 
+      }
       t=""
       topics.push(tmp);
     }
     // console.log(topics);
-
-    var results = [];
-    for (var i = 0; i < this.state.helpoptionstatuses.length; i++) {
-        for (var j = 0; j < topics.length; j++) {
-            if (this.state.helpinneeds[j].RequestID === this.state.helpoptionstatuses[i]._id) {
-                var tmp = { 
-                  help_new: topics[j].help,
-                  RequestID: topics[j].RequestID,
-                  help: this.state.helpoptionstatuses[i].help, 
-                  lat: this.state.helpoptionstatuses[i].lat, 
-                  long: this.state.helpoptionstatuses[i].long, 
-                  contact: this.state.helpoptionstatuses[i].contact,
-                  staus: this.state.helpoptionstatuses[i].status,  
-                  helperID: this.state.helpoptionstatuses[i].helperID,
-                }
-                results.push(tmp);
-            }
-        }
-    }
-    // console.log(results);
  
-    return results.map((res,i)=>{
+    return topics.map((res,i)=>{
       return <EventTableRow obj={res} key={i}/>
     });
   }
 
-  handleChange(e) {
-    var checkedValue = ""; 
-    var inputElements = document.getElementsByClassName('filter-check-input');
-    for(var i=0; inputElements[i]; ++i){
-      if(inputElements[i].checked){
-          checkedValue = checkedValue + inputElements[i].value + " ";
-      }
-    }
-    if (checkedValue===""){
-      axios.get('http://localhost:4000/events/all-event').then(res => {
-      this.setState({
-        helpoptionstatuses: res.data
-      })
-    }).catch((error)=>{
-      console.log(error)
-    })
-    } 
-    else{
-      // console.log(checkedValue)
-      // axios match
-      const help = String(checkedValue);
-      // console.log(`help:${help}`)
-      axios.get(`http://localhost:4000/events/match-event/${help}`).then(res => {
-      this.setState({
-        helpoptionstatuses: res.data
-      })
-      }).catch((error)=>{
-      console.log(error)
-    })
-    }
-  }
+  // handle radio box filter
+  handleFood = (e) => {
+    //console.log("done")
+    axios.get('http://localhost:4000/request/food-request').then(res => {
+      this.setState({helpRequest: res.data})}).catch((error)=>{console.log(error)})}
 
-  onSubmit=(e) => {
-    e.preventDefault();
-    var inputElements = document.getElementsByClassName('filter-check-input');
-    for(var i=0; inputElements[i]; ++i){
-      if(inputElements[i].checked){
-          inputElements[i].checked=!inputElements[i].checked;
-      }
-    }
-    this.setState({
-      search:""
-    })
-    // var otherElement = document.getElementsByClassName('other-check-input');
-    // otherElement.value= " ";
-    
-    axios.get('http://localhost:4000/events/all-event').then(res => {
-      this.setState({
-        helpoptionstatuses: res.data
-      })
-    }).catch((error)=>{
-      console.log(error)
-    })
-  }
-
-  handleChangeSearch = (e) =>{
-    this.setState({search:e.target.value})
-  }
-
-  onSubmitSearch=(e) => {
-    e.preventDefault();
-    var inputElements = document.getElementsByClassName('filter-check-input');
-    for(var i=0; inputElements[i]; ++i){
-      if(inputElements[i].checked){
-          inputElements[i].checked=!inputElements[i].checked;
-      }
-    }
-    const help = String(this.state.search);
-      // console.log(`help:${help}`)
-      axios.get(`http://localhost:4000/events/match-event/${help}`).then(res => {
-      this.setState({
-        helpoptionstatuses: res.data
-      })
-      }).catch((error)=>{
-      console.log(error)
-    })
-    // this.setState({
-    //   search:""
-    // })
-  }
+  handleMedicine = (e) => {
+    //console.log("done")
+    axios.get('http://localhost:4000/request/medicine-request').then(res => {
+    this.setState({helpRequest: res.data})}).catch((error)=>{console.log(error)})}
+  
+  handleHospital = (e) => {
+    //console.log("done")
+    axios.get('http://localhost:4000/request/hospital-request').then(res => {
+    this.setState({helpRequest: res.data})}).catch((error)=>{console.log(error)})}
+  
+  handleHome = (e) => {
+    //console.log("done")
+    axios.get('http://localhost:4000/request/home-request').then(res => {
+    this.setState({helpRequest: res.data})}).catch((error)=>{console.log(error)})}
+  
+  handleBed = (e) => {
+    //console.log("done")
+    axios.get('http://localhost:4000/request/bed-request').then(res => {
+    this.setState({helpRequest: res.data})}).catch((error)=>{console.log(error)})}
+  
+  handleOther = (e) => {
+    //console.log("done")
+    axios.get('http://localhost:4000/request/other-request').then(res => {
+    this.setState({helpRequest: res.data})}).catch((error)=>{console.log(error)})}
 
   render() {
     return (
-      <div className="helpertopic" onChange={e => this.handleChange(e)}>
+      <div className="helpertopic">
         <Header />
-        <h2>รายการผู้ขอความช่วยเหลือ</h2>
+        <h2 style={{fontFamily:"Kanit"}}>รายการผู้ขอความช่วยเหลือ</h2>
         <div className="filter">
           <form className="filter_clear" onSubmit={this.onSubmit}>
             <h4>Filter</h4>
@@ -180,70 +109,76 @@ class Helper extends Component {
               clear
             </button>
           </form>
-          <form className="filter-form-fil" onSubmit={this.onSubmitSearch}>
-            <input
-              class="other-check-input"
-              type="text"
-              name="helpfil"
-              placeholder="   ระบุ"
-              value={this.state.search}
-              onChange={this.handleChangeSearch}
-            />
-            <button type="submit" className="searchbutton">search</button>
-          </form>
           <div className="filter-form-check">
             <input
               class="filter-check-input"
-              type="checkbox"
+              type="radio"
               name="helpfil"
               value="อาหาร"
+              onChange={this.handleFood}
             />
-            <label class="filter-check-label" for="flexCheckChecked">
+            <label class="filter-check-label" for="flexCheckChecked" style={{fontFamily:"Kanit"}}>
               อาหาร
             </label>
           </div>
           <div className="filter-form-check">
             <input
               class="filter-check-input"
-              type="checkbox"
+              type="radio"
               name="helpfil"
               value="ยา"
+              onChange={this.handleMedicine}
             />
-            <label class="filter-check-label" for="flexCheckChecked">
+            <label class="filter-check-label" for="flexCheckChecked" style={{fontFamily:"Kanit"}}>
               ยา
             </label>
           </div>
           <div className="filter-form-check">
             <input
               class="filter-check-input"
-              type="checkbox"
+              type="radio"
               name="helpfil"
               value="นำส่งโรงพยาบาล"
+              onChange={this.handleHospital}
             />
-            <label class="filter-check-label" for="flexCheckDefault">
+            <label class="filter-check-label" for="flexCheckDefault" style={{fontFamily:"Kanit"}}>
               นำส่งโรงพยาบาล
             </label>
           </div>
           <div className="filter-form-check">
             <input
               class="filter-check-input"
-              type="checkbox"
+              type="radio"
               name="helpfil"
               value="นำส่งภูมิลำเนา"
+              onChange={this.handleHome}
             />
-            <label class="filter-check-label" for="flexCheckDefault">
+            <label class="filter-check-label" for="flexCheckDefault" style={{fontFamily:"Kanit"}}>
               นำส่งภูมิลำเนา
             </label>
           </div>
           <div className="filter-form-check">
             <input
               class="filter-check-input"
-              type="checkbox"
+              type="radio"
               name="helpfil"
               value="หาเตียง"
+              onChange={this.handleBed}
             />
-            <label class="filter-check-label" for="flexCheckDefault">
+            <label class="filter-check-label" for="flexCheckDefault" style={{fontFamily:"Kanit"}}>
               หาเตียง
+            </label>
+          </div>
+          <div className="filter-form-check">
+            <input
+              class="filter-check-input"
+              type="radio"
+              name="helpfil"
+              value="อื่นๆ"
+              onChange={this.handleOther}
+            />
+            <label class="filter-check-label" for="flexCheckDefault" style={{fontFamily:"Kanit"}}>
+              อื่นๆ
             </label>
           </div>
         </div>

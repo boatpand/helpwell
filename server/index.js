@@ -5,8 +5,8 @@ let express = require('express'),
     dbConfig = require('./database/db')
 
 // Express Route
-const helpoptionstatusRoute = require('../server/routes/helperoptionstatus-route');
-const helpinneedRoute = require('../server/routes/helpinnneed-route');
+// const helpoptionstatusRoute = require('../server/routes/helperoptionstatus-route');
+// const helpinneedRoute = require('../server/routes/helpinnneed-route');
 const RequestRoute = require('./routes/Request-route');
 
 // Connecting MongoDB Database 
@@ -27,8 +27,8 @@ app.use(bodyParser.urlencoded({
     extended:true
 }))
 app.use(cors());
-app.use('/events', helpoptionstatusRoute);
-app.use('/helpinneeds',helpinneedRoute);
+// app.use('/events', helpoptionstatusRoute);
+// app.use('/helpinneeds',helpinneedRoute);
 app.use('/request', RequestRoute);
 
 // PORT

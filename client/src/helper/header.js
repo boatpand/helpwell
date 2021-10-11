@@ -11,10 +11,10 @@ export default class Header extends Component {
                     {/* <img src={logo_helper_header} alt="logo_helper_header"/> */}
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                        <a class="nav-link" href="/helper">ให้ความช่วยเหลือ</a>
+                        <a class="nav-link" href="/helper" style={{fontFamily:"Kanit"}}>ให้ความช่วยเหลือ</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="#">แผนที่</a>
+                        <a class="nav-link" href="#" style={{fontFamily:"Kanit"}}>แผนที่</a>
                         </li>
                         <li class="nav-item">
                         <a class="nav-link" href="#">Profile</a>
