@@ -13,8 +13,6 @@ class Helper extends Component {
       // helpoptionstatuses:[],
       // helpinneeds:[],
       helpRequest:[],
-      search:""
-      // isChecked : false
     }
   }
 
