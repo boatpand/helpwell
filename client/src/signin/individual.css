@@ -1,11 +1,12 @@
 .signupcontainer{
     border-radius: 20px;
     border: 2px solid #B4B6BB;
-    width: 850px;
+    width: 900px;
 }
 
 .signupform{
     padding: 10px 40px;
+    margin-left: 20px;
 }
 
 .signupform img {

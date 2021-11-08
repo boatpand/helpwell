@@ -9,7 +9,6 @@ import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      
         <App />
     </BrowserRouter>
   </React.StrictMode>,

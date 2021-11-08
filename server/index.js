@@ -8,6 +8,12 @@ let express = require('express'),
 // const helpoptionstatusRoute = require('../server/routes/helperoptionstatus-route');
 // const helpinneedRoute = require('../server/routes/helpinnneed-route');
 const RequestRoute = require('./routes/Request-route');
+const DistrictRoute = require('./routes/District-route');
+const SubdistrictRoute = require('./routes/Subdistrict-route');
+const VictimuserRoute = require('./routes/Victimuser-route');
+const CongenitalRoute = require('./routes/Victimuser-route');
+const HelperuserRoute = require('./routes/Helperuser-route');
+const VerifyRoute = require('./routes/Verify-route');
 
 // Connecting MongoDB Database 
 mongoose.Promise = global.Promise;
@@ -30,6 +36,12 @@ app.use(cors());
 // app.use('/events', helpoptionstatusRoute);
 // app.use('/helpinneeds',helpinneedRoute);
 app.use('/request', RequestRoute);
+app.use('/district', DistrictRoute);
+app.use('/subdistrict', SubdistrictRoute);
+app.use('/victimuser', VictimuserRoute)
+app.use('/victimuser', CongenitalRoute)
+app.use('/helperuser', HelperuserRoute)
+app.use('/verify', VerifyRoute)
 
 // PORT
 const port = process.env.PORT || 4000;

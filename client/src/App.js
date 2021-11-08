@@ -10,6 +10,10 @@ import Individual from './signin/individual';
 import Organization from './signin/organization';
 import Helps from "./victim/Help";
 import Summary from "./victim/Summary";
+import SignupVictim2 from './signin/signupvictim2';
+import SignupHelper2 from './signin/signuphelper2';
+import VictimOtp from './signin/victim-otp';
+import HelperOtp from './signin/helper-otp';
 
 function App() {
   return (
@@ -17,13 +21,17 @@ function App() {
       <div className="App">
         <Switch>
           <Route exact path="/" component={Signin}/>
-          <Route path="/helper" component={Helper}/>
-          <Route path="/accept-request/:id" component={EventDetail}/>
-          <Route path="/signup" component={Signup}/>
-          <Route path="/signup-victim" component={SignupVictim}/>
-          <Route path="/helpertype" component={HelperType}/>
-          <Route path="/individual" component={Individual}/>
-          <Route path="/organization" component={Organization}/>
+          <Route exact path="/helper" component={Helper}/>
+          <Route exact path="/accept-request/:id" component={EventDetail}/>
+          <Route exact path="/signup" component={Signup}/>
+          <Route exact path="/signup-victim" component={SignupVictim}/>
+          <Route exact path="/signup-victim2" component={SignupVictim2}/>
+          <Route exact path="/victim-otp" component={VictimOtp}/>
+          <Route exact path="/helpertype" component={HelperType}/>
+          <Route exact path="/individual" component={Individual}/>
+          <Route exact path="/organization" component={Organization}/>
+          <Route exact path="/signup-helper2" component={SignupHelper2}/>
+          <Route exact path="/helper-otp" component={HelperOtp}/>
           <Route exact path="/victims" component={Helps} />
           <Route exact path="/victims/summary" component={Summary} />
         </Switch>
