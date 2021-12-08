@@ -16,6 +16,13 @@ export default class Individual extends Component {
             Password:"",
             Retype_Password:"",
 
+            Food:false,
+            Medicine:false,
+            Bed:false,
+            Hospital:false,
+            Home:false,
+            Other:"",
+
             show_all:false,
             show_pw:false,
             show_mobile:false,
@@ -256,7 +263,7 @@ export default class Individual extends Component {
                 <label style={{color:"red", display:(this.state.show_subdistrict? 'block':'none')}}>Please Select Subdistrict </label>
                     <div style={{marginTop:"30px", display:"flex", marginBottom:"20px"}}>
                     <label style={{marginRight:"10px", color:"#707070"}}>District</label>
-                    <select style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", marginRight:"30px"}} 
+                    <select style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", marginRight:"30px",fontFamily:"Kanit"}} 
                     class="form-control form-control-sm"
                     onChange={this.onChangeDistrict}>
                     <option style={{fontFamily:"Kanit"}}></option>
@@ -313,7 +320,7 @@ export default class Individual extends Component {
                     </select>
 
                     <label style={{marginRight:"10px", color:"#707070"}}>Subdistrict</label>
-                    <select style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", marginRight:"30px"}} 
+                    <select style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", marginRight:"30px",fontFamily:"Kanit"}} 
                     class="form-control form-control-sm"
                     onChange={this.onChangeSubdistrict}>
                     {scroll}

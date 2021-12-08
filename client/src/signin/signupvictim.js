@@ -13,8 +13,8 @@ export default class SignupVictim extends Component {
             Gender:"",
             Nationality:"",
             Race:"",
-            // Congenital_Disease:"",
-            Congenital_Disease:"ไม่มี",
+            Congenital_Disease:"",
+            // Congenital_Disease:"ไม่มี",
             Other_Disease:"",
             Mobile:"",
             Password:"",
@@ -219,7 +219,7 @@ export default class SignupVictim extends Component {
                         <label style={{marginRight:"10px", color:"#707070"}}>Firstname</label>
                         <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"300px", 
                         marginRight:"30px", fontFamily:"Kanit"}} 
-                        type="text" 
+                        type="text"
                         placeholder="   Firstname" 
                         onChange={this.onChangeFirstname}/>
 
@@ -233,7 +233,7 @@ export default class SignupVictim extends Component {
                     <div style={{marginTop:"20px", display:"flex", marginBottom:"20px"}}>
                     <label style={{marginRight:"10px", color:"#707070"}}>Age</label>
                     <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"80px", marginRight:"30px"}} 
-                    type="number"
+                    type="text" 
                     onChange={this.onChangeAge}/>
 
                     <label style={{marginRight:"10px", color:"#707070"}}>Gender</label>
@@ -262,6 +262,7 @@ export default class SignupVictim extends Component {
                     class="form-control form-control-sm"
                     onChange={this.onChangeCongenital_Disease}>
                     {/* <option style={{fontFamily:"Kanit"}}></option> */}
+                    <option style={{fontFamily:"Kanit"}}></option>
                     <option style={{fontFamily:"Kanit"}}>ไม่มี</option>
                     <option style={{fontFamily:"Kanit"}}>ผู้ป่วยโรคหัวใจ</option>
                     <option style={{fontFamily:"Kanit"}}>ผู้ป่วยโรคเบาหวาน</option>
@@ -289,7 +290,7 @@ export default class SignupVictim extends Component {
                         <label style={{marginRight:"10px", color:"#707070"}}>Mobile</label>
                         <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", 
                         marginRight:"30px", fontFamily:"Kanit"}}
-                        type="text" 
+                        type="text"
                         placeholder="   Mobile" 
                         onChange={this.onChangeMobile}/>
     
@@ -333,7 +334,7 @@ export default class SignupVictim extends Component {
                 <label style={{color:"red", display:(this.state.show_subdistrict? 'block':'none')}}>Please Select Subdistrict </label>
                     <div style={{marginTop:"30px", display:"flex", marginBottom:"20px"}}>
                     <label style={{marginRight:"10px", color:"#707070"}}>District</label>
-                    <select style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", marginRight:"30px"}} 
+                    <select style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", marginRight:"30px",fontFamily:"Kanit"}} 
                     class="form-control form-control-sm"
                     onChange={this.onChangeDistrict}>
                     <option style={{fontFamily:"Kanit"}}></option>
@@ -390,7 +391,7 @@ export default class SignupVictim extends Component {
                     </select>
 
                     <label style={{marginRight:"10px", color:"#707070"}}>Subdistrict</label>
-                    <select style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", marginRight:"30px"}} 
+                    <select style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", marginRight:"30px",fontFamily:"Kanit"}} 
                     class="form-control form-control-sm"
                     onChange={this.onChangeSubdistrict}>
                     {scroll}

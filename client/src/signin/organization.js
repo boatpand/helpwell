@@ -169,8 +169,8 @@ export default class Organization extends Component {
                   search: '',
                   state: {Firstname:this.state.Firstname,
                             Lastname:this.state.Lastname,
-                            Org_Name:"",
-                            isOrg:false,
+                            Org_Name:this.state.Org_Name,
+                            isOrg:true,
                             Mobile:this.state.Mobile,
                             Password:this.state.Password,
 
@@ -181,6 +181,13 @@ export default class Organization extends Component {
                             District:this.state.District,
                             Subdistrict:this.state.Subdistrict,
                             ZIP_Code:this.state.ZIP_Code,
+
+                            Food:this.state.Food,
+                            Medicine:this.state.Medicine,
+                            Bed:this.state.Bed,
+                            Hospital:this.state.Hospital,
+                            Home:this.state.Home,
+                            Other:this.state.Other,
                         } 
             })
         }
@@ -229,7 +236,7 @@ export default class Organization extends Component {
                         <label style={{marginRight:"10px", color:"#707070"}}>Mobile</label>
                         <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", 
                         marginRight:"30px", fontFamily:"Kanit"}}
-                        type="text" 
+                        type="text"
                         placeholder="   Mobile" 
                         onChange={this.onChangeMobile}/>
     
@@ -314,7 +321,7 @@ export default class Organization extends Component {
                 <label style={{color:"red", display:(this.state.show_subdistrict? 'block':'none')}}>Please Select Subdistrict </label>
                     <div style={{marginTop:"30px", display:"flex", marginBottom:"20px"}}>
                     <label style={{marginRight:"10px", color:"#707070"}}>District</label>
-                    <select style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", marginRight:"30px"}} 
+                    <select style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", marginRight:"30px",fontFamily:"Kanit"}} 
                     class="form-control form-control-sm"
                     onChange={this.onChangeDistrict}>
                     <option style={{fontFamily:"Kanit"}}></option>
@@ -371,7 +378,7 @@ export default class Organization extends Component {
                     </select>
 
                     <label style={{marginRight:"10px", color:"#707070"}}>Subdistrict</label>
-                    <select style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", marginRight:"30px"}} 
+                    <select style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", marginRight:"30px",fontFamily:"Kanit"}} 
                     class="form-control form-control-sm"
                     onChange={this.onChangeSubdistrict}>
                     {scroll}

@@ -14,6 +14,11 @@ import SignupVictim2 from './signin/signupvictim2';
 import SignupHelper2 from './signin/signuphelper2';
 import VictimOtp from './signin/victim-otp';
 import HelperOtp from './signin/helper-otp';
+import HelperMap from './helper/helpermap';
+import HelperProfile from './helper/helperprofile';
+import Admin from './admin/admin';
+import Forgetpass from './signin/forgetpass';
+import HelperEditProfile from './helper/helpereditprofile';
 
 function App() {
   return (
@@ -21,9 +26,10 @@ function App() {
       <div className="App">
         <Switch>
           <Route exact path="/" component={Signin}/>
-          <Route exact path="/helper" component={Helper}/>
+           <Route exact path="/helper"  component={Helper}/>
           <Route exact path="/accept-request/:id" component={EventDetail}/>
           <Route exact path="/signup" component={Signup}/>
+          <Route exact path="/forget-pass" component={Forgetpass}/>
           <Route exact path="/signup-victim" component={SignupVictim}/>
           <Route exact path="/signup-victim2" component={SignupVictim2}/>
           <Route exact path="/victim-otp" component={VictimOtp}/>
@@ -32,8 +38,12 @@ function App() {
           <Route exact path="/organization" component={Organization}/>
           <Route exact path="/signup-helper2" component={SignupHelper2}/>
           <Route exact path="/helper-otp" component={HelperOtp}/>
+          <Route exact path="/helpermap" component={HelperMap}/>
+          <Route exact path="/helperprofile/:mobile" component={HelperProfile}/>
+          <Route exact path="/helperprofile/edit-profile/:mobile" component={HelperEditProfile}/>
           <Route exact path="/victims" component={Helps} />
           <Route exact path="/victims/summary" component={Summary} />
+          <Route exact path="/admin" component={Admin}/>
         </Switch>
       </div>
     </Router>

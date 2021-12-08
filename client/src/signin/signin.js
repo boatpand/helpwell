@@ -33,11 +33,39 @@ export default class Signin extends Component {
         }
         
         if(this.state.Mobile !=="" && this.state.Password !== ""){
+
+          if(this.state.Mobile==="0123456789"){
+            console.log("admin")
+            axios.post('http://localhost:4000/admin/login', loginObject).then(res =>{
+            console.log(res.data)
+            // console.log(res.data.message)
+            const role = res.data.message;
+            if(role==="Incorrect Mobile or Password"){
+                //alert(role)
+                this.setState({mes:role, show_mes:true})
+            }else(this.setState({show_mes:false}))
+            // alert(res.data.message);
+            if(role==="admin"){
+                this.setState({show_mes:false})
+                // for protected route
+                //victimAuth.login(()=>{
+                // console.log(victimAuth.login)
+                // this.props.history.push('/victimland')
+                this.props.history.push({
+                  pathname: '/admin',
+                  search: '',
+                  state: {Mobile:this.state.Mobile} 
+                })
+              //});
+            }
+          })
+          }
+          else{
           axios.post('http://localhost:4000/victimuser/login', loginObject).then(res =>{
             console.log(res.data)
             // console.log(res.data.message)
             const role = res.data.message;
-            if(role==="No user please sign up" || "Incorrect Password"){
+            if(role==="Incorrect Mobile or Password"){
                 //alert(role)
                 this.setState({mes:role, show_mes:true})
             }else(this.setState({show_mes:false}))
@@ -61,13 +89,14 @@ export default class Signin extends Component {
                 // helperAuth.login(()=>{
                 // console.log(victimAuth.login)
                 this.props.history.push({
-                    pathname: '/helper',
+                    pathname: `/helper`,
                     search: '',
                     state: {Mobile:this.state.Mobile} 
                   })
               //});
             }
           })
+        }
         } 
         // else{alert("All input is required")}
         else{this.setState({mes:"All input is required", show_mes:true})}
@@ -82,12 +111,12 @@ export default class Signin extends Component {
                 <label style={{color:"red", display:(this.state.show_mes? 'block':'none')}}>{this.state.mes}</label>
                 <div className="form-controll">
                     <label>Mobile Number</label>
-                    <input type="text" placeholder="   Mobile Number" onChange={this.onChangeMobile}/>
+                    <input type="text" pattern="[0-9]{10}" placeholder="   Mobile Number" onChange={this.onChangeMobile}/>
                 </div>
                 <div className="form-controll">
                     <label>Password</label>
                     <input type="password" placeholder="   Password" onChange={this.onChangePassword}/>
-                    {/* <label><a href="/">forget password</a></label> */}
+                    <label><a href="/forget-pass">forget password</a></label>
                 </div>
                 <div className="signinup">
                 <button className="signinbutton" type="submit">sign in</button>

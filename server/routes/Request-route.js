@@ -66,7 +66,7 @@ router.route('/other-request').get((req, res, next) => {
             res.json(data)}})})
 
 //
-router.route('/accept-request/:id').get((req,res,next)=>{
+router.route('/helper-profile/:id').get((req,res,next)=>{
     // console.log(req.params.id)
     RequestSchema.findOne({_id:req.params.id}, (error,data)=>{
         if(error){
