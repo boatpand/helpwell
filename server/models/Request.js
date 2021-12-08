@@ -1,6 +1,19 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+var current = new Date();
+const timeStamp = new Date(
+  Date.UTC(
+    current.getFullYear(),
+    current.getMonth(),
+    current.getDate(),
+    current.getHours(),
+    current.getMinutes(),
+    current.getSeconds(),
+    current.getMilliseconds()
+  )
+);
+
 let RequestSchema = new Schema(
   {
     Food: {
@@ -44,7 +57,7 @@ let RequestSchema = new Schema(
     },
     date: {
       type: Date,
-      default: Date.now,
+      default: timeStamp,
     },
   },
   {
