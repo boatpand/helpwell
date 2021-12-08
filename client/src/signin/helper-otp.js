@@ -25,10 +25,17 @@ export default class HelperOtp extends Component {
             Subdistrict:this.props.location.state.Subdistrict,
             ZIP_Code:this.props.location.state.ZIP_Code,
 
+            Food:this.props.location.state.Food,
+            Medicine:this.props.location.state.Medicine,
+            Bed:this.props.location.state.Bed,
+            Hospital:this.props.location.state.Hospital,
+            Home:this.props.location.state.Home,
+            Other:this.props.location.state.Other,
+
             Lat:this.props.location.state.lat,
             Lng:this.props.location.state.lng,
 
-            Help:this.props.location.state.Help
+            show_resend:false
         }
     }
 
@@ -76,17 +83,35 @@ export default class HelperOtp extends Component {
                 if(this.state.isOrg === true){
                     const helptypeObject = {
                         Mobile:this.props.location.state.Mobile,
-                        Help:this.props.location.state.Help,
+                        Food:this.props.location.state.Food,
+                        Medicine:this.props.location.state.Medicine,
+                        Bed:this.props.location.state.Bed,
+                        Hospital:this.props.location.state.Hospital,
+                        Home:this.props.location.state.Home,
+                        Other:this.props.location.state.Other,
                     }
 
                     axios.post('http://localhost:4000/helperuser/helptype', helptypeObject).then(res =>
                         console.log(res.data));
-                        // this.props.history.push('/')
+                        this.props.history.push('/')
                 }
                 else{this.props.history.push('/')}
                 // this.props.history.push('/')
             }
         });
+    }
+
+    onSubmitResend = (e) =>{
+        e.preventDefault()
+
+        var phoneNumber = String(this.props.location.state.Mobile)
+        phoneNumber = phoneNumber.substring(1)
+        phoneNumber = '+66'+phoneNumber
+        console.log(phoneNumber)
+        const phoneObject = {phoneNumber:phoneNumber}
+        axios.post(`http://localhost:4000/verify/send/`,phoneObject);
+
+        this.setState({show_resend:true})
     }
 
     render() {
@@ -97,6 +122,7 @@ export default class HelperOtp extends Component {
                     width:"550px", padding:"10px 40px", position:"relative"}}>
                 <img src={logohelper_signup} alt="logohelper_signup"/>
                 <h5 style={{color:"#707070", fontFamily:"Kanit"}}>ระบบได้ทำการส่ง OTP ไปยังเบอร์ {this.props.location.state.Mobile}</h5>
+                <label style={{color:"#000000", fontFamily:"Kanit",display:(this.state.show_resend? 'block':'none')}}> ระบบได้ทำการส่ง OTP อีกคร้งแล้ว </label>
                 <div style={{display:"flex", alignItems:"center", justifyContent:"center",}}>
                 <input style={{borderRadius:"20px", border:"2px solid #B4B6BB"}}
                 type="text" onChange={this.onChangeOtp}></input>
@@ -104,7 +130,7 @@ export default class HelperOtp extends Component {
                  cursor:"pointer", color:"#707070", background:"#ffffff", marginLeft:"20px",
                 marginRight:"20px", fontFamily:"Kanit"}} 
                  type="submit" onClick={this.onSubmit}>ยืนยัน OTP</button>
-                {/* <label style={{cursor:"pointer", color:"#2F4A8A"}}>ขอ OTP อีกครั้ง</label> */}
+                <label style={{cursor:"pointer", color:"#FFB172"}} onClick={this.onSubmitResend}>ขอ OTP อีกครั้ง</label>
                 </div>
                 </form>
             </div>

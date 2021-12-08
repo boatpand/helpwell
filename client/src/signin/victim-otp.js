@@ -33,8 +33,10 @@ export default class VictimOtp extends Component {
             Lat:this.props.location.state.lat,
             Lng:this.props.location.state.lng,
 
-            Disease:this.props.location.state.Congenital_Disease,
-            Other:this.props.location.state.Other_Disease,
+            Disease:this.props.location.state.Disease,
+            Other:this.props.location.state.Other,
+
+            show_resend:false
         }
     }
 
@@ -85,8 +87,8 @@ export default class VictimOtp extends Component {
 
                 const congenitalObject = {
                     Mobile:this.props.location.state.Mobile,
-                    Disease:this.props.location.state.Congenital_Disease,
-                    Other:this.props.location.state.Other_Disease,
+                    Disease:this.props.location.state.Disease,
+                    Other:this.props.location.state.Other,
                 }
 
                 axios.post('http://localhost:4000/victimuser/congenital', congenitalObject).then(res =>
@@ -94,6 +96,19 @@ export default class VictimOtp extends Component {
                     this.props.history.push('/')
                 }
         });
+    }
+
+    onSubmitResend = (e) =>{
+        e.preventDefault()
+
+        var phoneNumber = String(this.props.location.state.Mobile)
+        phoneNumber = phoneNumber.substring(1)
+        phoneNumber = '+66'+phoneNumber
+        console.log(phoneNumber)
+        const phoneObject = {phoneNumber:phoneNumber}
+        axios.post(`http://localhost:4000/verify/send/`,phoneObject);
+
+        this.setState({show_resend:true})
     }
 
     render() {
@@ -104,6 +119,7 @@ export default class VictimOtp extends Component {
                     width:"550px", padding:"10px 40px", position:"relative"}}>
                 <img src={logo_signin} alt="logohelper_signup"/>
                 <h5 style={{color:"#707070", fontFamily:"Kanit"}}>ระบบได้ทำการส่ง OTP ไปยังเบอร์ {this.props.location.state.Mobile}</h5>
+                <label style={{color:"#000000", fontFamily:"Kanit",display:(this.state.show_resend? 'block':'none')}}> ระบบได้ทำการส่ง OTP อีกคร้งแล้ว </label>
                 <div style={{display:"flex", alignItems:"center", justifyContent:"center",}}>
                 <input style={{borderRadius:"20px", border:"2px solid #B4B6BB"}}
                 type="text" onChange={this.onChangeOtp}></input>
@@ -111,7 +127,7 @@ export default class VictimOtp extends Component {
                  cursor:"pointer", color:"#707070", background:"#ffffff", marginLeft:"20px",
                 marginRight:"20px", fontFamily:"Kanit"}} 
                  type="submit" onClick={this.onSubmit}>ยืนยัน OTP</button>
-                {/* <label style={{cursor:"pointer", color:"#2F4A8A"}}>ขอ OTP อีกครั้ง</label> */}
+                <label style={{cursor:"pointer", color:"#2F4A8A"}} onClick={this.onSubmitResend}>ขอ OTP อีกครั้ง</label>
                 </div>
                 </form>
             </div>

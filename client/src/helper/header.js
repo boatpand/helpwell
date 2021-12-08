@@ -1,23 +1,33 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import './header.css'
 import logo_helper_header from '../logo_helper_header.png'
+import { withRouter } from "react-router";
 
-export default class Header extends Component {
+class Header extends Component {
     render() {
         return (
             <div>
                 <nav class="navbar navbar-expand-sm">
-                <a class="navbar-brand" href="/helper"><img class="img-responsive" src={logo_helper_header} alt="logo_helper_header"/></a>
+                    <Link class="navbar-brand"  to={{pathname:`/helper`,state:{Mobile:this.props.Mobile}}}>
+                    <img class="img-responsive" src={logo_helper_header} alt="logo_helper_header"/>
+                    </Link>
                     {/* <img src={logo_helper_header} alt="logo_helper_header"/> */}
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                        <a class="nav-link" href="/helper" style={{fontFamily:"Kanit"}}>ให้ความช่วยเหลือ</a>
+                        <Link class="nav-link" style={{fontFamily:"Kanit", color:"#ffffff"}}
+                        to={{pathname:`/helper`,state:{Mobile:this.props.Mobile}
+                        }}>ให้ความช่วยเหลือ</Link>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="#" style={{fontFamily:"Kanit"}}>แผนที่</a>
+                        <Link class="nav-link" style={{fontFamily:"Kanit", color:"#ffffff"}}
+                        to={{pathname:"/helpermap",state:{Mobile:this.props.Mobile}}}>
+                        แผนที่</Link>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="#">Profile</a>
+                        <Link class="nav-link" style={{fontFamily:"Kanit", color:"#ffffff"}}
+                        to={{pathname:`/helperprofile/${this.props.Mobile}`,state:{Mobile:this.props.Mobile}}}>
+                        Profile</Link>
                         </li>
                     </ul>
                 </nav>
@@ -25,3 +35,4 @@ export default class Header extends Component {
         )
     }
 }
+export default withRouter(Header);

@@ -94,7 +94,7 @@ router.route('/login').post(async(req, res, next) => {
 
         // validate if user exist in our victim database
         var user = await VictimuserSchema.findOne({ Mobile });
-        if(!user){res.send({message:"No user please sign up"})}
+
         if(user &&(await bcrypt.compare(Password, user.Password))){
             // Create token
             TOKEN_KEY = "qwertyuiop"
@@ -130,16 +130,122 @@ router.route('/login').post(async(req, res, next) => {
     
                // return user
                res.send({message:"helper",user:user})
-               res.status(201);
+               res.status(201).json(user);
                res.json(data);
             }
         }
 
-        res.send({message:"Incorrect Password"})
+        res.send({message:"Incorrect Mobile or Password"})
 
    } catch(err){
        console.log(err);
    }
+})
+
+// find user type
+router.route('/re-password').post(async(req, res, next) => {
+    try{
+        // Get user input
+        const{ Mobile } = req.body;
+
+        // validate if user exist in our victim database
+        var user = await VictimuserSchema.findOne({ Mobile });
+
+        if(user){
+           // return user
+           res.send({message:"victim"})
+           res.status(201).json(user);
+           res.json(data);
+        }else{
+            // validate if user exist in our helper database
+            var user = await HelperSchema.findOne({ Mobile });
+            if(user){
+               // return user
+               res.send({message:"helper"})
+               res.status(201);
+               res.json(data);
+            }
+        }
+   } catch(err){
+       console.log(err);
+   }
+})
+
+// re password
+router.route('/update-password').put(async(req, res, next) => {
+    try {
+        // Get user input
+        const {Firstname,Lastname,Age,Gender,Nationality,Race,Mobile,Password,
+            Province,House_No,Soi,Road,District,Subdistrict,ZIP_Code,Lat,Lng} =req.body;
+
+        // hash password
+        hashPassword = await bcrypt.hash(Password,10)
+
+        // create user in database
+        const user = await VictimuserSchema.findOneAndUpdate({ Mobile } ,{ 
+            Firstname,
+            Lastname,
+            Age,
+            Gender,
+            Nationality,
+            Race,
+            Mobile,
+            Password:hashPassword,
+
+            Province,
+            House_No,
+            Soi,
+            Road,
+            District,
+            Subdistrict,
+            ZIP_Code,
+
+            Lat,
+            Lng
+        })
+
+        TOKEN_KEY = "qwertyuiop"
+        // create token
+        const token = jwt.sign(
+            {user_id: user._id, Mobile},
+            TOKEN_KEY,
+            {
+                expiresIn: "2h"
+            }
+        )
+
+        // save user token
+        user.token = token;
+
+        // return new user
+        res.send({message:"update user success!!"});
+        res.status(201).json(user);
+    }catch(err){
+        console.log(err)
+    }
+})
+
+// get profile user - general information
+router.route('/helper-profile/:mobile').get((req,res,next)=>{
+    // console.log(req.params.id)
+    VictimuserSchema.findOne({Mobile:req.params.mobile}, (error,data)=>{
+        if(error){
+            return next(error);
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+// get profile user - congenital disease information
+router.route('/helper-disease/:mobile').get((req,res,next)=>{
+    CongenitalSchema.findOne({Mobile:req.params.mobile}, (error,data)=>{
+        if(error){
+            return next(error);
+        } else {
+            res.json(data)
+        }
+    })
 })
 
 module.exports = router; 

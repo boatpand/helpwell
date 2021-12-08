@@ -13,6 +13,7 @@ class Helper extends Component {
       // helpoptionstatuses:[],
       // helpinneeds:[],
       helpRequest:[],
+      Mobile:this.props.location.state.Mobile
     }
   }
 
@@ -25,6 +26,7 @@ class Helper extends Component {
       console.log(error)
     })
     console.log(this.state.helpRequest)
+    console.log(`user : ${this.props.location.state.Mobile}`)
   }
   
   eventTable = () => {
@@ -65,6 +67,10 @@ class Helper extends Component {
   }
 
   // handle radio box filter
+  handleAll = (e) =>{
+    axios.get('http://localhost:4000/request/all-request').then(res => {
+      this.setState({helpRequest: res.data})}).catch((error)=>{console.log(error)})}
+
   handleFood = (e) => {
     //console.log("done")
     axios.get('http://localhost:4000/request/food-request').then(res => {
@@ -98,15 +104,28 @@ class Helper extends Component {
   render() {
     return (
       <div className="helpertopic">
-        <Header />
+        <Header Mobile={this.state.Mobile}/>
         <h2 style={{fontFamily:"Kanit"}}>รายการผู้ขอความช่วยเหลือ</h2>
         <div className="filter">
-          <form className="filter_clear" onSubmit={this.onSubmit}>
+          <form className="filter_clear">
             <h4>Filter</h4>
-            <button type="submit" className="clear">
+            {/* <button type="submit" className="clear">
               clear
-            </button>
+            </button> */}
           </form>
+          <div className="filter-form-check">
+            <input
+              class="filter-check-input"
+              type="radio"
+              name="helpfil"
+              value="ทั้งหมด"
+              onChange={this.handleAll}
+              defaultChecked
+            />
+            <label class="filter-check-label" for="flexCheckChecked" style={{fontFamily:"Kanit"}}>
+              ทั้งหมด
+            </label>
+          </div>
           <div className="filter-form-check">
             <input
               class="filter-check-input"

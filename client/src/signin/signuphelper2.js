@@ -28,6 +28,13 @@ export default class signuphelper2 extends Component {
             Subdistrict:this.props.location.state.Subdistrict,
             ZIP_Code:this.props.location.state.ZIP_Code,
 
+            Food:this.props.location.state.Food,
+            Medicine:this.props.location.state.Medicine,
+            Bed:this.props.location.state.Bed,
+            Hospital:this.props.location.state.Hospital,
+            Home:this.props.location.state.Home,
+            Other:this.props.location.state.Other,
+
             address:"",
             city:"",
             area:"",
@@ -191,6 +198,13 @@ export default class signuphelper2 extends Component {
                         District:this.props.location.state.District,
                         Subdistrict:this.props.location.state.Subdistrict,
                         ZIP_Code:this.props.location.state.ZIP_Code,
+
+                        Food:this.props.location.state.Food,
+                        Medicine:this.props.location.state.Medicine,
+                        Bed:this.props.location.state.Bed,
+                        Hospital:this.props.location.state.Hospital,
+                        Home:this.props.location.state.Home,
+                        Other:this.props.location.state.Other,
 
                         Lat:this.state.markerPosition.lat,
                         Lng:this.state.markerPosition.lng,
