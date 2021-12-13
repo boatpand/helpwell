@@ -14,8 +14,13 @@ const timeStamp = new Date(
   )
 );
 
+console.log(timeStamp);
+
 let RequestSchema = new Schema(
   {
+    Mobile: {
+      type: String,
+    },
     Food: {
       type: Boolean,
     },
@@ -53,6 +58,12 @@ let RequestSchema = new Schema(
       type: Number,
     },
     Option: {
+      type: String,
+    },
+    Status: {
+      type: String,
+    },
+    Status_Text: {
       type: String,
     },
     date: {

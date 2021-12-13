@@ -76,11 +76,13 @@ export default class Signin extends Component {
                 //victimAuth.login(()=>{
                 // console.log(victimAuth.login)
                 // this.props.history.push('/victimland')
+                console.log(this.state.Mobile)
                 this.props.history.push({
                   pathname: '/victims',
                   search: '',
                   state: {Mobile:this.state.Mobile} 
                 })
+                
               //});
             }
             else if (role==="helper"){

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {
   Typography,
@@ -60,8 +62,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Helps() {
+export default function Help(props) {
   const classes = useStyles();
+
+  const GetStateParam = useLocation().state;
+  const { Mobile } = GetStateParam || {};
+  console.log("Mobile : ", Mobile);
 
   const [count_Food, setcount_Food] = useState(0);
   const [count_Medicine, setcount_Medicine] = useState(0);
@@ -114,6 +120,7 @@ export default function Helps() {
   };
 
   const data = {
+    Mobile: Mobile,
     count_Food: count_Food,
     count_Medicine: count_Medicine,
     count_Bed: count_Bed,

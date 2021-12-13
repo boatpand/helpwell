@@ -41,6 +41,7 @@ export default function Summary(props) {
   const history = useHistory();
   const GetStateParam = useLocation().state.data;
   const {
+    Mobile,
     count_Food,
     count_Medicine,
     count_Bed,
@@ -61,12 +62,8 @@ export default function Summary(props) {
   const [name_Home, setname_Home] = useState(count_Home !== 0 ? true : false);
   const [value_Option, setvalue_Option] = useState("");
 
-  // console.log("name_Medicine ", name_Medicine);
-  // console.log("count Medicine is ", count_Medicine);
-  // console.log("name Food is ", name_Food);
-  // console.log("count Food is ", count_Food);
-  // console.log("name Bed is ", name_Bed);
-  // console.log("count Bed is ", count_Bed);
+  const [Status, set_Status] = useState("รอการช่วยเหลือ");
+  const [Status_Text, set_Status_Text] = useState("");
 
   const handleOption = (event) => {
     setvalue_Option(event.target.value);
@@ -75,16 +72,8 @@ export default function Summary(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // let data_count = {
-    //   count_Food: count_Food,
-    //   count_Medicine: count_Medicine,
-    //   count_Bed: count_Bed,
-    //   count_Hospital: count_Hospital,
-    //   count_Home: count_Home,
-    //   // count_Other: count_Other,
-    // };
-
     let data = {
+      Mobile: Mobile,
       Food: name_Food,
       count_Food: count_Food,
       Medicine: name_Medicine,
@@ -98,6 +87,8 @@ export default function Summary(props) {
       Other: value_Other,
       count_Other: count_Other,
       Option: value_Option,
+      Status: Status,
+      Status_Text: Status_Text,
     };
 
     // insertCount(data_count).then((response) => {
