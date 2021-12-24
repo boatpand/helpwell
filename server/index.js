@@ -15,6 +15,7 @@ const CongenitalRoute = require('./routes/Victimuser-route');
 const HelperuserRoute = require('./routes/Helperuser-route');
 const VerifyRoute = require('./routes/Verify-route');
 const AdminRoute = require('./routes/Admin-route');
+const AccepthelpRoute = require('./routes/Accepthelp-route');
 
 
 // Connecting MongoDB Database 
@@ -45,6 +46,7 @@ app.use('/victimuser', CongenitalRoute)
 app.use('/helperuser', HelperuserRoute)
 app.use('/verify', VerifyRoute)
 app.use('/admin', AdminRoute)
+app.use('/accept', AccepthelpRoute)
 
 // PORT
 const port = process.env.PORT || 4000;

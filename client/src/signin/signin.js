@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import logo_signin from '../logo_signin.png';
 import axios from 'axios';
-import './signin.css'
 
 export default class Signin extends Component {
     constructor(props){
@@ -104,29 +103,63 @@ export default class Signin extends Component {
         else{this.setState({mes:"All input is required", show_mes:true})}
       }
 
-    render() {
+//     render() {
+//         return (
+//         <body className="signinbody">
+//         <div className="signincontainer">
+//             <form className="signinform" onSubmit={this.onSubmitLogin}>
+//                 <img src={logo_signin} alt="logo of sign in form"/>
+//                 <label style={{color:"red", display:(this.state.show_mes? 'block':'none')}}>{this.state.mes}</label>
+//                 <div className="form-controll">
+//                     <label>Mobile Number</label>
+//                     <input type="text" pattern="[0-9]{10}" placeholder="   Mobile Number" onChange={this.onChangeMobile}/>
+//                 </div>
+//                 <div className="form-controll">
+//                     <label>Password</label>
+//                     <input type="password" placeholder="   Password" onChange={this.onChangePassword}/>
+//                     <label><a href="/forget-pass">forget password</a></label>
+//                 </div>
+//                 <div className="signinup">
+//                 <button className="signinbutton" type="submit">sign in</button>
+//                 <label><a href="/signup">sign up</a></label>
+//                 </div>
+//             </form>
+//         </div>    
+//         </body>
+//         )
+//     }
+// }
+
+      render() {
         return (
-        <body className="signinbody">
-        <div className="signincontainer">
-            <form className="signinform" onSubmit={this.onSubmitLogin}>
-                <img src={logo_signin} alt="logo of sign in form"/>
-                <label style={{color:"red", display:(this.state.show_mes? 'block':'none')}}>{this.state.mes}</label>
-                <div className="form-controll">
-                    <label>Mobile Number</label>
-                    <input type="text" pattern="[0-9]{10}" placeholder="   Mobile Number" onChange={this.onChangeMobile}/>
-                </div>
-                <div className="form-controll">
-                    <label>Password</label>
-                    <input type="password" placeholder="   Password" onChange={this.onChangePassword}/>
-                    <label><a href="/forget-pass">forget password</a></label>
-                </div>
-                <div className="signinup">
-                <button className="signinbutton" type="submit">sign in</button>
-                <label><a href="/signup">sign up</a></label>
-                </div>
-            </form>
-        </div>    
-        </body>
+        <div>
+          <div class="container-lg" style={{display:"flex", alignItems:"center", justifyContent:"center", position:"relative", minHeight:"100vh"}}>
+          <form class="rounded" 
+                onSubmit={this.onSubmitLogin}
+                style={{border:"2px solid #B4B6BB", width:"60%"}}>
+          <img class="img-fluid" src={logo_signin} style={{margin:"5% 0 0 0", width:"30%"}}></img>
+
+          <label style={{color:"red", fontSize:"1vw", display:(this.state.show_mes? 'block':'none')}}>{this.state.mes}</label>
+          <div style={{display:"flex",margin:"5% 0 0 0",justifyContent:"center"}}>
+          <label style={{fontSize:"1.5vw", color:"#707070", display:"flex"}}>Mobile Number :</label>
+          <input class="rounded-pill" type="text" pattern="[0-9]{10}" placeholder="   Mobile Number" 
+                  onChange={this.onChangeMobile}
+                  style={{border:"2px solid #B4B6BB", fontSize:"1.5vw", marginLeft:"2%", width:"40%"}}/>
+          </div>
+
+          <div style={{display:"flex",margin:"5% 0 0 0", justifyContent:"center"}}>
+          <label style={{fontSize:"1.5vw", color:"#707070", display:"flex"}}>Password : </label>
+          <input class="rounded-pill" type="password" placeholder="   Password" 
+                  onChange={this.onChangePassword}
+                  style={{border:"2px solid #B4B6BB", fontSize:"1.5vw", marginLeft:"8%", width:"40%"}}/>
+          </div>
+          <h1 style={{fontSize:"1.2vw", marginLeft:"50%", textAlign:"left", fontFamily:"Kanit"}}><a href="/forget-pass">forget password</a></h1>
+          <button class="rounded-pill" style={{background:"#2F4A8A", color:"#ffffff", 
+                  fontSize:"1.5vw", fontFamily:"Kanit", border:"2px solid #B4B6BB", width:"70%", marginTop:"5%"}}>sign in</button>
+          <h1 style={{fontSize:"1.2vw", fontFamily:"Kanit" ,marginBottom:"2%"}}><a href="/signup">sign up</a></h1>
+          </form> 
+          </div>
+        </div>
         )
+      }
     }
-}

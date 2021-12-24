@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import logohelper_signup from'../logohelper_signup.png';
-import './individual.css'
 
 export default class Individual extends Component {
     constructor(props){
@@ -191,80 +190,87 @@ export default class Individual extends Component {
         }
 
         return (
-            <body className="signinbody">
-            <div className="signupcontainer">
-                <form className="signupform">
-                <img src={logohelper_signup} alt="logohelper_signup"/>
+            <div >
+            <div class="container-lg" style={{display:"flex", alignItems:"center", justifyContent:"center", position:"relative", minHeight:"100vh"}}>
+                <form class="rounded" 
+                        style={{border:"2px solid #B4B6BB", width:"100%"}}>
+                <img src={logohelper_signup} class="img-fluid" style={{width:"20%", marginTop:"5%"}}/>
+
                 <label style={{color:"red", display:(this.state.show_all? 'block':'none')}}>All input is required! </label>
-                    <div style={{marginTop:"20px", display:"flex", marginBottom:"20px"}}>
-                        <label style={{marginRight:"10px", color:"#707070"}}>Firstname</label>
-                        <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"300px", 
-                        marginRight:"30px", fontFamily:"Kanit"}} 
+                <div style={{marginTop:"10%", display:"flex", marginBottom:"2%"}}>
+                <label style={{marginLeft:"8%", color:"#707070", fontSize:"1.5vw"}}>Firstname</label>
+                <input class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"30%", 
+                        marginLeft:"3%", fontFamily:"Kanit", fontSize:"1.5vw"}} 
                         type="text" 
                         placeholder="   Firstname" 
                         onChange={this.onChangeFirstname}/>
 
-                        <label style={{marginRight:"10px", color:"#707070"}}>Lastname</label>
-                        <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"300px", 
-                        marginRight:"30px", fontFamily:"Kanit"}} type="text"
+                <label style={{marginLeft:"2%", color:"#707070", fontSize:"1.5vw"}}>Lastname</label>
+                <input class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"30%", 
+                        marginLeft:"3%", fontFamily:"Kanit", fontSize:"1.5vw"}} type="text"
                         placeholder="   Lastname" 
                         onChange={this.onChangeLastname}/>
-                    </div>
+                </div>
 
-                    <label style={{color:"red", display:(this.state.show_pw? 'block':'none')}}>Password must same Retype Password !</label>
-                    <label style={{color:"red", display:(this.state.show_mobile? 'block':'none')}}>User already exist !</label>
-                    <label style={{color:"red", display:(this.state.show_digit? 'block':'none')}}>Mobile should be 10 digits !</label>
-                    <label style={{color:"red", display:(this.state.show_first? 'block':'none')}}>Mobile should start with 0 !</label>
-                    <div style={{marginTop:"20px", display:"flex", marginBottom:"20px"}}>
-                        <label style={{marginRight:"10px", color:"#707070"}}>Mobile</label>
-                        <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", 
-                        marginRight:"30px", fontFamily:"Kanit"}}
+                <label style={{color:"red", display:(this.state.show_pw? 'block':'none')}}>Password must same Retype Password !</label>
+                <label style={{color:"red", display:(this.state.show_mobile? 'block':'none')}}>User already exist !</label>
+                <label style={{color:"red", display:(this.state.show_digit? 'block':'none')}}>Mobile should be 10 digits !</label>
+                <label style={{color:"red", display:(this.state.show_first? 'block':'none')}}>Mobile should start with 0 !</label>
+                <div style={{marginTop:"5%", display:"flex", marginBottom:"2%"}}>
+                <label style={{marginLeft:"6%", color:"#707070", fontSize:"1.5vw"}}>Mobile</label>
+                <input class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"20%", 
+                        marginLeft:"3%", fontFamily:"Kanit", fontSize:"1.5vw"}}
                         type="text" 
                         placeholder="   Mobile" 
                         onChange={this.onChangeMobile}/>
     
-                        <label style={{marginRight:"10px", color:"#707070"}}>Password</label>
-                        <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", 
-                        marginRight:"30px", fontFamily:"Kanit"}}
+                <label style={{marginLeft:"2%", color:"#707070", fontSize:"1.5vw"}}>Password</label>
+                <input class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"15%", 
+                        marginLeft:"3%", fontFamily:"Kanit", fontSize:"1.5vw"}}
                         type="password" 
                         placeholder="   Password" 
                         onChange={this.onChangePassword}/>
                   
-                        <label style={{marginRight:"10px", color:"#707070"}}>Re-Password</label>
-                        <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", 
-                        marginRight:"30px", fontFamily:"Kanit"}}
+                <label style={{marginLeft:"2%", color:"#707070", fontSize:"1.5vw"}}>Re-Password</label>
+                <input class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"15%", 
+                        marginLeft:"3%", fontFamily:"Kanit", fontSize:"1.5vw"}}
                         type="password" 
                         placeholder="   Retype Password" 
                         onChange={this.onChangeRetype_Password}/>
-                    </div>
-
-                    <div className="form-controll" style={{display:"flex", marginTop:"20px"}}>
-                        <label style={{marginRight:"20px"}}>Province</label>
-                        <input value="กรุงเทพมหานคร" 
-                        style={{fontFamily:"Kanit", textAlign:"center"}}/>
                 </div>
-                <div style={{marginTop:"20px", display:"flex", marginBottom:"20px"}}>
-                    <label style={{marginRight:"10px", color:"#707070"}}>House No.</label>
-                    <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"120px", 
-                    marginRight:"30px"}} 
+
+                <div className="form-controll" style={{display:"flex", marginTop:"5%", marginBottom:"2%"}}>
+                <label style={{marginLeft:"20%", color:"#707070", fontSize:"1.5vw"}}>Province</label>
+                <input value="กรุงเทพมหานคร" class="rounded-pill"
+                        style={{border:"2px solid #B4B6BB", marginLeft:"3%", fontFamily:"Kanit", 
+                                textAlign:"center", fontSize:"1.5vw", width:"50%"}}/>
+                </div>
+
+                <div style={{marginTop:"5%", display:"flex", marginBottom:"2%"}}>
+                <label style={{marginLeft:"10%", color:"#707070", fontSize:"1.5vw"}}>House No.</label>
+                <input class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"12%", 
+                    marginLeft:"3%", fontSize:"1.5vw"}} 
                     type="text"
                     onChange={this.onChangeHouse_No}/>
-                    <label style={{marginRight:"10px", color:"#707070"}}>Soi</label>
-                    <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"195px", 
-                    marginRight:"30px", fontFamily:"Kanit"}} 
+
+                <label style={{marginLeft:"2%", color:"#707070", fontSize:"1.5vw"}}>Soi</label>
+                <input class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"20%", 
+                    marginLeft:"3%", fontFamily:"Kanit", fontSize:"1.5vw"}} 
                     type="text"
                     onChange={this.onChangeSoi}/>
-                    <label style={{marginRight:"10px", color:"#707070"}}>Road</label>
-                    <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"195px", 
-                    marginRight:"30px", fontFamily:"Kanit"}} 
+                    
+                <label style={{marginLeft:"2%", color:"#707070", fontSize:"1.5vw"}}>Road</label>
+                <input class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"20%", 
+                    marginLeft:"3%", fontFamily:"Kanit", fontSize:"1.5vw"}} 
                     type="text"
                     onChange={this.onChangeRoad}/>                    
                 </div>
+
                 <label style={{color:"red", display:(this.state.show_subdistrict? 'block':'none')}}>Please Select Subdistrict </label>
-                    <div style={{marginTop:"30px", display:"flex", marginBottom:"20px"}}>
-                    <label style={{marginRight:"10px", color:"#707070"}}>District</label>
-                    <select style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", marginRight:"30px",fontFamily:"Kanit"}} 
-                    class="form-control form-control-sm"
+                <div style={{marginTop:"5%", display:"flex", marginBottom:"2%"}}>
+                <label style={{marginLeft:"10%", color:"#707070", fontSize:"1.5vw"}}>District</label>
+                <select class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"15%", 
+                        marginLeft:"3%",fontFamily:"Kanit", fontSize:"1.5vw"}} 
                     onChange={this.onChangeDistrict}>
                     <option style={{fontFamily:"Kanit"}}></option>
                     <option style={{fontFamily:"Kanit"}}>พระนคร</option>
@@ -319,28 +325,29 @@ export default class Individual extends Component {
                     <option style={{fontFamily:"Kanit"}}>บางบอน</option>
                     </select>
 
-                    <label style={{marginRight:"10px", color:"#707070"}}>Subdistrict</label>
-                    <select style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", marginRight:"30px",fontFamily:"Kanit"}} 
-                    class="form-control form-control-sm"
+                <label style={{marginLeft:"2%", color:"#707070", fontSize:"1.5vw"}}>Subdistrict</label>
+                <select class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"15%", 
+                        marginLeft:"3%",fontFamily:"Kanit", fontSize:"1.5vw"}} 
                     onChange={this.onChangeSubdistrict}>
                     {scroll}
-                    </select>
+                </select>
 
-                    <label style={{marginRight:"10px", color:"#707070"}}>ZIP Code</label>
-                    <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"120px", 
-                    marginRight:"30px", fontFamily:"Kanit", textAlign:"center"}} 
+                <label style={{marginLeft:"2%", color:"#707070", fontSize:"1.5vw"}}>ZIP Code</label>
+                <input class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"12%", 
+                    marginLeft:"3%", fontFamily:"Kanit", textAlign:"center", fontSize:"1.5vw"}} 
                     type="text" value={this.state.ZIP_Code}/>
-                    </div>
+                </div>
 
-                    <div>
-                    <button style={{backgroundColor:"#FFB172"}} 
-                    className="signupbutton" 
+                <div>
+                <button class="rounded-pill"
+                    style={{margin:"5% 0 5% 0", backgroundColor:"#FFB172", color:"#ffffff",
+                            border:"2px solid #B4B6BB", width:"50%", fontSize:"1.5vw"}} 
                     type="submit"
                     onClick={this.onSubmit}>next</button>
-                    </div>
+                </div>
                 </form>
             </div>    
-            </body>
+            </div>
         )
     }
 }

@@ -226,7 +226,7 @@ router.route('/update-password').put(async(req, res, next) => {
 })
 
 // get profile user - general information
-router.route('/helper-profile/:mobile').get((req,res,next)=>{
+router.route('/victim-profile/:mobile').get((req,res,next)=>{
     // console.log(req.params.id)
     VictimuserSchema.findOne({Mobile:req.params.mobile}, (error,data)=>{
         if(error){
@@ -238,7 +238,7 @@ router.route('/helper-profile/:mobile').get((req,res,next)=>{
 })
 
 // get profile user - congenital disease information
-router.route('/helper-disease/:mobile').get((req,res,next)=>{
+router.route('/victim-disease/:mobile').get((req,res,next)=>{
     CongenitalSchema.findOne({Mobile:req.params.mobile}, (error,data)=>{
         if(error){
             return next(error);

@@ -116,23 +116,24 @@ export default class HelperOtp extends Component {
 
     render() {
         return (
-            <div style={{alignItems:"center", justifyContent:"center", display:"flex",
-                        margin:"0", minHeight:"100vh"}}>
-                <form style={{borderRadius:"20px", border:"2px solid #B4B6BB", 
-                    width:"550px", padding:"10px 40px", position:"relative"}}>
-                <img src={logohelper_signup} alt="logohelper_signup"/>
-                <h5 style={{color:"#707070", fontFamily:"Kanit"}}>ระบบได้ทำการส่ง OTP ไปยังเบอร์ {this.props.location.state.Mobile}</h5>
+            <div>
+                <div class="container-lg" style={{display:"flex", alignItems:"center", justifyContent:"center", position:"relative", minHeight:"100vh"}}>
+                <form class="rounded" 
+                        style={{border:"2px solid #B4B6BB", width:"100%"}}>
+                <img src={logohelper_signup} class="img-fluid" style={{margin:"5% 0 0 0", width:"20%"}}/>
+                <h5 style={{color:"#707070", fontFamily:"Kanit", margin:"2% 2% 2% 2%", fontSize:"2.5vh"}}>ระบบได้ทำการส่ง OTP ไปยังเบอร์ {this.props.location.state.Mobile}</h5>
                 <label style={{color:"#000000", fontFamily:"Kanit",display:(this.state.show_resend? 'block':'none')}}> ระบบได้ทำการส่ง OTP อีกคร้งแล้ว </label>
-                <div style={{display:"flex", alignItems:"center", justifyContent:"center",}}>
-                <input style={{borderRadius:"20px", border:"2px solid #B4B6BB"}}
+                <div style={{display:"flex"}}>
+                <input class="rounded-pill" style={{marginLeft:"4%", border:"2px solid #B4B6BB", width:"60%", textAlign:"center", fontSize:"2.5vh", fontFamily:"Kanit"}}
                 type="text" onChange={this.onChangeOtp}></input>
-                <button style={{borderRadius:"20px", border:"2px solid #B4B6BB",
-                 cursor:"pointer", color:"#707070", background:"#ffffff", marginLeft:"20px",
-                marginRight:"20px", fontFamily:"Kanit"}} 
+                <button class="rounded-pill"
+                        style={{border:"2px solid #B4B6BB", cursor:"pointer", color:"#707070", 
+                        background:"#ffffff", marginLeft:"2%", marginRight:"2%", fontFamily:"Kanit", width:"30%", fontSize:"2vh"}} 
                  type="submit" onClick={this.onSubmit}>ยืนยัน OTP</button>
-                <label style={{cursor:"pointer", color:"#FFB172"}} onClick={this.onSubmitResend}>ขอ OTP อีกครั้ง</label>
                 </div>
+                <h1 style={{cursor:"pointer", color:"#FFB172", fontSize:"2.5vh", fontFamily:"Kanit"}} onClick={this.onSubmitResend}>ขอ OTP อีกครั้ง</h1>
                 </form>
+            </div>
             </div>
         )
     }

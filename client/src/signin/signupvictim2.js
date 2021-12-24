@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react'
 import logo_signin from '../logo_signin.png';
-
 import { InfoWindow, withScriptjs, withGoogleMap, GoogleMap, Marker} from 'react-google-maps';
 import Geocode from 'react-geocode';
 import AutoComplete from "react-google-autocomplete";
@@ -244,27 +243,28 @@ export default class signupvictim2 extends Component {
           ));
 
         return (
-            <body className="signinbody">
-            <div className="signupcontainer">
-                <form className="signupform">
-                <img src={logo_signin} alt="logohelper_signup"/>
+            <div>
+            <div class="container-lg">
+            <div style={{margin:"5rem 0 0 0"}}>
+            <img src={logo_signin} class="img-fluid" style={{width:"15%", marginBottom:"5%"}}/>
                 
-                    <MapWithAMarker
-                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtuF_qV8V68Bf_YrT3UA9lXcAff5yQeyU&v=3.exp&libraries=geometry,drawing,places"
-                    loadingElement={<div style={{ height: `100%` }} />}
-                    containerElement={<div style={{ height: `400px` }} />}
-                    mapElement={<div style={{ height: `100%` }} />}
-                    />
+            <MapWithAMarker
+            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtuF_qV8V68Bf_YrT3UA9lXcAff5yQeyU&v=3.exp&libraries=geometry,drawing,places"
+            loadingElement={<div style={{ height: `100%` }} />}
+            containerElement={<div style={{ height: `25rem` }} />}
+            mapElement={<div style={{ height: `100%` }} />}
+            />
 
-                    <div style={{marginTop:"40px"}}>
-                    <button style={{backgroundColor:"#2F4A8A"}} 
-                    className="signupbutton" 
+            <div style={{marginTop:"4%"}}>
+            <button class="rounded-pill"
+                    style={{margin:"10% 0 5% 0", backgroundColor:"#2F4A8A", color:"#ffffff",
+                            border:"2px solid #B4B6BB", width:"50%", fontSize:"1.5vw"}} 
                     type="submit"
                     onClick={this.onSubmitSignup}>Submit</button>
-                    </div>
-                </form>
+            </div>
+            </div>
             </div>    
-            </body>
+            </div>
         )
     }
 }
