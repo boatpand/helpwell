@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import Header from "./header";
 import axios from 'axios';
 import EventTableRow from "./eventtablerow";
-import "./helper.css";
+import "./style.css";
 
 class Helper extends Component {
   constructor(props){
@@ -13,7 +13,7 @@ class Helper extends Component {
       // helpoptionstatuses:[],
       // helpinneeds:[],
       helpRequest:[],
-      Mobile:this.props.location.state.Mobile
+      Mobile:this.props.location.state.Mobile,
     }
   }
 
@@ -30,8 +30,6 @@ class Helper extends Component {
   }
   
   eventTable = () => {
-    // console.log(this.state.helpoptionstatuses)
-    // console.log(this.state.helpinneeds.length)
     var topics = [];
     var t ="";
     for (var y = 0; y < this.state.helpRequest.length; y++) {
@@ -51,18 +49,22 @@ class Helper extends Component {
         t= t+"หาเตียง"+" "
       }
       t=t+this.state.helpRequest[y].Other + " "
+
       var tmp = {
         help:t ,
         Option: this.state.helpRequest[y].Option,
-        RequestID:this.state.helpRequest[y]._id 
+        Status_Text: this.state.helpRequest[y].Status_Text,
+        Victim_Mobile: this.state.helpRequest[y].Mobile,
+        date: this.state.helpRequest[y].date,
+        RequestID: this.state.helpRequest[y]._id
       }
       t=""
       topics.push(tmp);
     }
-    // console.log(topics);
- 
+    // // console.log(topics);
+    // topics.reverse()
     return topics.map((res,i)=>{
-      return <EventTableRow obj={res} key={i}/>
+      return <EventTableRow obj={res} key={i} Mobile={this.state.Mobile}/>
     });
   }
 
@@ -101,116 +103,119 @@ class Helper extends Component {
     axios.get('http://localhost:4000/request/other-request').then(res => {
     this.setState({helpRequest: res.data})}).catch((error)=>{console.log(error)})}
 
-  render() {
-    return (
-      <div className="helpertopic">
-        <Header Mobile={this.state.Mobile}/>
-        <h2 style={{fontFamily:"Kanit"}}>รายการผู้ขอความช่วยเหลือ</h2>
-        <div className="filter">
-          <form className="filter_clear">
-            <h4>Filter</h4>
-            {/* <button type="submit" className="clear">
-              clear
-            </button> */}
-          </form>
-          <div className="filter-form-check">
-            <input
-              class="filter-check-input"
-              type="radio"
-              name="helpfil"
-              value="ทั้งหมด"
-              onChange={this.handleAll}
-              defaultChecked
-            />
-            <label class="filter-check-label" for="flexCheckChecked" style={{fontFamily:"Kanit"}}>
-              ทั้งหมด
-            </label>
-          </div>
-          <div className="filter-form-check">
-            <input
-              class="filter-check-input"
-              type="radio"
-              name="helpfil"
-              value="อาหาร"
-              onChange={this.handleFood}
-            />
-            <label class="filter-check-label" for="flexCheckChecked" style={{fontFamily:"Kanit"}}>
-              อาหาร
-            </label>
-          </div>
-          <div className="filter-form-check">
-            <input
-              class="filter-check-input"
-              type="radio"
-              name="helpfil"
-              value="ยา"
-              onChange={this.handleMedicine}
-            />
-            <label class="filter-check-label" for="flexCheckChecked" style={{fontFamily:"Kanit"}}>
-              ยา
-            </label>
-          </div>
-          <div className="filter-form-check">
-            <input
-              class="filter-check-input"
-              type="radio"
-              name="helpfil"
-              value="นำส่งโรงพยาบาล"
-              onChange={this.handleHospital}
-            />
-            <label class="filter-check-label" for="flexCheckDefault" style={{fontFamily:"Kanit"}}>
-              นำส่งโรงพยาบาล
-            </label>
-          </div>
-          <div className="filter-form-check">
-            <input
-              class="filter-check-input"
-              type="radio"
-              name="helpfil"
-              value="นำส่งภูมิลำเนา"
-              onChange={this.handleHome}
-            />
-            <label class="filter-check-label" for="flexCheckDefault" style={{fontFamily:"Kanit"}}>
-              นำส่งภูมิลำเนา
-            </label>
-          </div>
-          <div className="filter-form-check">
-            <input
-              class="filter-check-input"
-              type="radio"
-              name="helpfil"
-              value="หาเตียง"
-              onChange={this.handleBed}
-            />
-            <label class="filter-check-label" for="flexCheckDefault" style={{fontFamily:"Kanit"}}>
-              หาเตียง
-            </label>
-          </div>
-          <div className="filter-form-check">
-            <input
-              class="filter-check-input"
-              type="radio"
-              name="helpfil"
-              value="อื่นๆ"
-              onChange={this.handleOther}
-            />
-            <label class="filter-check-label" for="flexCheckDefault" style={{fontFamily:"Kanit"}}>
-              อื่นๆ
-            </label>
-          </div>
+render() {
+  return (
+    <div>
+      <Header Mobile={this.state.Mobile}/>
+      <div class="container-lg" style={{width:"100%"}}>
+      <h1 style={{fontFamily:"Kanit", color:"#FFB172", textAlign:"left", margin:"5rem 0 0 2%"}}>รายการผู้ขอความช่วยเหลือ</h1>
+      <div style={{display:"flex"}}>
+      <div style={{fontFamily:"Kanit", color:"#FFB172", textAlign:"left", margin:"5% 0 0 2%", position:"fixed", width:"20%"}}>
+        <h4 style={{fontSize:"2vw", color:"#FFB172", textAlign:"left"}}>Filter</h4>
+        <div className="filter-form-check">
+          <input
+            class="filter-check-input"
+            type="radio"
+            name="helpfil"
+            value="ทั้งหมด"
+            onChange={this.handleAll}
+            defaultChecked
+          />
+          <label class="filter-check-label" for="flexCheckChecked" 
+                  style={{fontFamily:"Kanit", fontSize:"1.5vw", margin:"0 0 2% 10%"}}>
+            ทั้งหมด
+          </label>
         </div>
-      
-        <div className="helplist">
-                <form>
-                <table class="table table-borderless">
-                    <tbody>
-                      {this.eventTable()}
-                    </tbody>
-                    </table>
-                </form>
-            </div>
+        <div className="filter-form-check">
+          <input
+            class="filter-check-input"
+            type="radio"
+            name="helpfil"
+            value="อาหาร"
+            onChange={this.handleFood}
+          />
+          <label class="filter-check-label" for="flexCheckChecked" 
+                  style={{fontFamily:"Kanit", fontSize:"1.5vw", margin:"0 0 2% 10%"}}>
+            อาหาร
+          </label>
+        </div>
+        <div className="filter-form-check">
+          <input
+            class="filter-check-input"
+            type="radio"
+            name="helpfil"
+            value="ยา"
+            onChange={this.handleMedicine}
+          />
+          <label class="filter-check-label" for="flexCheckChecked" 
+                  style={{fontFamily:"Kanit", fontSize:"1.5vw", margin:"0 0 2% 10%"}}>
+            ยา
+          </label>
+        </div>
+        <div className="filter-form-check">
+          <input
+            class="filter-check-input"
+            type="radio"
+            name="helpfil"
+            value="นำส่งโรงพยาบาล"
+            onChange={this.handleHospital}
+          />
+          <label class="filter-check-label" for="flexCheckDefault" 
+                  style={{fontFamily:"Kanit", fontSize:"1.5vw", margin:"0 0 2% 10%"}}>
+            นำส่งโรงพยาบาล
+          </label>
+        </div>
+        <div className="filter-form-check">
+          <input
+            class="filter-check-input"
+            type="radio"
+            name="helpfil"
+            value="นำส่งภูมิลำเนา"
+            onChange={this.handleHome}
+          />
+          <label class="filter-check-label" for="flexCheckDefault" 
+                  style={{fontFamily:"Kanit", fontSize:"1.5vw", margin:"0 0 2% 10%"}}>
+            นำส่งภูมิลำเนา
+          </label>
+        </div>
+        <div className="filter-form-check">
+          <input
+            class="filter-check-input"
+            type="radio"
+            name="helpfil"
+            value="หาเตียง"
+            onChange={this.handleBed}
+          />
+          <label class="filter-check-label" for="flexCheckDefault" 
+                  style={{fontFamily:"Kanit", fontSize:"1.5vw", margin:"0 0 2% 10%"}}>
+            หาเตียง
+          </label>
+        </div>
+        <div className="filter-form-check">
+          <input
+            class="filter-check-input"
+            type="radio"
+            name="helpfil"
+            value="อื่นๆ"
+            onChange={this.handleOther}
+          />
+          <label class="filter-check-label" for="flexCheckDefault" 
+                  style={{fontFamily:"Kanit", fontSize:"1.5vw", margin:"0 0 2% 10%"}}>
+            อื่นๆ
+          </label>
+        </div>
       </div>
-    );
-  }
+      <div style={{margin:"5% 0 0 22%", textAlign:"left", width:"80%"}}>
+      <form>
+      <table class="table table-borderless">
+      <tbody>{this.eventTable()}</tbody>
+      </table>
+      </form>
+      </div>
+      </div>
+      </div>
+      </div>
+  );
+}
 }
 export default withRouter(Helper);

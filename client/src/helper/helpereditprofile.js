@@ -381,111 +381,118 @@ export default class HelperEditProfile extends Component {
                     componentRestrictions: { country: "th" },
                   }} 
                 // defaultValue={this.props.location.state.Subdistrict}
-            /> */}
-
+            /> */}        
             </GoogleMap>
         ));
 
         return (
             <div>
-                <Header Mobile={this.state.Mobile}/>
-                <div style={{marginTop:"100px",color:"#FFB172"}}><h1>Edit Profile</h1></div>
+            <Header Mobile={this.state.Mobile}/>
+            <div class="container-lg" style={{marginTop:"10%"}}>
+            <form class="rounded" 
+                    style={{border:"2px solid #B4B6BB", width:"80%",position:"absolute",
+                    top:"10%", right:"10%"}}>
+            <h1 style={{color:"#FFB172", fontSize:"2vw", fontWeight:"bold", marginTop:"5%"}}>Edit Profile</h1>
+            <div style={{marginTop:"5%", display:"flex", marginBottom:"2%"}}>
+            <label style={{marginLeft:"8%", color:"#707070", fontSize:"1.5vw"}}>Firstname</label>
+            <input class="rounded-pill" 
+                    style={{border:"2px solid #B4B6BB", width:"30%", 
+                        marginLeft:"3%", fontFamily:"Kanit", fontSize:"1.5vw"}} 
+                    type="text" 
+                    placeholder="   Firstname" 
+                    value={this.state.Firstname}
+                    onChange={this.onChangeFirstname}/>
 
-                <form style={{marginLeft:"300px", display:"block", fontSize:"18px", marginRight:"300px"}}>
-                    <div style={{marginTop:"40px", display:"flex"}}>
-                        <label style={{marginRight:"10px", color:"#707070"}}>Firstname</label>
-                        <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"300px", 
-                        marginRight:"30px", fontFamily:"Kanit"}} 
-                        type="text" 
-                        placeholder="   Firstname" 
-                        value={this.state.Firstname}
-                        onChange={this.onChangeFirstname}/>
+            <label style={{marginLeft:"2%", color:"#707070", fontSize:"1.5vw"}}>Lastname</label>
+            <input class="rounded-pill" 
+                    style={{border:"2px solid #B4B6BB", width:"30%", 
+                        marginLeft:"3%", fontFamily:"Kanit", fontSize:"1.5vw"}} 
+                    type="text"
+                    placeholder="   Lastname"
+                    value={this.state.Lastname} 
+                    onChange={this.onChangeLastname}/>
+            </div>
 
-                        <label style={{marginRight:"10px", color:"#707070"}}>Lastname</label>
-                        <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"300px", 
-                        marginRight:"30px", fontFamily:"Kanit"}} type="text"
-                        placeholder="   Lastname"
-                        value={this.state.Lastname} 
-                        onChange={this.onChangeLastname}/>
-                    </div>
+            <div style={{marginTop:"5%", marginBottom:"2%", display:(this.state.isOrg? 'flex':'none')}}>
+            <label style={{marginLeft:"8%", color:"#707070", fontSize:"1.5vw"}}>Organization Name</label>
+            <input type="text" placeholder="   Organization Name" class="rounded-pill" 
+                    style={{border:"2px solid #B4B6BB", width:"30%", 
+                            marginLeft:"3%", fontFamily:"Kanit", fontSize:"1.5vw"}}
+                    value={this.state.Org_Name}
+                    onChange={this.onChangeOrg_Name}></input>
+            </div>
 
-                    <div style={{marginTop:"40px", display:(this.state.isOrg? 'flex':'none')}}>
-                        <label style={{marginRight:"10px", color:"#707070"}}>Organization Name</label>
-                        <input type="text" placeholder="   Organization Name" style={{marginRight:"20px", 
-                        borderRadius:"20px", border:"2px solid #B4B6BB", width:"650px", fontFamily:"Kanit"}}
-                        value={this.state.Org_Name}
-                        onChange={this.onChangeOrg_Name}></input>
-                    </div>
+            <div style={{marginTop:"5%", marginBottom:"2%", display:(this.state.isOrg? 'flex':'none')}}>
+            <label style={{marginLeft:"8%", marginRight:"2%", color:"#707070", fontSize:"1.5vw"}}>Help : </label>
 
-                    <div className="signupform" style={{marginLeft:"-50px",marginTop:"20px", 
-                    display:(this.state.isOrg? 'inline-block':'none')}}>
-                        <label style={{marginRight:"10px", color:"#707070"}}>Help : </label>
+            <input type="checkbox" style={{margin:"1% 1% 0 0"}} 
+                    checked={this.state.Food}
+                    onChange={this.handleFood}></input>
+            <label style={{margin:"0 2% 0 0", color:"#707070", fontSize:"1.5vw"}}>Food</label>
 
-                        <input type="checkbox" style={{marginRight:"10px"}} 
-                        checked={this.state.Food}
-                        onChange={this.handleFood}></input>
-                        <label style={{marginRight:"10px", color:"#707070"}}>Food</label>
+            <input type="checkbox" style={{margin:"1% 1% 0 0"}} 
+                    checked={this.state.Medicine}
+                    onChange={this.handleMedicine}></input>
+            <label style={{margin:"0 2% 0 0", color:"#707070", fontSize:"1.5vw"}}>Medicine</label>
 
-                        <input type="checkbox" style={{marginRight:"10px"}}
-                        checked={this.state.Medicine}
-                        onChange={this.handleMedicine}></input>
-                        <label style={{marginRight:"10px", color:"#707070"}}>Medicine</label>
+            <input type="checkbox" style={{margin:"1% 1% 0 0"}}
+                    checked={this.state.Bed}
+                    onChange={this.handleBed}></input>
+            <label style={{margin:"0 2% 0 0", color:"#707070", fontSize:"1.5vw"}}>Bed</label>
 
-                        <input type="checkbox" style={{marginRight:"10px"}}
-                        checked={this.state.Bed}
-                        onChange={this.handleBed}></input>
-                        <label style={{marginRight:"10px", color:"#707070"}}>Bed</label>
+            <input type="checkbox" style={{margin:"1% 1% 0 0"}}
+                    checked={this.state.Hospital}
+                    onChange={this.handleHospital}></input>
+            <label style={{margin:"0 2% 0 0", color:"#707070", fontSize:"1.5vw"}}>Hospital</label>
 
-                        <input type="checkbox" style={{marginRight:"10px"}}
-                        checked={this.state.Hospital}
-                        onChange={this.handleHospital}></input>
-                        <label style={{marginRight:"10px", color:"#707070"}}>Hospital</label>
+            <input type="checkbox" style={{margin:"1% 1% 0 0"}}
+                    checked={this.state.Home}
+                    onChange={this.handleHome}></input>
+            <label style={{margin:"0 2% 0 0", color:"#707070", fontSize:"1.5vw"}}>Home</label>
 
-                        <input type="checkbox" style={{marginRight:"10px"}}
-                        checked={this.state.Home}
-                        onChange={this.handleHome}></input>
-                        <label style={{marginRight:"10px", color:"#707070"}}>Home</label>
+            <label style={{margin:"0 2% 0 0", color:"#707070", fontSize:"1.5vw"}}>Other</label>
+            <input type="text" placeholder="   ระบุ"  class="rounded-pill"
+                    style={{border:"2px solid #B4B6BB", fontSize:"1.5vw", width:"10%"}}
+                    value={this.state.Other}
+                    onChange={this.handleOther}></input>
+            </div>
 
-                        <label style={{marginLeft:"30px", marginRight:"10px", color:"#707070"}}>Other</label>
-                        <input type="text" placeholder="   ระบุ" style={{marginRight:"10px", 
-                        borderRadius:"20px", border:"2px solid #B4B6BB", fontFamily:"Kanit"}}
-                        value={this.state.Other}
-                        onChange={this.handleOther}></input>
-                    </div>
+            <div style={{marginTop:"5%", display:"flex", marginBottom:"2%"}}>
+            <label style={{marginLeft:"20%", color:"#707070", fontSize:"1.5vw"}}>Province</label>
+            <input value="กรุงเทพมหานคร" class="rounded-pill"
+                    style={{border:"2px solid #B4B6BB", marginLeft:"3%", fontFamily:"Kanit", 
+                            textAlign:"center", fontSize:"1.5vw", width:"50%"}}/> 
+            </div>
 
-                    <div  style={{marginTop:"20px", display:"flex"}}>
-                        <label style={{marginRight:"10px", color:"#707070"}}>Province</label>
-                        <input value="กรุงเทพมหานคร" 
-                        style={{fontFamily:"Kanit", textAlign:"center", marginRight:"20px", 
-                        borderRadius:"20px", border:"2px solid #B4B6BB", width:"730px"}}/>
-                    </div>
-                <div style={{marginTop:"20px", display:"flex", marginBottom:"20px"}}>
-                    <label style={{marginRight:"10px", color:"#707070"}}>House No.</label>
-                    <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"120px", 
-                    marginRight:"30px"}} 
+            <div style={{marginTop:"5%", display:"flex", marginBottom:"2%"}}>
+            <label style={{marginLeft:"10%", color:"#707070", fontSize:"1.5vw"}}>House No.</label>
+            <input class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"12%", 
+                    marginLeft:"3%", fontSize:"1.5vw"}} 
                     value={this.state.House_No}
                     type="text"
                     onChange={this.onChangeHouse_No}/>
-                    <label style={{marginRight:"10px", color:"#707070"}}>Soi</label>
-                    <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"195px", 
-                    marginRight:"30px", fontFamily:"Kanit"}} 
+            
+            <label style={{marginLeft:"2%", color:"#707070", fontSize:"1.5vw"}}>Soi</label>
+            <input class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"20%", 
+                    marginLeft:"3%", fontFamily:"Kanit", fontSize:"1.5vw"}} 
                     value={this.state.Soi}
                     type="text"
                     onChange={this.onChangeSoi}/>
-                    <label style={{marginRight:"10px", color:"#707070"}}>Road</label>
-                    <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"195px", 
-                    marginRight:"30px", fontFamily:"Kanit"}} 
+            
+            <label style={{marginLeft:"2%", color:"#707070", fontSize:"1.5vw"}}>Road</label>
+            <input class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"20%", 
+                    marginLeft:"3%", fontFamily:"Kanit", fontSize:"1.5vw"}} 
                     type="text"
                     value={this.state.Road}
                     onChange={this.onChangeRoad}/>                    
-                    </div>
-                    <label style={{color:"red", display:(this.state.show_district? 'block':'none')}}>Please Select District </label>
-                    <label style={{color:"red", display:(this.state.show_subdistrict? 'block':'none')}}>Please Select Subdistrict </label>
-                    <div style={{marginTop:"30px", display:"flex", marginBottom:"20px"}}>
-                    <label style={{marginRight:"10px", color:"#707070"}}>District</label>
-                    <select style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", marginRight:"30px",fontFamily:"Kanit",fontSize:"18px"}} 
-                    class="form-control form-control-sm"
-                    // value={this.state.District}
+            </div>
+            
+            <label style={{color:"red", display:(this.state.show_district? 'block':'none')}}>Please Select District </label>
+            <label style={{color:"red", display:(this.state.show_subdistrict? 'block':'none')}}>Please Select Subdistrict </label>
+            <div style={{marginTop:"5%", display:"flex", marginBottom:"2%"}}>
+            <label style={{marginLeft:"10%", color:"#707070", fontSize:"1.5vw"}}>District</label>
+            <select class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"15%", 
+                        marginLeft:"3%",fontFamily:"Kanit", fontSize:"1.5vw"}} 
                     onChange={this.onChangeDistrict}>
                     <option style={{fontFamily:"Kanit"}}></option>
                     <option style={{fontFamily:"Kanit"}}>พระนคร</option>
@@ -538,50 +545,54 @@ export default class HelperEditProfile extends Component {
                     <option style={{fontFamily:"Kanit"}}>ทวีวัฒนา</option>
                     <option style={{fontFamily:"Kanit"}}>ทุ่งครุ</option>
                     <option style={{fontFamily:"Kanit"}}>บางบอน</option>
-                    </select>
+            </select>
 
-                    <label style={{marginRight:"10px", color:"#707070"}}>Subdistrict</label>
-                    <select style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"150px", marginRight:"30px",fontFamily:"Kanit",fontSize:"18px"}} 
-                    class="form-control form-control-sm"
+            <label style={{marginLeft:"2%", color:"#707070", fontSize:"1.5vw"}}>Subdistrict</label>
+            <select class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"15%", 
+                            marginLeft:"3%",fontFamily:"Kanit", fontSize:"1.5vw"}} 
                     onChange={this.onChangeSubdistrict}>
                     {scroll}
-                    </select>
+            </select>
 
-                    <label style={{marginRight:"10px", color:"#707070"}}>ZIP Code</label>
-                    <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"120px", 
-                    marginRight:"30px", fontFamily:"Kanit", textAlign:"center"}} 
+            <label style={{marginLeft:"2%", color:"#707070", fontSize:"1.5vw"}}>ZIP Code</label>
+            <input class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"12%", 
+                    marginLeft:"3%", fontFamily:"Kanit", textAlign:"center", fontSize:"1.5vw"}}
                     type="text" value={this.state.ZIP_Code}/>
-                    </div>
+            </div>
 
                     {/* Map here */}
-                    <AutoComplete 
-                    style = {{ width:"100%", height:"40px", paddingLeft:"16px", marginTop:"40px", 
-                            marginBottom:"2rem"}}
-                    onPlaceSelected={this.onPlaceSelected}
-                    placeholder="   Search Here"
+            <AutoComplete class="rounded-pill"
+            style = {{ width:"80%", height:"5vh", marginTop:"2%", marginBottom:"2rem", border:"2px solid #B4B6BB",
+                        fontSize:"1.5vw", fontFamily:"Kanit"}}
+            onPlaceSelected={this.onPlaceSelected}
+            placeholder="   Search Here"
                     // types={['(regions)']}
-                    options={{
+            options={{
                         // types: ["(regions)"],
-                        types: ["address"],
-                        componentRestrictions: { country: "th" },
-                    }} 
+                types: ["address"],
+                componentRestrictions: { country: "th" },
+            }} 
                     // defaultValue={this.props.location.state.Subdistrict}
-                    />
+            />
 
                     <MapWithAMarker
                     googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtuF_qV8V68Bf_YrT3UA9lXcAff5yQeyU&v=3.exp&libraries=geometry,drawing,places"
                     loadingElement={<div style={{ height: `100%` }} />}
-                    containerElement={<div style={{ height: `400px` }} />}
+                    containerElement={<div style={{ height: `25rem` }} />}
                     mapElement={<div style={{ height: `100%` }} />}
                     />
 
                     <div>
-                    <button style={{backgroundColor:"#FFB172", width:"840px", marginBottom:"100px"}} 
-                    className="signupbutton" 
+                    <button class="rounded-pill"
+                    style={{margin:"5% 0 5% 0", backgroundColor:"#FFB172", color:"#ffffff",
+                            border:"2px solid #B4B6BB", width:"50%", fontSize:"1.5vw"}}  
                     type="submit"
                     onClick={this.onSubmit}>SAVE</button>
                     </div>
                 </form>
+            </div>
+
+                
             </div>
         )
     }

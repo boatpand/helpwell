@@ -210,65 +210,73 @@ export default class Forgetpass extends Component {
 
     render() {
         return (
-            <div style={{alignItems:"center", justifyContent:"center", display:"flex",
-                        margin:"0", minHeight:"100vh"}}>
+            <div>
+                <div class="container-lg" style={{display:"flex", alignItems:"center", justifyContent:"center", position:"relative", minHeight:"100vh"}}>
                 <div style={{display:(this.state.show_verify? 'block':'none')}}>
-                <form style={{borderRadius:"20px", border:"2px solid #B4B6BB", 
-                    width:"550px", padding:"10px 40px", position:"relative"}}>
-                <h5 style={{color:"#707070", fontFamily:"Kanit", marginBottom:"20px"}}>
-                    กรอกเบอร์โทรศัพท์ของท่านเพื่อตั้งรหัสผ่านใหม่</h5>
+                <form class="rounded" 
+                        style={{border:"2px solid #B4B6BB", width:"100%"}}>
+                <div>
+                <h5 style={{color:"#707070", fontFamily:"Kanit", margin:"4% 4% 4% 4%", fontSize:"2.5vh"}}>
+                    กรอกเบอร์โทรศัพท์ของท่าน</h5>
+                </div>
                 
                 <div style={{display:"flex", display:(this.state.show_mobileInput? 'block':'none')}}>
-                <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"300px"}}
-                type="text" pattern="[0-9]{10}" placeholder="   Mobile Number" 
-                onChange={this.onChangeMobile}></input>
-                <button style={{borderRadius:"20px", border:"2px solid #B4B6BB",
-                 cursor:"pointer", color:"#707070", background:"#ffffff", marginLeft:"20px",
-                marginRight:"20px", fontFamily:"Kanit"}} 
-                 type="submit" onClick={this.onSubmitPhone}>ยืนยัน</button>
-                 </div>
+                <input class="rounded-pill"
+                        style={{border:"2px solid #B4B6BB", width:"70%", fontSize:"2vh", marginBottom:"2%", textAlign:"center"}}
+                        type="text" pattern="[0-9]{10}" placeholder="   Mobile Number" 
+                        onChange={this.onChangeMobile}></input>
+                <button class="rounded-pill"
+                        style={{border:"2px solid #B4B6BB",cursor:"pointer", color:"#707070", 
+                        background:"#ffffff", marginLeft:"2%", marginRight:"2%", fontFamily:"Kanit", fontSize:"2vh", width:"20%"}} 
+                        type="submit" onClick={this.onSubmitPhone}>ยืนยัน</button>
+                </div>
 
-                <label style={{color:"#000000", fontFamily:"Kanit", display:(this.state.show_mobile? 'block':'none')}}> ระบบได้ทำการส่ง OTP ไปที่เบอร์ {this.state.phone} </label>
-                <label style={{color:"#000000", fontFamily:"Kanit", display:(this.state.show_resend? 'block':'none')}}> ระบบได้ทำการส่ง OTP อีกคร้งแล้ว </label>
+                <label style={{color:"#000000", fontFamily:"Kanit", fontSize:"2vh", display:(this.state.show_mobile? 'block':'none')}}> ระบบได้ทำการส่ง OTP ไปที่เบอร์ {this.state.phone} </label>
+                <label style={{color:"#000000", fontFamily:"Kanit", fontSize:"2vh", display:(this.state.show_resend? 'block':'none')}}> ระบบได้ทำการส่ง OTP อีกคร้งแล้ว </label>
                 <label style={{color:"red", display:(this.state.show_digit? 'block':'none')}}> Mobile should be 10 digits </label>
                 <label style={{color:"red", display:(this.state.show_first? 'block':'none')}}> Mobile should start with 0 </label>
-                <div style={{display:"flex", marginTop:"20px", display:(this.state.show_otp? 'block':'none')}}>
-                <input style={{borderRadius:"20px", border:"2px solid #B4B6BB"}}
-                type="text" onChange={this.onChangeOtp}></input>
-                <button style={{borderRadius:"20px", border:"2px solid #B4B6BB",
-                 cursor:"pointer", color:"#707070", background:"#ffffff", marginLeft:"20px",
-                marginRight:"20px", fontFamily:"Kanit"}} 
-                 type="submit" onClick={this.onSubmit}>ยืนยัน OTP</button>
-                <label style={{cursor:"pointer", color:"#2F4A8A"}} onClick={this.onSubmitResend}>ขอ OTP อีกครั้ง</label>
+                <div style={{display:"flex", marginTop:"2%", display:(this.state.show_otp? 'block':'none')}}>
+                <input class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"50%"}}
+                        type="text" onChange={this.onChangeOtp}></input>
+                <button class="rounded-pill"
+                        style={{border:"2px solid #B4B6BB", cursor:"pointer", color:"#707070", 
+                        background:"#ffffff", marginLeft:"2%", marginRight:"2%", fontFamily:"Kanit", width:"30%", fontSize:"2vh"}} 
+                        type="submit" onClick={this.onSubmit}>ยืนยัน OTP</button>
+                </div>
+                <div style={{display:"flex", marginTop:"2%", display:(this.state.show_otp? 'block':'none')}}>
+                <label style={{cursor:"pointer", color:"#2F4A8A",fontFamily:"Kanit", fontSize:"1.5vh" }} onClick={this.onSubmitResend}>ขอ OTP อีกครั้ง</label>
                 </div>
                 </form>
                 </div>
                 
                 <div style={{display:(this.state.show_newpw? 'block':'none')}}>
-                <form style={{borderRadius:"20px", border:"2px solid #B4B6BB", 
-                    width:"550px", padding:"10px 40px", position:"relative"}}>
-                <h5 style={{color:"#707070", fontFamily:"Kanit", marginBottom:"20px"}}>
+                <form class="rounded" 
+                        style={{border:"2px solid #B4B6BB", width:"100%"}}>
+                <h5 style={{color:"#707070", fontFamily:"Kanit", margin:"2% 2% 2% 2%", fontSize:"2.5vh"}}>
                     ตั้งรหัสผ่านใหม่</h5>
                 
-                    <label style={{color:"red", display:(this.state.show_empty? 'block':'none')}}> Password can't empty !</label>
+                <label style={{color:"red", display:(this.state.show_empty? 'block':'none')}}> Password can't empty !</label>
                 <label style={{color:"red", display:(this.state.show_same? 'block':'none')}}> Password must be the same !</label>
                 <div>
-                <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"300px", 
-                display:"flex", marginLeft:"80px", marginBottom:"20px"}}
+                <input class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"70%", 
+                 marginBottom:"2%", fontSize:"2vh"}}
                 type="password"  placeholder="   New Password" 
                 onChange={this.onChangeNewpw}></input>
-                <input style={{borderRadius:"20px", border:"2px solid #B4B6BB", width:"300px", 
-                display:"flex", marginLeft:"80px", marginBottom:"20px"}}
+
+                <input class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"70%", 
+                marginBottom:"2%", fontSize:"2vh"}}
                 type="password"  placeholder="  Retype New Password" 
                 onChange={this.onChangeRepw}></input>
-                <button style={{borderRadius:"20px", border:"2px solid #B4B6BB",
-                 cursor:"pointer", color:"#707070", background:"#ffffff", marginLeft:"20px",
-                marginRight:"20px", fontFamily:"Kanit"}} 
-                 type="submit" onClick={this.onSubmitUpdate}>ยืนยัน</button>
-                 </div>
+
+                <button class="rounded-pill" 
+                style={{border:"2px solid #B4B6BB", cursor:"pointer", color:"#707070", 
+                        background:"#ffffff", marginLeft:"2%", marginRight:"2%", 
+                        fontFamily:"Kanit", fontSize:"2vh", width:"30%", marginBottom:"2%"}} 
+                type="submit" onClick={this.onSubmitUpdate}>ยืนยัน</button>
+                </div>
                 </form>
                 </div>
-
+                </div>
             </div>
         )
     }

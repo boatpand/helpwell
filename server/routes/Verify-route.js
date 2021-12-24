@@ -4,7 +4,7 @@ let mongoose = require('mongoose'),
 
 TWILIO_ACCOUNT_SID = "AC0168cbb3ba59f12198e49a911663136f"
 // always change after push to clound version control
-TWILIO_AUTH_TOKEN = "d157983cf942eac906d2784b3a74a93d"
+TWILIO_AUTH_TOKEN = "8304d2b04fedbb25666877f9956caa27"
 VERIFY_SERVICE_SID= "VA3976cb1c2cd872e91aef627525a14332"
 const client = require('twilio')(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 

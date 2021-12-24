@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router";
 import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { Typography, TextField, Box, Button } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
@@ -113,7 +114,7 @@ export default function Summary(props) {
       .post("http://localhost:4000/request/insert", data)
       .then((res) => {
         console.log(res.data);
-        history.push(`/victims`);
+        history.push({pathname:`/victims`,state:{Mobile:Mobile}});
       })
       .catch((err) => {
         Promise.reject(err);

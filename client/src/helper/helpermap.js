@@ -13,6 +13,13 @@ export default class HelperMap extends Component {
     
         this.state ={
             Mobile:this.props.location.state.Mobile,
+            helpRequest:[],
+            user:"",
+            flag:0,
+            place:[],
+            name:"",
+            mobile:"",
+            show_info:false,
 
             address:"",
             city:"",
@@ -22,10 +29,13 @@ export default class HelperMap extends Component {
             height:400,
             mapPosition:{lat:0,lng:0},
             markerPosition:{lat:0,lng:0},
+
+            activeMarker: {},
+            selectedPlace: {},
         }
     }
 
-    componentDidMount() {
+    async componentDidMount () {
         if(navigator.geolocation){
             navigator.geolocation.getCurrentPosition(position => {
                 this.setState({
@@ -56,6 +66,47 @@ export default class HelperMap extends Component {
                 })
             })
         }
+        await axios.get('http://localhost:4000/request/all-request').then(res => {
+        this.setState({
+            helpRequest: res.data,
+            flag: 1
+        })
+        }).catch((error)=>{
+        console.log(error)
+        })
+        console.log(this.state.helpRequest)
+    }
+
+    async componentDidUpdate(prevProps,prevState){
+        if(this.state.flag!==prevState.flag){
+            let address_list = [], mobile_list = [], mobile = ""
+            for (var y = 0; y < this.state.helpRequest.length; y++) {
+                mobile = String(this.state.helpRequest[y].Mobile)
+                await axios.get(`http://localhost:4000/victimuser/victim-profile/${mobile}`).then(res => {
+                this.setState({
+                user: res.data
+            })
+            }).catch((error)=>{
+            console.log(error)
+            })
+            var mobile_pool = String(this.state.user.Mobile)
+            if(mobile_list.indexOf(mobile_pool)<0){
+                mobile_list.push(mobile_pool)
+            }
+            // console.log(mobile_list)
+        }
+        for(var a=0;a<mobile_list.length;a++){
+            var tmp = {
+                name:this.state.user.Firstname + " " + this.state.user.Lastname,
+                lat:this.state.user.Lat,
+                lng:this.state.user.Lng,
+                mobile:this.state.user.Mobile
+            }
+            address_list.push(tmp);
+        }
+        this.setState({place:address_list})
+        console.log(this.state.place)
+    }
     }
 
     getCity = (addressArray) => {
@@ -150,74 +201,78 @@ export default class HelperMap extends Component {
         }) 
     }
 
+    handleMarkerClick = (e) =>{
+        this.setState({
+            show_info:!this.state.show_block,
+            mapPosition:{
+                lat:e.latLng.lat(),
+                lng:e.latLng.lng()
+            }
+        })
+    }
+
+    closeInfo = (e) =>{
+        this.setState({show_info:false})
+    }
+
     render() {
+        // console.log(this.state.place.length)
+        const markers = [];
+        for (let i=0; i<this.state.place.length; i++){
+            markers.push(
+                <Marker draggable={false}
+                        position={{lat: parseFloat(this.state.place[i].lat), 
+                                    lng: parseFloat(this.state.place[i].lng)}}
+                        clickable
+                        onClick={this.handleMarkerClick}
+                >
+                    {this.state.show_info === true && (
+                    <InfoWindow onCloseClick={this.closeInfo}>
+                    <p>{this.state.place[i].name} <br/> {this.state.place[i].mobile}</p>
+                    </InfoWindow>
+                    )}
+                </Marker>
+            )
+        }
+
         const MapWithAMarker = withScriptjs(withGoogleMap(props =>
             <GoogleMap
               defaultZoom={18}
               defaultCenter={{ lat: this.state.mapPosition.lat, lng: this.state.mapPosition.lng }}
             >
-              <Marker 
-              draggable={true}
-              onDragEnd={this.onMarkerDragEnd}
-              position={{ lat: this.state.markerPosition.lat, lng: this.state.markerPosition.lng }}
-              >
-                {/* <InfoWindow>
-                    <div>hello</div>
-                </InfoWindow> */}
-              </Marker>
-
-            {/* <label style={{fontFamily:"Kanit", fontWeight:"bold", color:"#FFB172", fontSize:"20px",
-            display:"inline-flex", marginRight:"20px", marginTop:"40px"}}>เขตที่ต้องการจะค้นหา</label>    
-            <AutoComplete 
-                style = {{ width:"50%", height:"40px", paddingLeft:"16px", marginTop:"40px", marginBottom:"2rem"}}
-                onPlaceSelected={this.onPlaceSelected}
-                // types={['(regions)']}
-                options={{
-                    // types: ["(regions)"],
-                    types: ["(regions)"],
-                    componentRestrictions: { country: "th" },
-                  }} 
-                // defaultValue={this.props.location.state.Subdistrict}
-            /> */}
-
+              {markers}
             </GoogleMap>
           ));
-        return (
-            <div>
-                <Header Mobile={this.state.Mobile}/>
-                <form style={{
-                    // borderRadius:"20px", 
-                    // border:"2px solid #B4B6BB",
-                    // position:"fixed",
-                    margin:"50px 0px 0 100px",
-                    // height:"100px",
-                    // justifyItems:"center",
-                    // width:"1200px"
-                }}>
-                
-                <label style={{fontFamily:"Kanit", fontWeight:"bold", color:"#FFB172", fontSize:"20px",
-                display:"inline-flex", marginRight:"20px", marginTop:"40px"}}>เขตที่ต้องการจะค้นหา</label>    
-                <AutoComplete 
-                style = {{ width:"50%", height:"40px", paddingLeft:"16px", marginTop:"40px", 
-                        marginBottom:"2rem", border:"2px solid #B4B6BB", borderRadius:"20px"}}
-                onPlaceSelected={this.onPlaceSelected}
-                placeholder="   Search Here"
-                // types={['(regions)']}
-                options={{
-                    // types: ["(regions)"],
-                    types: ["(regions)"],
-                    componentRestrictions: { country: "th" },
-                  }} 
-                // defaultValue={this.props.location.state.Subdistrict}
-                />
-                <MapWithAMarker
-                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtuF_qV8V68Bf_YrT3UA9lXcAff5yQeyU&v=3.exp&libraries=geometry,drawing,places"
-                    loadingElement={<div style={{ height: `100%` }} />}
-                    containerElement={<div style={{ height: `600px`, width:"1250px", alignItems:"center" }} />}
-                    mapElement={<div style={{ height: `100%` }} />}
-                />
-                </form>
+
+    return (
+        <div>
+            <Header Mobile={this.state.Mobile}/>
+            <div class="container-lg" style={{width:"100%"}}>
+            <div style={{margin:"8rem 0 0 15%", display:"flex"}}>
+            <h2 style={{fontFamily:"Kanit", color:"#FFB172", textAlign:"left", fontSize:"1.5vw", 
+                        fontWeight:"bold"}}>เขตที่ต้องการจะค้นหา</h2>
+            <AutoComplete class="rounded-pill"
+            style = {{ width:"50%", height:"2vw", marginLeft:"5%", fontSize:"1.5vw",
+                    marginBottom:"4vw", border:"2px solid #B4B6BB", fontFamily:"Kanit"}}
+            onPlaceSelected={this.onPlaceSelected}
+            placeholder="   Search Here"
+            // types={['(regions)']}
+            options={{
+                // types: ["(regions)"],
+                types: ["(regions)"],
+                componentRestrictions: { country: "th" },
+            }} 
+            />
             </div>
-        )
-    }
+            
+            <MapWithAMarker
+                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtuF_qV8V68Bf_YrT3UA9lXcAff5yQeyU&v=3.exp&libraries=geometry,drawing,places"
+                loadingElement={<div style={{ height: `100%` }} />}
+                containerElement={<div style={{ height: `35rem`, width:"100%", alignItems:"center" }} />}
+                mapElement={<div style={{ height: `100%` }} />}
+            />
+            </div>
+        </div>
+    )
+}
 }
