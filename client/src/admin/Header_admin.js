@@ -4,11 +4,11 @@ import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@mui/material/styles";
-import theme_vic from "./theme_vic";
+import theme_admin from "./theme_admin";
 
-import logo_white from "./image/logo_white_crop.png";
+import logo_white from "./image/logo-white-crop.png";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   logoImage: {
     width: 120,
     height: 50,
@@ -24,10 +24,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header_Vic() {
+export default function Header_admin() {
   const classes = useStyles();
   return (
-    <ThemeProvider theme={theme_vic}>
+    <ThemeProvider theme={theme_admin}>
       <Box
         display="flex"
         alignItems="center"
@@ -38,7 +38,7 @@ export default function Header_Vic() {
           <Toolbar>
             <Link
               to={{
-                pathname: `/victims`,
+                pathname: `/admin`,
               }}
             >
               <Typography>
@@ -48,27 +48,27 @@ export default function Header_Vic() {
             <div className={classes.spancer} />
             <Link
               to={{
-                pathname: `/victims`,
+                pathname: `/admin/database`,
               }}
             >
-              <Button fontFamily="Kanit" color="inherit">
-                ความต้องการ
+              <Button fontFamily="Kanit" color="secondary">
+                database
               </Button>
             </Link>
             <Link
               to={{
-                pathname: `/victims/map`,
+                pathname: `/admin/map`,
               }}
             >
-              <Button color="inherit">map</Button>
+              <Button color="secondary">map</Button>
             </Link>
-            <Typography>|&nbsp;</Typography>
+            <Typography color="secondary">|&nbsp;</Typography>
             <Link
               to={{
-                pathname: `/victims/profile`,
+                pathname: `/admin/information`,
               }}
             >
-              <Button color="inherit">Profile</Button>
+              <Button color="secondary">information</Button>
             </Link>
           </Toolbar>
         </AppBar>

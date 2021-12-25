@@ -9,18 +9,19 @@ import SignupVictim from "./signin/signupvictim";
 import HelperType from "./signin/helpertype";
 import Individual from "./signin/individual";
 import Organization from "./signin/organization";
-import Help from "./victim/Help";
-import Summary from "./victim/Summary";
-
 import SignupVictim2 from './signin/signupvictim2';
 import SignupHelper2 from './signin/signuphelper2';
 import VictimOtp from './signin/victim-otp';
 import HelperOtp from './signin/helper-otp';
+import Forgetpass from './signin/forgetpass';
+
+import Help from "./victim/Help";
+import Summary from "./victim/Summary";
 import HelperMap from './helper/helpermap';
 import HelperProfile from './helper/helperprofile';
-import Admin from './admin/admin';
-import Forgetpass from './signin/forgetpass';
 import HelperEditProfile from './helper/helpereditprofile';
+import Header_admin from './admin/Header_admin';
+import Maps_admin from './admin/Map_admin';
 
 
 function App() {
@@ -47,7 +48,13 @@ function App() {
           <Route exact path="/helperprofile/edit-profile/:mobile" component={HelperEditProfile}/>
           <Route exact path="/victims" component={Help} />
           <Route exact path="/victims/summary" component={Summary} />
-          <Route exact path="/admin" component={Admin}/>
+          <Route exact path="/victims/map" component={Summary} />
+          <Route exact path="/victims/profile" component={Summary} />
+          <Route exact path="/admin" component={Maps_admin}/>
+          <Route exact path="/admin/database" component={Header_admin} />
+          <Route exact path="/admin/map" component={Maps_admin} />
+          <Route exact path="/admin/information" component={Maps_admin} />
+
         </Switch>
       </div>
     </Router>
