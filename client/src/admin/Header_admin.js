@@ -52,7 +52,7 @@ export default function Header_admin() {
               }}
             >
               <Button fontFamily="Kanit" color="secondary">
-                database
+                databaseeeeeeee
               </Button>
             </Link>
             <Link
