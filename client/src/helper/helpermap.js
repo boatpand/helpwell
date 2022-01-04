@@ -5,7 +5,11 @@ import { InfoWindow, withScriptjs, withGoogleMap, GoogleMap, Marker} from 'react
 import Geocode from 'react-geocode';
 import AutoComplete from "react-google-autocomplete";
 
-Geocode.setApiKey("AIzaSyBtuF_qV8V68Bf_YrT3UA9lXcAff5yQeyU")
+// Old API KEY
+// Geocode.setApiKey("AIzaSyBtuF_qV8V68Bf_YrT3UA9lXcAff5yQeyU")
+
+// New API KEY
+Geocode.setApiKey("AIzaSyA-fNGUBxtHqdiDpx9zfylTwXtZkkfGN_M")
 
 export default class HelperMap extends Component {
     constructor(props){
@@ -266,7 +270,10 @@ export default class HelperMap extends Component {
             </div>
             
             <MapWithAMarker
-                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtuF_qV8V68Bf_YrT3UA9lXcAff5yQeyU&v=3.exp&libraries=geometry,drawing,places"
+                // Old
+                // googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtuF_qV8V68Bf_YrT3UA9lXcAff5yQeyU&v=3.exp&libraries=geometry,drawing,places"
+                // New
+                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-fNGUBxtHqdiDpx9zfylTwXtZkkfGN_M&v=3.exp&libraries=geometry,drawing,places"
                 loadingElement={<div style={{ height: `100%` }} />}
                 containerElement={<div style={{ height: `35rem`, width:"100%", alignItems:"center" }} />}
                 mapElement={<div style={{ height: `100%` }} />}
