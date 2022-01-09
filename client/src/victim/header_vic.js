@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
 
@@ -24,8 +25,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header_Vic() {
+export default function Header_Vic(props) {
   const classes = useStyles();
+  const GetStateParam = useLocation().state;
+  const { Mobile } = GetStateParam ;
+  console.log("Header_Mobile : ", Mobile);
   return (
     <ThemeProvider theme={theme_vic}>
       <Box
@@ -39,6 +43,7 @@ export default function Header_Vic() {
             <Link
               to={{
                 pathname: `/victims`,
+                state: { Mobile: Mobile },
               }}
             >
               <Typography>
@@ -49,6 +54,7 @@ export default function Header_Vic() {
             <Link
               to={{
                 pathname: `/victims`,
+                state: { Mobile: Mobile },
               }}
             >
               <Button fontFamily="Kanit" color="inherit">
@@ -58,6 +64,7 @@ export default function Header_Vic() {
             <Link
               to={{
                 pathname: `/victims/map`,
+                state: { Mobile: Mobile },
               }}
             >
               <Button color="inherit">map</Button>
@@ -66,6 +73,7 @@ export default function Header_Vic() {
             <Link
               to={{
                 pathname: `/victims/profile`,
+                state: { Mobile: Mobile },
               }}
             >
               <Button color="inherit">Profile</Button>

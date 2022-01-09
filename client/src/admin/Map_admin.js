@@ -12,7 +12,7 @@ export default class Map_Admin extends Component {
         super(props)
     
         this.state ={
-            Mobile:this.props.location.state.Mobile ,
+            Mobile:this.props.location.state.Mobile,
 
             address:"",
             city:"",
