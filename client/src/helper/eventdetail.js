@@ -6,7 +6,11 @@ import { withRouter } from "react-router-dom";
 import { InfoWindow, withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer} from 'react-google-maps';
 import Geocode from 'react-geocode';
 
-Geocode.setApiKey("AIzaSyBtuF_qV8V68Bf_YrT3UA9lXcAff5yQeyU")
+// Old API KEY
+// Geocode.setApiKey("AIzaSyBtuF_qV8V68Bf_YrT3UA9lXcAff5yQeyU")
+
+// New API KEY
+Geocode.setApiKey("AIzaSyA-fNGUBxtHqdiDpx9zfylTwXtZkkfGN_M")
 
 class EventDetail extends Component {
     constructor(props){
