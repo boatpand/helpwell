@@ -28,6 +28,11 @@ router.route('/all-request').get((req, res, next) => {
     })
 })
 
+router.route('/request/:mobile').get((req, res, next) => {
+    RequestSchema.find({Mobile:req.params.mobile}, (error,data) => {
+        if(error){return next(error);} else{
+            res.json(data)}})})
+
 // For Radio box filter
 // Get food request
 router.route('/food-request').get((req, res, next) => {

@@ -51,6 +51,7 @@ export default function Summary(props) {
     count_Other,
     value_Other,
   } = GetStateParam;
+  console.log("Sum_Mobile : ", Mobile)
 
   const [name_Food, setname_Food] = useState(count_Food !== 0 ? true : false);
   const [name_Medicine, setname_Medicine] = useState(
@@ -109,12 +110,12 @@ export default function Summary(props) {
     //   .catch((err) => {
     //     Promise.reject(err);
     //   });
-    
+
     await axios
       .post("http://localhost:4000/request/insert", data)
       .then((res) => {
         console.log(res.data);
-        history.push({pathname:`/victims`,state:{Mobile:Mobile}});
+        history.push({ pathname: `/victims`, state: { Mobile: Mobile } });
       })
       .catch((err) => {
         Promise.reject(err);

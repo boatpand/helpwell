@@ -17,11 +17,13 @@ import Forgetpass from './signin/forgetpass';
 
 import Help from "./victim/Help";
 import Summary from "./victim/Summary";
+import Maps_vic from './victim/Map_vic';
 import HelperMap from './helper/helpermap';
 import HelperProfile from './helper/helperprofile';
 import HelperEditProfile from './helper/helpereditprofile';
 import Header_admin from './admin/Header_admin';
 import Maps_admin from './admin/Map_admin';
+import Profile_vic from "./victim/Profile_vic";
 
 
 function App() {
@@ -48,8 +50,8 @@ function App() {
           <Route exact path="/helperprofile/edit-profile/:mobile" component={HelperEditProfile}/>
           <Route exact path="/victims" component={Help} />
           <Route exact path="/victims/summary" component={Summary} />
-          <Route exact path="/victims/map" component={Summary} />
-          <Route exact path="/victims/profile" component={Summary} />
+          <Route exact path="/victims/map" component={Maps_vic} />
+          <Route exact path="/victims/profile" component={Profile_vic} />
           <Route exact path="/admin" component={Maps_admin}/>
           <Route exact path="/admin/database" component={Header_admin} />
           <Route exact path="/admin/map" component={Maps_admin} />
