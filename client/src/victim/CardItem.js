@@ -18,28 +18,17 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 900,
     display: "block",
-    alignItems: "center",
     margin: "0px auto",
-    padding: theme.spacing(2, 8),
   },
-  paper: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
+  status: {
+    display: "grid",
+    justifyContent: "flex-end",
   },
   textLink: {
     color: "inherit",
     textDecoration: "inherit",
   },
-  title: {
-    fontSize: 25,
-  },
-  submitBtn: {
-    flex: 1,
-  },
-  spacer: {
-    marginLeft: theme.spacing(4),
-  },
+
   spancer: {
     flexGrow: 1,
   },
@@ -67,48 +56,234 @@ export default function CardItem(props) {
   } = props;
 
   return (
-    <ThemeProvider theme={theme_vic}>
-      <Grid item>
-        <Card className={classes.root}>
-          <Box className={classes.paper}>
-            <CardContent>
-              <Box className={classes.paper}>
-                { Food ? (
-                  <div style={{ width: "100%" }}>
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                      sx={{ flexGrow: 1 }}
-                    >
-                      <Typography
-                        fontFamily="Kanit"
-                        variant="h6"
-                        color="text.primary"
-                        sx={{ flexShrink: 0 }}
-                      >
-                        จำนวนอาหารที่ต้องการ
-                      </Typography>
-                      <div className={classes.spancer} />
-                      <Typography
-                        fontFamily="Kanit"
-                        variant="h6"
-                        color="text.primary"
-                      >
-                        {count_Food}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;วัน
-                      </Typography>
-                    </Box>
-                  </div>
-                ) : null}
+    <Grid item>
+      <Card className={classes.root}>
+        <CardContent>
+          {Status === "รอการช่วยเหลือ" ? (
+            <Typography
+              color="text.primary"
+              className={classes.status}
+              style={{ color: "#ffc107", fontFamily: "Kanit" }}
+            >
+              {Status}
+            </Typography>
+          ) : null}
+          {Status === "กำลังช่วยเหลือ" ? (
+            <Typography
+              color="text.primary"
+              className={classes.status}
+              style={{ color: "#6c757d", fontFamily: "Kanit" }}
+            >
+              {Status}
+            </Typography>
+          ) : null}
+          {Status === "ช่วยเหลือสำเร็จ" ? (
+            <Typography
+              color="text.primary"
+              className={classes.status}
+              style={{ color: "#198754", fontFamily: "Kanit" }}
+            >
+              {Status}
+            </Typography>
+          ) : null}
+          {Food ? (
+            <div style={{ width: "100%" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  m: 2,
+                }}
+              >
+                <Typography
+                  fontFamily="Kanit"
+                  color="#2F4A8A"
+                  sx={{ flexShrink: 0 }}
+                  style={{ color: "#2F4A8A", fontFamily: "Kanit" }}
+                >
+                  จำนวนอาหารที่ต้องการ
+                </Typography>
+
+                <Typography style={{ color: "#2F4A8A", fontFamily: "Kanit" }}>
+                  {count_Food}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;วัน
+                </Typography>
               </Box>
-              <br />
-              <Typography variant="body2" color="textSecondary">
-                aaa
+            </div>
+          ) : null}
+          {Medicine ? (
+            <div style={{ width: "100%" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  m: 2,
+                }}
+              >
+                <Typography
+                  sx={{ flexShrink: 0 }}
+                  style={{ color: "#2F4A8A", fontFamily: "Kanit" }}
+                >
+                  จำนวนยาที่ต้องการ
+                </Typography>
+                <div className={classes.Spacer} />
+                <Typography style={{ color: "#2F4A8A", fontFamily: "Kanit" }}>
+                  {count_Medicine}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;วัน
+                </Typography>
+              </Box>
+            </div>
+          ) : null}
+          {Bed ? (
+            <div style={{ width: "100%" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  m: 2,
+                }}
+              >
+                <Typography
+                  sx={{ flexShrink: 0 }}
+                  style={{ color: "#2F4A8A", fontFamily: "Kanit" }}
+                >
+                  จำนวนผู้ป่วยที่หาเตียง
+                </Typography>
+                <div className={classes.Spacer} />
+                <Typography style={{ color: "#2F4A8A", fontFamily: "Kanit" }}>
+                  {count_Bed}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;คน
+                </Typography>
+              </Box>
+            </div>
+          ) : null}
+          {Hospital ? (
+            <div style={{ width: "100%" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  m: 2,
+                }}
+              >
+                <Typography
+                  sx={{ flexShrink: 0 }}
+                  style={{ color: "#2F4A8A", fontFamily: "Kanit" }}
+                >
+                  จำนวนผู้ป่วยที่นำส่งโรงพยาบาล
+                </Typography>
+                <div className={classes.Spacer} />
+                <Typography style={{ color: "#2F4A8A", fontFamily: "Kanit" }}>
+                  {count_Hospital}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;คน
+                </Typography>
+              </Box>
+            </div>
+          ) : null}
+          {Home ? (
+            <div style={{ width: "100%" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  m: 2,
+                }}
+              >
+                <Typography
+                  sx={{ flexShrink: 0 }}
+                  style={{ color: "#2F4A8A", fontFamily: "Kanit" }}
+                >
+                  จำนวนผู้ป่วยที่นำส่งภูมิลำเนา
+                </Typography>
+                <div className={classes.Spacer} />
+                <Typography style={{ color: "#2F4A8A", fontFamily: "Kanit" }}>
+                  {count_Home}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;คน
+                </Typography>
+              </Box>
+            </div>
+          ) : null}
+          {Home ? (
+            <div style={{ width: "100%" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  m: 2,
+                }}
+              >
+                <Typography
+                  sx={{ flexShrink: 0 }}
+                  style={{ color: "#2F4A8A", fontFamily: "Kanit" }}
+                >
+                  จำนวนผู้ป่วยที่นำส่งภูมิลำเนา
+                </Typography>
+                <div className={classes.Spacer} />
+                <Typography style={{ color: "#2F4A8A", fontFamily: "Kanit" }}>
+                  {count_Home}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;คน
+                </Typography>
+              </Box>
+            </div>
+          ) : null}
+          {count_Other ? (
+            <div style={{ width: "100%" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  m: 2,
+                }}
+              >
+                <Typography
+                  sx={{ flexShrink: 0 }}
+                  style={{ color: "#2F4A8A", fontFamily: "Kanit" }}
+                >
+                  {Other}
+                </Typography>
+                <div className={classes.Spacer} />
+                <Typography style={{ color: "#2F4A8A", fontFamily: "Kanit" }}>
+                  {count_Other}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ชุด
+                </Typography>
+              </Box>
+            </div>
+          ) : null}
+          <div style={{ width: "100%" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                m: 2,
+              }}
+            >
+              <Typography
+                sx={{ flexShrink: 0 }}
+                style={{ color: "#2F4A8A", fontFamily: "Kanit" }}
+              >
+                รายละเอียด
               </Typography>
-            </CardContent>
-          </Box>
-        </Card>
-      </Grid>
-    </ThemeProvider>
+              <div className={classes.Spacer} />
+              <Typography style={{ color: "#2F4A8A", fontFamily: "Kanit" }}>
+                {Option}
+              </Typography>
+            </Box>
+          </div>
+          <div style={{ width: "100%" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                m: 2,
+              }}
+            >
+              <Typography
+                sx={{ flexShrink: 0 }}
+                style={{ color: "#2F4A8A", fontFamily: "Kanit" }}
+              >
+                ความคืบหน้า
+              </Typography>
+              <div className={classes.Spacer} />
+              <Typography style={{ color: "#2F4A8A", fontFamily: "Kanit" }}>
+                {Status_Text}
+              </Typography>
+            </Box>
+          </div>
+        </CardContent>
+      </Card>
+    </Grid>
   );
 }

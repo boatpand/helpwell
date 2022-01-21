@@ -51,7 +51,7 @@ export default class Signin extends Component {
                 // console.log(victimAuth.login)
                 // this.props.history.push('/victimland')
                 this.props.history.push({
-                  pathname: '/admin',
+                  pathname: '/admin/database',
                   search: '',
                   state: {Mobile:this.state.Mobile} 
                 })
