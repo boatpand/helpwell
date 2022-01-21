@@ -29,6 +29,7 @@ export default function Header_admin(props) {
   const classes = useStyles();
   const GetStateParam = useLocation().state;
   const { Mobile } = GetStateParam ;
+  console.log()
   return (
     <ThemeProvider theme={theme_admin}>
       <Box
@@ -41,7 +42,8 @@ export default function Header_admin(props) {
           <Toolbar>
             <Link
               to={{
-                pathname: `/admin`,
+                pathname: `/admin/database`,
+                state: { Mobile: Mobile },
               }}
             >
               <Typography>
@@ -56,7 +58,7 @@ export default function Header_admin(props) {
               }}
             >
               <Button fontFamily="Kanit" color="secondary">
-                databaseeeeeeee
+                database
               </Button>
             </Link>
             <Link
