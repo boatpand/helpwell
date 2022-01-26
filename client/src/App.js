@@ -24,11 +24,16 @@ import History from "./helper/history";
 
 import Help from "./victim/Help";
 import Summary from "./victim/Summary";
-import HelperMap from './helper/helpermap';
-import HelperProfile from './helper/helperprofile';
-import HelperEditProfile from './helper/helpereditprofile';
-import Header_admin from './admin/Header_admin';
-import Maps_admin from './admin/Map_admin';
+import Maps_vic from "./victim/Map_vic";
+import HelperMap from "./helper/helpermap";
+import HelperProfile from "./helper/helperprofile";
+import HelperEditProfile from "./helper/helpereditprofile";
+import Header_admin from "./admin/Header_admin";
+import Database_vic from "./admin/Database_vic";
+import Database_helper from "./admin/Database_helper";
+import Maps_admin from "./admin/Map_admin";
+import Profile_vic from "./victim/Profile_vic";
+import Accordion_vic from "./admin/Accordion_vic";
 
 
 function App() {
@@ -59,11 +64,12 @@ function App() {
 
           <Route exact path="/victims" component={Help} />
           <Route exact path="/victims/summary" component={Summary} />
-          <Route exact path="/victims/map" component={Summary} />
-          <Route exact path="/victims/profile" component={Summary} />
+          <Route exact path="/victims/map" component={Maps_vic} />
+          <Route exact path="/victims/profile" component={Profile_vic} />
           
-          <Route exact path="/admin" component={Maps_admin}/>
-          <Route exact path="/admin/database" component={Header_admin} />
+          <Route exact path="/admin/database" component={Database_vic} />
+          <Route exact path="/admin/database/victims" component={Database_vic}/>
+          <Route exact path="/admin/database/helpers" component={Database_helper}/>
           <Route exact path="/admin/map" component={Maps_admin} />
           <Route exact path="/admin/information" component={Maps_admin} />
 

@@ -58,7 +58,7 @@ export default class Signin extends Component {
                 adminAuth.login(()=>{
                 console.log(adminAuth.login)
                 this.props.history.push({
-                  pathname: '/admin',
+                  pathname: '/admin/database',
                   search: '',
                   state: {Mobile:this.state.Mobile} 
                 })

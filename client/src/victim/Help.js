@@ -66,8 +66,8 @@ export default function Help(props) {
   const classes = useStyles();
 
   const GetStateParam = useLocation().state;
-  const { Mobile } = GetStateParam || {};
-  console.log("Mobile : ", Mobile);
+  const { Mobile } = GetStateParam ;
+  console.log("Help_Mobile : ", Mobile);
 
   const [count_Food, setcount_Food] = useState(0);
   const [count_Medicine, setcount_Medicine] = useState(0);

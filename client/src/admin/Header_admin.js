@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
 
@@ -24,8 +25,11 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function Header_admin() {
+export default function Header_admin(props) {
   const classes = useStyles();
+  const GetStateParam = useLocation().state;
+  const { Mobile } = GetStateParam ;
+  console.log()
   return (
     <ThemeProvider theme={theme_admin}>
       <Box
@@ -38,7 +42,8 @@ export default function Header_admin() {
           <Toolbar>
             <Link
               to={{
-                pathname: `/admin`,
+                pathname: `/admin/database`,
+                state: { Mobile: Mobile },
               }}
             >
               <Typography>
@@ -49,15 +54,17 @@ export default function Header_admin() {
             <Link
               to={{
                 pathname: `/admin/database`,
+                state: { Mobile: Mobile },
               }}
             >
               <Button fontFamily="Kanit" color="secondary">
-                databaseeeeeeee
+                database
               </Button>
             </Link>
             <Link
               to={{
                 pathname: `/admin/map`,
+                state: { Mobile: Mobile },
               }}
             >
               <Button color="secondary">map</Button>
@@ -66,6 +73,7 @@ export default function Header_admin() {
             <Link
               to={{
                 pathname: `/admin/information`,
+                state: { Mobile: Mobile },
               }}
             >
               <Button color="secondary">information</Button>
