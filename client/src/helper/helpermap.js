@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 import Header from './header'
 import axios from 'axios';
 import { InfoWindow, withScriptjs, withGoogleMap, GoogleMap, Marker} from 'react-google-maps';
@@ -36,6 +37,8 @@ export default class HelperMap extends Component {
 
             activeMarker: {},
             selectedPlace: {},
+
+            vic_mobile:""
         }
     }
 
@@ -108,7 +111,7 @@ export default class HelperMap extends Component {
             }
             address_list.push(tmp);
         }
-        this.setState({place:address_list})
+        this.setState({place:address_list, flag:0})
         console.log(this.state.place)
     }
     }
@@ -219,6 +222,51 @@ export default class HelperMap extends Component {
         this.setState({show_info:false})
     }
 
+    // handle radio box filter
+    handleAll = (e) =>{
+        axios.get('http://localhost:4000/request/all-request').then(res => {
+        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
+
+    handleFood = (e) => {
+        //console.log("done")
+        axios.get('http://localhost:4000/request/food-request').then(res => {
+        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
+
+    handleMedicine = (e) => {
+        //console.log("done")
+        axios.get('http://localhost:4000/request/medicine-request').then(res => {
+        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
+    
+    handleHospital = (e) => {
+        //console.log("done")
+        axios.get('http://localhost:4000/request/hospital-request').then(res => {
+        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
+    
+    handleHome = (e) => {
+        //console.log("done")
+        axios.get('http://localhost:4000/request/home-request').then(res => {
+        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
+    
+    handleBed = (e) => {
+        //console.log("done")
+        axios.get('http://localhost:4000/request/bed-request').then(res => {
+        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
+    
+    handleOther = (e) => {
+        //console.log("done")
+        axios.get('http://localhost:4000/request/other-request').then(res => {
+        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
+    
+    onClickName = async(e) => {
+        console.log(e.target.value)
+        await this.setState({vic_mobile:e.target.value})
+        this.props.history.push({
+            pathname: `/helper/history/${e.target.value}`,
+            search: '',
+            state: {Mobile:this.state.Mobile, vic_mobile:this.state.vic_mobile} 
+          })
+    }
+
     render() {
         // console.log(this.state.place.length)
         const markers = [];
@@ -232,7 +280,10 @@ export default class HelperMap extends Component {
                 >
                     {this.state.show_info === true && (
                     <InfoWindow onCloseClick={this.closeInfo}>
-                    <p>{this.state.place[i].name} <br/> {this.state.place[i].mobile}</p>
+                    <p><button style={{background:"#ffffff", border:"0"}} onClick={this.onClickName} value={this.state.place[i].mobile}>{this.state.place[i].name}</button> 
+                    <br/> 
+                    {this.state.place[i].mobile}
+                    </p>
                     </InfoWindow>
                     )}
                 </Marker>
@@ -257,7 +308,7 @@ export default class HelperMap extends Component {
                         fontWeight:"bold"}}>เขตที่ต้องการจะค้นหา</h2>
             <AutoComplete class="rounded-pill"
             style = {{ width:"50%", height:"2vw", marginLeft:"5%", fontSize:"1.5vw",
-                    marginBottom:"4vw", border:"2px solid #B4B6BB", fontFamily:"Kanit"}}
+                    border:"2px solid #B4B6BB", fontFamily:"Kanit"}}
             onPlaceSelected={this.onPlaceSelected}
             placeholder="   Search Here"
             // types={['(regions)']}
@@ -268,6 +319,103 @@ export default class HelperMap extends Component {
             }} 
             />
             </div>
+
+            <div style={{display:"flex"}}>
+            <div style={{fontFamily:"Kanit", color:"#FFB172", textAlign:"left", margin:"5% 0 0 0", position:"fixed", width:"20%"}}>
+            <h4 style={{fontSize:"2vw", color:"#FFB172", textAlign:"left"}}>Filter</h4>
+            <div className="filter-form-check">
+            <input
+                class="filter-check-input"
+                type="radio"
+                name="helpfil"
+                value="ทั้งหมด"
+                onChange={this.handleAll}
+                defaultChecked
+            />
+            <label class="filter-check-label" for="flexCheckChecked" 
+                    style={{fontFamily:"Kanit", fontSize:"1.5vw", margin:"0 0 2% 10%"}}>
+                ทั้งหมด
+            </label>
+            </div>
+            <div className="filter-form-check">
+            <input
+                class="filter-check-input"
+                type="radio"
+                name="helpfil"
+                value="อาหาร"
+                onChange={this.handleFood}
+            />
+            <label class="filter-check-label" for="flexCheckChecked" 
+                    style={{fontFamily:"Kanit", fontSize:"1.5vw", margin:"0 0 2% 10%"}}>
+                อาหาร
+            </label>
+            </div>
+            <div className="filter-form-check">
+            <input
+                class="filter-check-input"
+                type="radio"
+                name="helpfil"
+                value="ยา"
+                onChange={this.handleMedicine}
+            />
+            <label class="filter-check-label" for="flexCheckChecked" 
+                    style={{fontFamily:"Kanit", fontSize:"1.5vw", margin:"0 0 2% 10%"}}>
+                ยา
+            </label>
+            </div>
+            <div className="filter-form-check">
+            <input
+                class="filter-check-input"
+                type="radio"
+                name="helpfil"
+                value="นำส่งโรงพยาบาล"
+                onChange={this.handleHospital}
+            />
+            <label class="filter-check-label" for="flexCheckDefault" 
+                    style={{fontFamily:"Kanit", fontSize:"1.5vw", margin:"0 0 2% 10%"}}>
+                นำส่งโรงพยาบาล
+            </label>
+            </div>
+            <div className="filter-form-check">
+            <input
+                class="filter-check-input"
+                type="radio"
+                name="helpfil"
+                value="นำส่งภูมิลำเนา"
+                onChange={this.handleHome}
+            />
+            <label class="filter-check-label" for="flexCheckDefault" 
+                    style={{fontFamily:"Kanit", fontSize:"1.5vw", margin:"0 0 2% 10%"}}>
+                นำส่งภูมิลำเนา
+            </label>
+            </div>
+            <div className="filter-form-check">
+            <input
+                class="filter-check-input"
+                type="radio"
+                name="helpfil"
+                value="หาเตียง"
+                onChange={this.handleBed}
+            />
+            <label class="filter-check-label" for="flexCheckDefault" 
+                    style={{fontFamily:"Kanit", fontSize:"1.5vw", margin:"0 0 2% 10%"}}>
+                หาเตียง
+            </label>
+            </div>
+            <div className="filter-form-check">
+            <input
+                class="filter-check-input"
+                type="radio"
+                name="helpfil"
+                value="อื่นๆ"
+                onChange={this.handleOther}
+            />
+            <label class="filter-check-label" for="flexCheckDefault" 
+                    style={{fontFamily:"Kanit", fontSize:"1.5vw", margin:"0 0 2% 10%"}}>
+                อื่นๆ
+            </label>
+            </div>
+            </div>
             
             <MapWithAMarker
                 // Old
@@ -275,9 +423,11 @@ export default class HelperMap extends Component {
                 // New
                 googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-fNGUBxtHqdiDpx9zfylTwXtZkkfGN_M&v=3.exp&libraries=geometry,drawing,places"
                 loadingElement={<div style={{ height: `100%` }} />}
-                containerElement={<div style={{ height: `35rem`, width:"100%", alignItems:"center" }} />}
+                containerElement={<div style={{ height: `35rem`, width:"80%", margin:"5% 0 0 20%"}} />}
                 mapElement={<div style={{ height: `100%` }} />}
             />
+            </div>
+
             </div>
         </div>
     )
