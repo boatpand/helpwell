@@ -51,32 +51,38 @@ export default function Header_Vic(props) {
               </Typography>
             </Link>
             <div className={classes.spancer} />
+
             <Link
+              style={{textDecorationLine:"none", fontFamily:"Kanit", fontSize:"1.3vw", color:"#ffffff"}}
               to={{
                 pathname: `/victims`,
                 state: { Mobile: Mobile },
               }}
             >
-              <Button fontFamily="Kanit" color="inherit">
-                ความต้องการ
-              </Button>
+            ความต้องการ 
             </Link>
+            <Typography>&nbsp;&nbsp;&nbsp;</Typography>
+
             <Link
+            style={{textDecorationLine:"none", fontFamily:"Kanit", fontSize:"1.3vw", color:"#ffffff"}}
               to={{
                 pathname: `/victims/map`,
                 state: { Mobile: Mobile },
               }}
             >
-              <Button color="inherit">map</Button>
+              แผนที่
             </Link>
-            <Typography>|&nbsp;</Typography>
+            <Typography>&nbsp;&nbsp;&nbsp;</Typography>
+
+            <Typography style={{fontSize:"1.3vw"}}>|&nbsp;&nbsp;&nbsp;</Typography>
             <Link
+            style={{textDecorationLine:"none", fontFamily:"Kanit", fontSize:"1.3vw", color:"#ffffff"}}
               to={{
                 pathname: `/victims/profile`,
                 state: { Mobile: Mobile },
               }}
             >
-              <Button color="inherit">Profile</Button>
+            Profile
             </Link>
           </Toolbar>
         </AppBar>

@@ -25,3 +25,31 @@ input[type='checkbox']:checked:after {
     visibility: visible;
     border: 2px solid white;
 }
+
+.victim-check-input[type='radio']:checked:after{
+    width: 17px;
+    height: 17px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #2F4A8A;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+.admin-check-input[type='radio']:checked:after{
+    width: 17px;
+    height: 17px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #90D1CB;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}

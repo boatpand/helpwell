@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
 import Header from './header'
 import axios from 'axios';
 import { InfoWindow, withScriptjs, withGoogleMap, GoogleMap, Marker} from 'react-google-maps';
@@ -24,7 +23,8 @@ export default class HelperMap extends Component {
             place:[],
             name:"",
             mobile:"",
-            show_info:false,
+            // show_info:false,
+            show_info:true,
 
             address:"",
             city:"",
@@ -86,31 +86,35 @@ export default class HelperMap extends Component {
 
     async componentDidUpdate(prevProps,prevState){
         if(this.state.flag!==prevState.flag){
-            let address_list = [], mobile_list = [], mobile = ""
+            let address_list = [], mobile_list = [], mobile = "", id=0
             for (var y = 0; y < this.state.helpRequest.length; y++) {
                 mobile = String(this.state.helpRequest[y].Mobile)
                 await axios.get(`http://localhost:4000/victimuser/victim-profile/${mobile}`).then(res => {
                 this.setState({
-                user: res.data
+                user: res.data,
             })
             }).catch((error)=>{
             console.log(error)
             })
+            console.log(this.state.user)
             var mobile_pool = String(this.state.user.Mobile)
             if(mobile_list.indexOf(mobile_pool)<0){
                 mobile_list.push(mobile_pool)
-            }
-            // console.log(mobile_list)
-        }
-        for(var a=0;a<mobile_list.length;a++){
-            var tmp = {
+
+                var tmp ={
+                id:id,
                 name:this.state.user.Firstname + " " + this.state.user.Lastname,
                 lat:this.state.user.Lat,
                 lng:this.state.user.Lng,
                 mobile:this.state.user.Mobile
+                }
+                address_list.push(tmp);
+                id+=1
             }
-            address_list.push(tmp);
+            // console.log(mobile_list)
+            // console.log(mobile_list.length)
         }
+        // console.log(address_list)
         this.setState({place:address_list, flag:0})
         console.log(this.state.place)
     }
@@ -211,15 +215,11 @@ export default class HelperMap extends Component {
     handleMarkerClick = (e) =>{
         this.setState({
             show_info:!this.state.show_block,
-            mapPosition:{
-                lat:e.latLng.lat(),
-                lng:e.latLng.lng()
-            }
+            // mapPosition:{
+            //     lat:e.latLng.lat(),
+            //     lng:e.latLng.lng()
+            // }
         })
-    }
-
-    closeInfo = (e) =>{
-        this.setState({show_info:false})
     }
 
     // handle radio box filter
@@ -275,11 +275,10 @@ export default class HelperMap extends Component {
                 <Marker draggable={false}
                         position={{lat: parseFloat(this.state.place[i].lat), 
                                     lng: parseFloat(this.state.place[i].lng)}}
-                        clickable
                         onClick={this.handleMarkerClick}
                 >
                     {this.state.show_info === true && (
-                    <InfoWindow onCloseClick={this.closeInfo}>
+                    <InfoWindow>
                     <p><button style={{background:"#ffffff", border:"0"}} onClick={this.onClickName} value={this.state.place[i].mobile}>{this.state.place[i].name}</button> 
                     <br/> 
                     {this.state.place[i].mobile}

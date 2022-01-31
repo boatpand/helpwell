@@ -432,7 +432,7 @@ class EventDetail extends Component {
         for (let i = 0; i < t.length; i++) {
         inputs.push(
         <label style={{fontFamily:"Kanit", fontSize:"1.5vw"}}>ความต้องการ
-        <input  style={{marginRight:"10%" ,marginLeft:"10%", width:"20%", textAlign:"center", fontFamily:"Kanit"}} 
+        <input  style={{marginRight:"10%" ,marginLeft:"10%", width:"30%", textAlign:"center", fontFamily:"Kanit"}} 
                 name={`input-${i}`} value ={t[i]}/>จำนวน
         <input  style={{marginLeft:"10%", width:"10%", textAlign:"center", fontFamily:"Kanit"}}
                 name={`input-${i}`} value={n[i]}/></label>)}  

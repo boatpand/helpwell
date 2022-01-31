@@ -26,6 +26,7 @@ export default class EventTableRow extends Component {
     async componentDidMount(){
         console.log(`helper_mobile : ${this.state.Mobile}`)
         let mobile = this.props.obj.Victim_Mobile
+        console.log(`${mobile}`)
         await axios.get(`http://localhost:4000/victimuser/victim-profile/${mobile}`).then(res => {
             this.setState({
             user: res.data
@@ -33,7 +34,7 @@ export default class EventTableRow extends Component {
         }).catch((error)=>{
           console.log(error)
         })
-        // console.log(this.state.user)
+        console.log(this.state.user)
         this.setState({House_No:this.state.user.House_No,
             Soi:this.state.user.Soi,
             Road:this.state.user.Road,
@@ -42,6 +43,7 @@ export default class EventTableRow extends Component {
             ZIP_Code:this.state.user.ZIP_Code,
             Province:this.state.user.Province,
         })
+        console.log(this.state.District)
         if(this.state.Soi==""){this.setState({show_soi:false})}
         if(this.state.Road==""){this.setState({show_road:false})}
     }
