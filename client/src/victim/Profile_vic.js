@@ -90,6 +90,7 @@ export default function Profile_vic(props) {
         <Link
           to={{
             pathname: `/victims/profile/edit`,
+            state: { Mobile: Mobile },
           }}
         >
           <Button variant="outlined" size="small">
@@ -99,7 +100,8 @@ export default function Profile_vic(props) {
         <div className={classes.Spacer3} />
         <Link
           to={{
-            pathname: `/victims/profile/edit`,
+            pathname: `/`,
+            // state: { Mobile: Mobile },
           }}
         >
           <Button variant="outlined" size="small">
@@ -205,7 +207,7 @@ export default function Profile_vic(props) {
           >
             รายการขอความช่วยเหลือ
           </Typography>
-          
+
           {request.map((requests) => {
             return <CardItem {...requests}></CardItem>;
           })}

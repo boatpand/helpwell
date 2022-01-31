@@ -4,13 +4,13 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Grid, Stack, Chip } from "@mui/material";
-import { Fastfood } from "@mui/icons-material";
+
 
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@mui/material/styles";
 
 import theme_admin from "./theme_admin";
-import Header_admin from "./Header_admin";
+import CardItem from "../victim/CardItem";
 
 import {
   Accordion,
@@ -58,6 +58,33 @@ export default function Accordion_vic(props) {
     Province,
     ZIP_Code,
   } = props;
+  const [info, setInfo] = useState("");
+  const [congenital, setCongenital] = useState("-");
+  const [request, setRequest] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/victimuser/victim-disease/${Mobile}`)
+      .then((res) => {
+        //console.log("res is ", res.data);
+        setCongenital(res.data);
+      })
+      .catch((err) => {
+        Promise.reject(err);
+      });
+    axios
+      .get(`http://localhost:4000/request/request/${Mobile}`)
+      .then((res) => {
+        //console.log("res is ", res.data);
+        setRequest(res.data);
+      })
+      .catch((err) => {
+        Promise.reject(err);
+      });
+  }, []);
+  console.log("Accordion_Mobile : ", { Mobile });
+  console.log("Accordion_congenital : ", congenital);
+  //console.log("Accordion_request : ", request);
 
   return (
     <ThemeProvider theme={theme_admin}>
@@ -88,10 +115,12 @@ export default function Accordion_vic(props) {
                 เบอร์โทรศัพท์&nbsp;:&nbsp;{Mobile}
               </Typography>
               <Typography fontFamily="Kanit">อายุ&nbsp;:&nbsp;{Age}</Typography>
+              
 
               <Typography fontFamily="Kanit">
                 เพศ&nbsp;:&nbsp;{Gender}
               </Typography>
+              <Typography fontFamily="Kanit">โรคประจำตัว&nbsp;:&nbsp;{congenital.Disease}</Typography>
             </Box>
             <Box
               sx={{
@@ -108,6 +137,32 @@ export default function Accordion_vic(props) {
                 {ZIP_Code}
               </Typography>
             </Box>
+          </AccordionDetails>
+          <hr />
+          <AccordionDetails>
+            <Grid
+              container
+              spacing={2}
+              justify="center"
+              alignItems="center"
+              display="block"
+            >
+              <Box
+                ml={2.5}
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography variant="h6" fontFamily="Kanit">
+                  รายการขอความช่วยเหลือ
+                </Typography>
+              </Box>
+
+              {request.map((requests) => {
+                return <CardItem {...requests}></CardItem>;
+              })}
+            </Grid>
           </AccordionDetails>
         </Accordion>
       </Grid>
