@@ -25,9 +25,12 @@ import History from "./helper/history";
 import Help from "./victim/Help";
 import Summary from "./victim/Summary";
 import Maps_vic from "./victim/Map_vic";
+import EditProfile_vic from "./victim/EditProfile_vic";
+
 import HelperMap from "./helper/helpermap";
 import HelperProfile from "./helper/helperprofile";
 import HelperEditProfile from "./helper/helpereditprofile";
+
 import Header_admin from "./admin/Header_admin";
 import Database_vic from "./admin/Database_vic";
 import Database_helper from "./admin/Database_helper";
@@ -66,7 +69,8 @@ function App() {
           <Route exact path="/victims/summary" component={Summary} />
           <Route exact path="/victims/map" component={Maps_vic} />
           <Route exact path="/victims/profile" component={Profile_vic} />
-          
+          <Route exact path="/victims/profile/edit" component={EditProfile_vic} />
+
           <Route exact path="/admin/database" component={Database_vic} />
           <Route exact path="/admin/database/victims" component={Database_vic}/>
           <Route exact path="/admin/database/helpers" component={Database_helper}/>
