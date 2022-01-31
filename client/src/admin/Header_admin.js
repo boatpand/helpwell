@@ -52,31 +52,36 @@ export default function Header_admin(props) {
             </Link>
             <div className={classes.spancer} />
             <Link
+              style={{textDecorationLine:"none", fontFamily:"Kanit", fontSize:"1.3vw", color:"#ffffff"}}
               to={{
                 pathname: `/admin/database`,
                 state: { Mobile: Mobile },
               }}
             >
-              <Button fontFamily="Kanit" color="secondary">
-                database
-              </Button>
+              ฐานข้อมูล
             </Link>
+            <Typography>&nbsp;&nbsp;&nbsp;</Typography>
+
             <Link
+              style={{textDecorationLine:"none", fontFamily:"Kanit", fontSize:"1.3vw", color:"#ffffff"}}
               to={{
                 pathname: `/admin/map`,
                 state: { Mobile: Mobile },
               }}
             >
-              <Button color="secondary">map</Button>
+            แผนที่
             </Link>
-            <Typography color="secondary">|&nbsp;</Typography>
+            <Typography>&nbsp;&nbsp;&nbsp;</Typography>
+
+            <Typography color="secondary" style={{fontSize:"1.3vw"}}>|&nbsp;&nbsp;&nbsp;</Typography>
             <Link
+              style={{textDecorationLine:"none", fontFamily:"Kanit", fontSize:"1.3vw", color:"#ffffff"}}
               to={{
                 pathname: `/admin/information`,
                 state: { Mobile: Mobile },
               }}
             >
-              <Button color="secondary">information</Button>
+            information
             </Link>
           </Toolbar>
         </AppBar>

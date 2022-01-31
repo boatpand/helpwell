@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter} from 'react-router-dom';
 import axios from 'axios';
 
-export default class HelpRow extends Component {
+class HelpRow extends Component {
     constructor(props){
         super(props)
 
@@ -138,6 +138,21 @@ export default class HelpRow extends Component {
         })
     }
 
+    Navigation=(e)=>{
+        e.preventDefault();
+        
+        let RequestID = String(this.props.obj.RequestID)
+        console.log(RequestID)
+        this.props.history.push({
+            pathname: `/${RequestID}/navigation`,
+            search: '',
+            state: {Helper_Mobile:this.state.Mobile, 
+                    RequestID:this.props.obj.RequestID,
+                    Mobile:this.props.obj.Victim_Mobile
+                } 
+          })
+    }
+
 
 
 render() {
@@ -184,8 +199,13 @@ render() {
         </button>
         <button class="rounded-pill " 
                 style={{border:"2px solid #FFB172",backgroundColor:"#ffffff", color:"#FFB172", 
-                      width:"100%", height:"20%", fontWeight:"bold", fontSize:"1.2vw"}}
+                      width:"100%", height:"20%", fontWeight:"bold", marginBottom:"5%", fontSize:"1.2vw"}}
                 onClick={this.onSubmitAll}>ช่วยเหลือแล้วทั้งหมด
+        </button> 
+        <button class="rounded-pill " 
+                style={{border:"2px solid #FFB172",backgroundColor:"#ffffff", color:"#FFB172", 
+                      width:"100%", height:"20%", fontWeight:"bold", fontSize:"1.2vw"}}
+                onClick={this.Navigation}>นำทาง
         </button> 
         </div>  
         </div>
@@ -206,3 +226,4 @@ render() {
     )
 }
 }
+export default withRouter(HelpRow);

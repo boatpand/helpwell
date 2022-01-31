@@ -56,7 +56,17 @@ class EventDetail extends Component {
             directions:null,
 
             Cancel:this.props.location.state.Cancel,
-            request:[]
+            request:[],
+
+            route:"",
+            distance:"",
+            time:"",
+
+            user:"",
+            Firstname: "",
+            Lastname: "",
+            Org_Name: "",
+            isOrg: false,
         }
     }
 
@@ -216,12 +226,21 @@ class EventDetail extends Component {
               async(result, status) => {
                 if (status === google.maps.DirectionsStatus.OK) {
                   this.setState({
-                    directions: result
+                    directions: result,
+                    route:result.routes[0].summary,
+                    distance:result.routes[0].legs[0].distance.text,
+                    time:result.routes[0].legs[0].duration.text
                   });
                 } else {
                   console.error(`error fetching directions ${result}`);
                 }
                 await console.log(this.state.directions)
+                // await console.log(`distance: ${this.state.directions.routes[0].legs[0].distance.text}`)
+                // await console.log(`time: ${this.state.directions.routes[0].legs[0].duration.text}`)
+                // await console.log(`route: ${this.state.directions.routes[0].summary}`)
+                await console.log(this.state.route)
+                await console.log(this.state.distance)
+                await console.log(this.state.time)
               }
             );
             }
@@ -326,12 +345,30 @@ class EventDetail extends Component {
         var RequestID_Check = String(this.state.RequestID)
         var RequestID_Checklist = this.state.requestID_state
 
+        let mobile = this.state.Helper_Mobile
+        await axios.get(`http://localhost:4000/helperuser/helper-profile/${mobile}`).then(res => {
+            this.setState({
+            user: res.data
+          })
+        }).catch((error)=>{
+          console.log(error)
+        })
+        this.setState({Firstname:this.state.user.Firstname,
+                      Lastname:this.state.user.Lastname,
+                      Org_Name:this.state.user.Org_Name,
+                      isOrg:this.state.user.isOrg,
+                    })
+
         if(RequestID_Checklist.includes(RequestID_Check)){
           alert('คุณให้ความช่วยเหลือรายการนี้อยู่แล้ว')
         }
 
         else{
           const acceptObject = {
+          Firstname:this.state.user.Firstname,
+          Lastname:this.state.user.Lastname,
+          Org_Name:this.state.user.Org_Name,
+          isOrg:this.state.user.isOrg,
           RequestID:this.state.RequestID,
           Helper_Mobile:this.state.Helper_Mobile,
           Status:'กำลังช่วยเหลือ'
@@ -395,7 +432,7 @@ class EventDetail extends Component {
         for (let i = 0; i < t.length; i++) {
         inputs.push(
         <label style={{fontFamily:"Kanit", fontSize:"1.5vw"}}>ความต้องการ
-        <input  style={{marginRight:"10%" ,marginLeft:"10%", width:"20%", textAlign:"center", fontFamily:"Kanit"}} 
+        <input  style={{marginRight:"10%" ,marginLeft:"10%", width:"30%", textAlign:"center", fontFamily:"Kanit"}} 
                 name={`input-${i}`} value ={t[i]}/>จำนวน
         <input  style={{marginLeft:"10%", width:"10%", textAlign:"center", fontFamily:"Kanit"}}
                 name={`input-${i}`} value={n[i]}/></label>)}  
@@ -455,10 +492,21 @@ class EventDetail extends Component {
       {inputs}  
       </div>
       <div>
+
+      <div style={{display:"flex", margin:"5% 0 0 10%"}}>
+      <h1 style={{fontFamily:"kanit", fontSize:"1.5vw"}}>เส้นทางแนะนำ :</h1>
+      <h1 style={{fontFamily:"kanit", fontSize:"1.5vw", color:"#707070"}}>&nbsp;{this.state.route}</h1>
+      <h1 style={{fontFamily:"kanit", fontSize:"1.5vw", marginLeft:"2%"}}>ระยะทาง</h1>
+      <h1 style={{fontFamily:"kanit", fontSize:"1.5vw", color:"#707070"}}>&nbsp;{this.state.distance}</h1>
+      <h1 style={{fontFamily:"kanit", fontSize:"1.5vw", marginLeft:"2%"}}>ใช้เวลาประมาณ</h1>
+      <h1 style={{fontFamily:"kanit", fontSize:"1.5vw", color:"#707070"}}>&nbsp;{this.state.time}</h1>
+      </div>
+
       <GoogleMapExample
+        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-fNGUBxtHqdiDpx9zfylTwXtZkkfGN_M&v=3.exp&libraries=geometry,drawing,places"
         containerElement={<div style={{ height: `25rem`, width: "80%", 
         display: "block", marginLeft: "auto", 
-        marginRight: "auto", marginTop:"5%", marginBottom:"5%" }} />}
+        marginRight: "auto", marginTop:"2%", marginBottom:"5%" }} />}
         mapElement={<div style={{ height: `100%` }} />}
       />
     </div>

@@ -215,4 +215,63 @@ router.route('/update-helptype').put(async(req, res, next) => {
         console.log(err)
     }
 })
+
+// get all organization
+router.route('/all-org').get((req, res, next) => {
+    HelperuserSchema.find({isOrg:true}, (error,data) => {
+        if(error){
+            return next(error);
+        } else{
+            res.json(data)
+        }
+    })
+})
+
+// get helptype of organization
+router.route('/helptype-org/:mobile').get((req, res, next) => {
+    HelptypeSchema.findOne({Mobile:req.params.mobile}, (error,data) => {
+        if(error){
+            return next(error);
+        } else{
+            res.json(data)
+        }
+    })
+})
+
+// For Radio box filter
+// Get food request
+router.route('/food-request').get((req, res, next) => {
+    HelptypeSchema.find({Food:true}, (error,data) => {
+        if(error){return next(error);} else{
+            res.json(data)}})})
+
+// Get medicine request
+router.route('/medicine-request').get((req, res, next) => {
+    HelptypeSchema.find({Medicine:true}, (error,data) => {
+        if(error){return next(error);} else{
+            res.json(data)}})})
+
+// Get hospital request
+router.route('/hospital-request').get((req, res, next) => {
+    HelptypeSchema.find({Hospital:true}, (error,data) => {
+        if(error){return next(error);} else{
+            res.json(data)}})})
+
+// Get home request
+router.route('/home-request').get((req, res, next) => {
+    HelptypeSchema.find({Home:true}, (error,data) => {
+        if(error){return next(error);} else{
+            res.json(data)}})})
+
+// Get bed request
+router.route('/bed-request').get((req, res, next) => {
+    HelptypeSchema.find({Bed:true}, (error,data) => {
+        if(error){return next(error);} else{
+            res.json(data)}})})
+
+// Get other request
+router.route('/other-request').get((req, res, next) => {
+    HelptypeSchema.find({Other:{$ne:""}}, (error,data) => {
+        if(error){return next(error);} else{
+            res.json(data)}})})
 module.exports = router; 

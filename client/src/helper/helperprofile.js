@@ -140,6 +140,7 @@ class HelperProfile extends Component {
           RequestID: this.state.RequestID
         }
         requset_list.push(tmp)
+        requset_list.reverse()
         // console.log(requset_list)
         }
         this.setState({request_state:requset_list})
