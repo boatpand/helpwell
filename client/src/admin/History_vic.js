@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Header from './header';
-import HistoryRow from './historyrow';
+import Header_admin from './Header_admin';
+import HistoryRowVic from './HistoryRow_vic';
 
-export default class History extends Component {
+export default class HistoryVic extends Component {
     constructor(props){
         super(props)
     
@@ -188,7 +188,7 @@ export default class History extends Component {
       // console.log(topics);
       topics.reverse()
       return topics.map((res,i)=>{
-        return <HistoryRow obj={res} key={i} Mobile={this.state.Mobile}/>
+        return <HistoryRowVic obj={res} key={i} Mobile={this.state.Mobile}/>
       });
     }
   
@@ -196,9 +196,9 @@ export default class History extends Component {
     return (
     <div>
         {/* <h1>{this.state.vic_mobile}</h1> */}
-        <Header Mobile={this.state.Mobile}/>
+        <Header_admin Mobile={this.state.Mobile}/>
         <div class="container-lg" style={{width:"100%"}}>
-              <div style={{display:"flex", margin:"5rem 0 0 2%"}}>
+              <div style={{display:"flex", margin:"2rem 0 0 2%"}}>
               <h1 style={{fontWeight:"bold", color:"#2F4A8A", textAlign:"left"}}>Profile</h1>
               </div>
                   

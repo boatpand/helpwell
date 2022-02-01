@@ -39,6 +39,7 @@ export default class HelperMap extends Component {
 
             org_mobile:"",
             helptype:"",
+            vic_mobile:""
         }
     }
 
@@ -335,7 +336,7 @@ export default class HelperMap extends Component {
         console.log(e.target.value)
         await this.setState({vic_mobile:e.target.value})
         this.props.history.push({
-            pathname: `/helper/history/${e.target.value}`,
+            pathname: `/admin/history/${e.target.value}`,
             search: '',
             state: {Mobile:this.state.Mobile, vic_mobile:this.state.vic_mobile} 
           })
