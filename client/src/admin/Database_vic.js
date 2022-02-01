@@ -53,6 +53,7 @@ export default function Database_vic(props) {
   }, []);
 
   console.log("info_vic : ", info_vic);
+  console.log("info_mobile : ", Mobile);
 
   return (
     <ThemeProvider theme={theme_admin}>
