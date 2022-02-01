@@ -73,7 +73,7 @@ class EventDetail extends Component {
     async componentDidMount(){
       // check cancel button
       console.log(this.state.Cancel)
-
+      console.log(this.state.Helper_Mobile)
       if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(position => {
             this.setState({
@@ -162,6 +162,7 @@ class EventDetail extends Component {
         console.log(this.state.currentLocation)
 
         mobile = String(this.state.Helper_Mobile)
+        console.log(`${mobile}`)
         await axios.get(`http://localhost:4000/accept/status/${mobile}`).then(res => {
             this.setState({
             request: res.data
@@ -353,6 +354,7 @@ class EventDetail extends Component {
         }).catch((error)=>{
           console.log(error)
         })
+        console.log(this.state.user)
         this.setState({Firstname:this.state.user.Firstname,
                       Lastname:this.state.user.Lastname,
                       Org_Name:this.state.user.Org_Name,
