@@ -20,6 +20,7 @@ import {
   Box,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Card_helper from "../helper/Card_helper";
 
 const useStyles = makeStyles((theme) => ({
   GridSpacer: {
@@ -57,6 +58,21 @@ export default function Accordion_helper(props) {
     Province,
     ZIP_Code,
   } = props;
+
+  const [accept_help, setAccept_help] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/accept/status/${Mobile}`)
+      .then((res) => {
+        // console.log("res is ", res.data);
+        setAccept_help(res.data);
+      })
+      .catch((err) => {
+        Promise.reject(err);
+      });
+  }, []);
+  console.log("card_helper : ", accept_help)
 
   return (
     <ThemeProvider theme={theme_admin}>
@@ -113,6 +129,32 @@ export default function Accordion_helper(props) {
                 {ZIP_Code}
               </Typography>
             </Box>
+          </AccordionDetails>
+          <hr />
+          <AccordionDetails>
+            <Grid
+              container
+              spacing={2}
+              justify="center"
+              alignItems="center"
+              display="block"
+            >
+              <Box
+                ml={2.5}
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography variant="h6" fontFamily="Kanit">
+                  รายการการช่วยเหลือ
+                </Typography>
+              </Box>
+
+              {accept_help.map((accepts) => {
+                return <Card_helper {...accepts}></Card_helper>;
+              })}
+            </Grid>
           </AccordionDetails>
         </Accordion>
       </Grid>
