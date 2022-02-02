@@ -37,6 +37,7 @@ import Database_helper from "./admin/Database_helper";
 import Maps_admin from "./admin/Map_admin";
 import Profile_vic from "./victim/Profile_vic";
 import Accordion_vic from "./admin/Accordion_vic";
+import HistoryVic from "./admin/History_vic";
 
 
 function App() {
@@ -63,7 +64,7 @@ function App() {
           <HelperRoute exact path="/:RequestID/navigation" component={Navigation}/>
           <HelperRoute exact path="/helperprofile/:mobile" component={HelperProfile}/>
           <HelperRoute exact path="/helperprofile/edit-profile/:mobile" component={HelperEditProfile}/>
-          <HelperRoute exact path="/helper/history/:mobile" component={History}/>
+          <Route exact path="/helper/history/:mobile" component={History}/>
 
           <Route exact path="/victims" component={Help} />
           <Route exact path="/victims/summary" component={Summary} />
@@ -76,6 +77,7 @@ function App() {
           <Route exact path="/admin/database/helpers" component={Database_helper}/>
           <Route exact path="/admin/map" component={Maps_admin} />
           <Route exact path="/admin/information" component={Maps_admin} />
+          <Route exact path="/admin/history/:mobile" component={HistoryVic}/>
 
         </Switch>
       </div>

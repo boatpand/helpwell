@@ -244,8 +244,8 @@ export default class SignupVictim extends Component {
                     style={{border:"2px solid #B4B6BB", width:"12%", marginLeft:"3%"}} 
                     onChange={this.onChangeGender}>
                     <option></option>
-                    <option>male</option>
-                    <option>female</option>
+                    <option>ชาย</option>
+                    <option>หญิง</option>
             </select>
 
             <label style={{marginLeft:"2%", color:"#707070", fontSize:"1.5vw"}}>Nationality</label>

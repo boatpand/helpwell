@@ -35,4 +35,10 @@ router.route(`/update-status/:RequestID`).put((req,res,next) => {
         }
     })
 })
+
+// get helper name
+router.route('/list/:id').get((req, res, next) => {
+    AccepthelpSchema.findOne({RequestID:req.params.id}, (error,data) => {
+        if(error){return next(error);} else{
+            res.json(data)}})})
 module.exports = router; 
