@@ -50,6 +50,7 @@ export default function Card_helper(props) {
 
   const [request_detail, setRequest_detail] = useState([]);
   const [info, setInfo] = useState([]);
+  const [flag, setFlag] = useState(0);
 
   useEffect(() => {
     async function fetchRequest() {
@@ -58,6 +59,7 @@ export default function Card_helper(props) {
         .then((res) => {
           console.log("res_request is ", res.data);
            setRequest_detail(res.data);
+           setFlag(1);
         })
         .catch((err) => {
           Promise.reject(err);
@@ -70,25 +72,44 @@ export default function Card_helper(props) {
       // console.log("MOBILE : ", Mobile);
     }
 
-    function fetchInfo(Mobile) {
-      axios
+    // function fetchInfo(Mobile) {
+    //   axios
+    //     .get(`http://localhost:4000/victimuser/victim-profile/${Mobile}`)
+    //     .then((res) => {
+    //       console.log("res is ", res.data);
+    //       setInfo(res.data);
+    //     })
+    //     .catch((err) => {
+    //       Promise.reject(err);
+    //     });
+    // }
+
+    fetchRequest();
+    // let Mobile_vic = request_detail.Mobile;
+    // console.log(Mobile_vic);
+    // fetchInfo(Mobile_vic);
+  }, []);
+  //   console.log("request_detail : ", request_detail);
+  //   console.log("info_vic : ", info);
+
+  useEffect(() => {
+    async function fetchInfo() {
+      if(flag===1){
+        let Mobile = request_detail.Mobile;
+        console.log(Mobile)
+        await axios
         .get(`http://localhost:4000/victimuser/victim-profile/${Mobile}`)
         .then((res) => {
-          console.log("res is ", res.data);
+          // console.log("res is ", res.data);
           setInfo(res.data);
         })
         .catch((err) => {
           Promise.reject(err);
         });
+      }
     }
-
-    fetchRequest();
-    let Mobile_vic = request_detail.Mobile;
-    console.log(Mobile_vic);
-    fetchInfo(Mobile_vic);
-  }, []);
-  //   console.log("request_detail : ", request_detail);
-  //   console.log("info_vic : ", info);
+    fetchInfo();
+  }, [flag]);
 
   return (
     <Grid item>
@@ -198,7 +219,7 @@ export default function Card_helper(props) {
                 ที่อยู่ : &nbsp;
               </Typography>
               <div className={classes.Spacer} />
-              {/* <Typography style={{ color: "#707070", fontFamily: "Kanit" }}>
+              <Typography style={{ color: "#707070", fontFamily: "Kanit" }}>
                 {info.House_No}&nbsp;&nbsp;ซอย&nbsp;
                 {info.Soi}&nbsp;&nbsp;ถนน&nbsp;
                 {info.Road}&nbsp;&nbsp;แขวง&nbsp;{info.Subdistrict}
@@ -206,7 +227,7 @@ export default function Card_helper(props) {
                 {info.District}&nbsp;&nbsp;
                 {info.Province}&nbsp;&nbsp;
                 {info.ZIP_Code}
-              </Typography> */}
+              </Typography>
             </Box>
           </div>
           <div style={{ width: "100%" }}>
