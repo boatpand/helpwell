@@ -59,6 +59,7 @@ export default function CardItem(props) {
     <Grid item>
       <Card className={classes.root}>
         <CardContent>
+          {Mobile}
           {Status === "รอการช่วยเหลือ" ? (
             <Typography
               color="text.primary"

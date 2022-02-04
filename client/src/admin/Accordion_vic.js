@@ -5,7 +5,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Grid, Stack, Chip } from "@mui/material";
 
-
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@mui/material/styles";
 
@@ -61,7 +60,7 @@ export default function Accordion_vic(props) {
   const [info, setInfo] = useState("");
   const [congenital, setCongenital] = useState("-");
   const [request, setRequest] = useState([]);
-
+  console.log("Mobile : ", Mobile);
   useEffect(() => {
     axios
       .get(`http://localhost:4000/victimuser/victim-disease/${Mobile}`)
@@ -82,8 +81,8 @@ export default function Accordion_vic(props) {
         Promise.reject(err);
       });
   }, []);
-  console.log("Accordion_Mobile : ", { Mobile });
-  console.log("Accordion_congenital : ", congenital);
+  // console.log("Accordion_Mobile : ", { Mobile });
+  // console.log("Accordion_congenital : ", congenital);
   //console.log("Accordion_request : ", request);
 
   return (
@@ -115,12 +114,13 @@ export default function Accordion_vic(props) {
                 เบอร์โทรศัพท์&nbsp;:&nbsp;{Mobile}
               </Typography>
               <Typography fontFamily="Kanit">อายุ&nbsp;:&nbsp;{Age}</Typography>
-              
 
               <Typography fontFamily="Kanit">
                 เพศ&nbsp;:&nbsp;{Gender}
               </Typography>
-              <Typography fontFamily="Kanit">โรคประจำตัว&nbsp;:&nbsp;{congenital.Disease}</Typography>
+              <Typography fontFamily="Kanit">
+                โรคประจำตัว&nbsp;:&nbsp;{congenital.Disease}
+              </Typography>
             </Box>
             <Box
               sx={{
