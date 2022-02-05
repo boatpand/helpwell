@@ -17,11 +17,18 @@ export default function Information(props) {
   const { Mobile } = GetStateParam;
   const [info_vic, setInfo_vic] = useState([]);
   const [request, setRequest] = useState([]);
+  const [flag, setFlag] = useState(0);
+
   const [num_food, setNum_food] = useState(0);
+  const [num_medicine, setNum_medicine] = useState(0);
+  const [num_bed, setNum_bed] = useState(0);
+  const [num_hospital, setNum_hospital] = useState(0);
+  const [num_home, setNum_home] = useState(0);
+  const [num_other, setNum_other] = useState(0);
   console.log(Mobile);
 
-  useEffect(() => {
-    axios
+  useEffect(async() => {
+    await axios
       .get(`http://localhost:4000/victimuser/`)
       .then((res) => {
         // console.log("res is ", res.data);
@@ -30,37 +37,61 @@ export default function Information(props) {
       .catch((err) => {
         Promise.reject(err);
       });
-    axios
+    await axios
       .get(`http://localhost:4000/request/all-request`)
       .then((res) => {
         console.log("request is ", res.data);
         setRequest(res.data);
+        setFlag(1);
       })
       .catch((err) => {
         Promise.reject(err);
       });
-    console.log("after ax ", request);
+    // console.log("after ax ", request);
   }, []);
-
-  const handleEvent = () => {
-    console.log("length: ", request.length);
-    for (var i = 0; i < request.length; i++) {
-      if (request[i].Food === true) {
-        // console.log("if : ", i);
-        console.log("yeah");
-        // setNum_food(num_food + 1);
-      }
-    }
-
-   
-  };
 
   console.log(request);
 
-  if (request.Food === true) {
-      setNum_food(num_food + 1)
-  }
-  console.log(num_food);
+  useEffect(async() => {
+    await console.log("length: ", request.length);
+    for (var i = 0; i < request.length; i++) {
+      if (request[i].Food === true) {
+        setNum_food(num_food + request[i].count_Food);
+      }
+      if (request[i].Medicine === true) {
+        setNum_medicine(num_medicine + request[i].count_Medicine);
+      }
+      if (request[i].Bed === true) {
+        setNum_bed(num_bed + request[i].count_Bed);
+      }
+      if (request[i].Hospital === true) {
+        setNum_hospital(num_hospital + + request[i].count_Hospital);
+      }
+      if (request[i].Home === true) {
+        setNum_home(num_home + request[i].count_Home);
+      }
+      if (request[i].Other!==""){
+        setNum_other(num_other + request[i].count_Other)
+      }
+    }
+  }, [flag]);
+  // const handleEvent = () => {
+  //   console.log("length: ", request.length);
+  //   for (var i = 0; i < request.length; i++) {
+  //     if (request[i].Food === true) {
+  //       // console.log("if : ", i);
+  //       console.log("yeah");
+  //       setNum_food(num_food + 1);
+  //     }
+  //   }
+  // };
+
+  // console.log(request);
+
+  // if (request.Food === true) {
+  //     setNum_food(num_food + 1)
+  // }
+  // console.log(num_food);
 
   //   const data = [
   //     { name: "สมพง", math: 68, physics: 80, english: 99, social: 62 },
@@ -90,7 +121,12 @@ export default function Information(props) {
     <div>
       {/* <Header_admin /> */}
       {/* {renderLineChart} */}
-      {handleEvent()}
+      {num_food}
+      {num_medicine}
+      {num_bed}
+      {num_hospital}
+      {num_home}
+      {num_other}
     </div>
   );
 }

@@ -59,7 +59,7 @@ export default function Database_vic(props) {
       });
   }, []);
 
-  useEffect(() => {
+  useEffect(async() => {
     setFiltered(
       info_vic.filter((searchValue) => {
         return Object.values(searchValue)
@@ -71,6 +71,7 @@ export default function Database_vic(props) {
     console.log(search)
     console.log(filtered)
   }, [search, info_vic]);
+
   
 
   // console.log("info_vic : ", info_vic);
