@@ -98,7 +98,7 @@ export default function Database_vic(props) {
 
   return (
     <ThemeProvider theme={theme_admin}>
-      <Header_admin />
+      <Header_admin Mobile={Mobile}/>
       <Grid container>
         <Grid item xs={2}></Grid>
         <Grid item xs={8}>
