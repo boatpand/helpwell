@@ -38,6 +38,7 @@ import Maps_admin from "./admin/Map_admin";
 import Profile_vic from "./victim/Profile_vic";
 import Accordion_vic from "./admin/Accordion_vic";
 import HistoryVic from "./admin/History_vic";
+import Information from "./admin/Information";
 
 
 function App() {
@@ -76,7 +77,7 @@ function App() {
           <Route exact path="/admin/database/victims" component={Database_vic}/>
           <Route exact path="/admin/database/helpers" component={Database_helper}/>
           <Route exact path="/admin/map" component={Maps_admin} />
-          <Route exact path="/admin/information" component={Maps_admin} />
+          <Route exact path="/admin/information" component={Information} />
           <Route exact path="/admin/history/:mobile" component={HistoryVic}/>
 
         </Switch>
