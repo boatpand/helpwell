@@ -47,6 +47,8 @@ export default function Database_vic(props) {
   const [searchInput, setSearchInput] = useState("");
   const [filteredResults, setFilteredResults] = useState([]);
 
+  const [flag, setFlag] = useState(0);
+
   useEffect(() => {
     axios
       .get(`http://localhost:4000/victimuser/`)
@@ -59,7 +61,7 @@ export default function Database_vic(props) {
       });
   }, []);
 
-  useEffect(async() => {
+  useEffect(() => {
     setFiltered(
       info_vic.filter((searchValue) => {
         return Object.values(searchValue)
@@ -68,11 +70,15 @@ export default function Database_vic(props) {
           .includes(search.toLowerCase());
       })
     );
+    setFlag(0);
     console.log(search)
     console.log(filtered)
-  }, [search, info_vic]);
+  }, [search, info_vic, flag]);
 
-  
+  const onChange = (e) =>{
+    setSearch(e.target.value);
+    setFlag(1)
+  }
 
   // console.log("info_vic : ", info_vic);
   // console.log("info_mobile : ", Mobile);
@@ -126,7 +132,8 @@ export default function Database_vic(props) {
             style={{ width: "100%", fontFamily: "Kanit", marginBottom: "1%" }}
             icon="search"
             placeholder="Search"
-            onChange={(e) => setSearch(e.target.value)}
+            // onChange={(e) => setSearch(e.target.value)}
+            onChange={onChange}
           />
           {Mobile}
           {filtered.map((item) => {
