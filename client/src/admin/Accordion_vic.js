@@ -61,8 +61,8 @@ export default function Accordion_vic(props) {
   const [congenital, setCongenital] = useState("-");
   const [request, setRequest] = useState([]);
   console.log("Mobile : ", Mobile);
-  useEffect(() => {
-    axios
+  useEffect(async() => {
+    await axios
       .get(`http://localhost:4000/victimuser/victim-disease/${Mobile}`)
       .then((res) => {
         //console.log("res is ", res.data);
@@ -71,10 +71,10 @@ export default function Accordion_vic(props) {
       .catch((err) => {
         Promise.reject(err);
       });
-    axios
+    await axios
       .get(`http://localhost:4000/request/request/${Mobile}`)
       .then((res) => {
-        //console.log("res is ", res.data);
+        // console.log("res is ", res.data);
         setRequest(res.data);
       })
       .catch((err) => {
@@ -83,7 +83,7 @@ export default function Accordion_vic(props) {
   }, []);
   // console.log("Accordion_Mobile : ", { Mobile });
   // console.log("Accordion_congenital : ", congenital);
-  //console.log("Accordion_request : ", request);
+  // console.log("Accordion_request : ", request);
 
   return (
     <ThemeProvider theme={theme_admin}>
@@ -160,7 +160,7 @@ export default function Accordion_vic(props) {
               </Box>
 
               {request.map((requests) => {
-                return <CardItem {...requests}></CardItem>;
+                return <CardItem {...requests} ></CardItem>;
               })}
             </Grid>
           </AccordionDetails>
