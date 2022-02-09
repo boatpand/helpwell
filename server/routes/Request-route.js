@@ -17,6 +17,16 @@ router.route("/insert").post((req, res, next) => {
 });
 
 // get all requests
+router.route("/all-request-no-status").get((req, res, next) => {
+  RequestSchema.find(req.body, (error, data) => {
+    if (error) {
+      return next(error);
+    } else {
+      res.json(data);
+    }
+  });
+});
+
 router.route("/all-request").get((req, res, next) => {
   RequestSchema.find({ Status: "รอการช่วยเหลือ" }, (error, data) => {
     if (error) {
@@ -27,7 +37,27 @@ router.route("/all-request").get((req, res, next) => {
   });
 });
 
-router.route("/all-request-nocond").get((req, res, next) => {
+router.route("/all-request/help").get((req, res, next) => {
+  RequestSchema.find({ Status: "กำลังช่วยเหลือ" }, (error, data) => {
+    if (error) {
+      return next(error);
+    } else {
+      res.json(data);
+    }
+  });
+});
+
+router.route("/all-request/success").get((req, res, next) => {
+  RequestSchema.find({ Status: "ช่วยเหลือสำเร็จ" }, (error, data) => {
+    if (error) {
+      return next(error);
+    } else {
+      res.json(data);
+    }
+  });
+});
+
+router.route("/all-request-no-status").get((req, res, next) => {
   RequestSchema.find(req.body, (error, data) => {
     if (error) {
       return next(error);
@@ -62,16 +92,13 @@ router.route("/food-request").get((req, res, next) => {
   );
 });
 router.route("/food-request-no-status").get((req, res, next) => {
-  RequestSchema.find(
-    {  Food: true  },
-    (error, data) => {
-      if (error) {
-        return next(error);
-      } else {
-        res.json(data);
-      }
+  RequestSchema.find({ Food: true }, (error, data) => {
+    if (error) {
+      return next(error);
+    } else {
+      res.json(data);
     }
-  );
+  });
 });
 
 // Get medicine request
@@ -88,6 +115,16 @@ router.route("/medicine-request").get((req, res, next) => {
   );
 });
 
+router.route("/medicine-request-no-status").get((req, res, next) => {
+  RequestSchema.find({ Medicine: true }, (error, data) => {
+    if (error) {
+      return next(error);
+    } else {
+      res.json(data);
+    }
+  });
+});
+
 // Get hospital request
 router.route("/hospital-request").get((req, res, next) => {
   RequestSchema.find(
@@ -100,6 +137,16 @@ router.route("/hospital-request").get((req, res, next) => {
       }
     }
   );
+});
+
+router.route("/hospital-request-no-status").get((req, res, next) => {
+  RequestSchema.find({ Hospital: true }, (error, data) => {
+    if (error) {
+      return next(error);
+    } else {
+      res.json(data);
+    }
+  });
 });
 
 // Get home request
@@ -116,6 +163,16 @@ router.route("/home-request").get((req, res, next) => {
   );
 });
 
+router.route("/home-request-no-status").get((req, res, next) => {
+  RequestSchema.find({ Home: true }, (error, data) => {
+    if (error) {
+      return next(error);
+    } else {
+      res.json(data);
+    }
+  });
+});
+
 // Get bed request
 router.route("/bed-request").get((req, res, next) => {
   RequestSchema.find(
@@ -129,18 +186,16 @@ router.route("/bed-request").get((req, res, next) => {
     }
   );
 });
+
 router.route("/bed-request-no-status").get((req, res, next) => {
-    RequestSchema.find(
-      { Bed: true },
-      (error, data) => {
-        if (error) {
-          return next(error);
-        } else {
-          res.json(data);
-        }
-      }
-    );
+  RequestSchema.find({ Bed: true }, (error, data) => {
+    if (error) {
+      return next(error);
+    } else {
+      res.json(data);
+    }
   });
+});
 
 // Get other request
 router.route("/other-request").get((req, res, next) => {
@@ -154,6 +209,16 @@ router.route("/other-request").get((req, res, next) => {
       }
     }
   );
+});
+
+router.route("/other-request-no-status").get((req, res, next) => {
+  RequestSchema.find({ Other: { $ne: "" } }, (error, data) => {
+    if (error) {
+      return next(error);
+    } else {
+      res.json(data);
+    }
+  });
 });
 
 // get request detail with request id
