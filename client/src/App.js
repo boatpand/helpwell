@@ -37,6 +37,7 @@ import Database_helper from "./admin/Database_helper";
 import Maps_admin from "./admin/Map_admin";
 import Profile_vic from "./victim/Profile_vic";
 import Accordion_vic from "./admin/Accordion_vic";
+import Acc from "./admin/Acc"
 import HistoryVic from "./admin/History_vic";
 import Information from "./admin/Information";
 import Info from "./admin/Info";

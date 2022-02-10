@@ -3,15 +3,16 @@ import { useLocation } from "react-router";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Grid, Stack, Chip, Input } from "@mui/material";
-import { Fastfood } from "@mui/icons-material";
+
 import axios from "axios";
+
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@mui/material/styles";
 
 import theme_admin from "./theme_admin";
 import Header_admin from "./Header_admin";
 import Accordion_vic from "./Accordion_vic";
-
+import Acc from "./Acc"
 const fontSize = 22;
 
 const useStyles = makeStyles((theme) => ({
@@ -44,9 +45,6 @@ export default function Database_vic(props) {
 
   const [search, setSearch] = useState("");
   const [filtered, setFiltered] = useState([]);
-  const [searchInput, setSearchInput] = useState("");
-  const [filteredResults, setFilteredResults] = useState([]);
-
   const [flag, setFlag] = useState(0);
 
   useEffect(() => {
@@ -71,37 +69,12 @@ export default function Database_vic(props) {
       })
     );
     setFlag(0);
-    console.log(search)
-    console.log(filtered)
   }, [search, info_vic, flag]);
 
   const onChange = (e) =>{
     setSearch(e.target.value);
     setFlag(1)
   }
-
-  // console.log("info_vic : ", info_vic);
-  // console.log("info_mobile : ", Mobile);
-
-  // const searchItems = (searchValue) => {
-  //   setSearchInput(searchValue);
-  //   if (searchInput !== "") {
-  //     const filteredData = info_vic.filter((searchValue) => {
-  //       return Object.values(searchValue)
-  //         .join("")
-  //         .toLowerCase()
-  //         .includes(searchInput.toLowerCase());
-  //     });
-  //     setFilteredResults(filteredData);
-  //     console.log("FilteredData : ", filteredData);
-  //     console.log("FilteredResults_01 : ", filteredResults);
-  //   }
-  // else {
-  //   setFilteredResults(info_vic);
-  // }
-  // console.log("searchInput : ", searchInput);
-  // console.log("FilteredResults : ", filteredResults);
-  // };
 
   return (
     <ThemeProvider theme={theme_admin}>
@@ -115,6 +88,7 @@ export default function Database_vic(props) {
                 pathname: `/admin/database/victims`,
                 state: { Mobile: Mobile },
               }}
+              style={{textDecorationLine:"none", fontFamily:"Kanit"}}
             >
               <Chip label="victim" variant="outlined" />
             </Link>
@@ -123,6 +97,7 @@ export default function Database_vic(props) {
                 pathname: `/admin/database/helpers`,
                 state: { Mobile: Mobile },
               }}
+              style={{textDecorationLine:"none", fontFamily:"Kanit"}}
             >
               <Chip label="helper" variant="outlined" />
             </Link>
@@ -132,10 +107,8 @@ export default function Database_vic(props) {
             style={{ width: "100%", fontFamily: "Kanit", marginBottom: "1%" }}
             icon="search"
             placeholder="Search"
-            // onChange={(e) => setSearch(e.target.value)}
             onChange={onChange}
           />
-          {Mobile}
           {filtered.map((item) => {
             return (
               <Grid
@@ -151,51 +124,6 @@ export default function Database_vic(props) {
               </Grid>
             );
           })}
-
-          {/* <div style={{ padding: 20 }}>
-            <Input
-            style={{ width: "100%", fontFamily: "Kanit"}}
-              icon="search"
-              placeholder="Search..."
-              onChange={(e) => searchItems(e.target.value)}
-            />
-          
-
-            {/* {searchInput.length > 0
-              ? filteredResults.map((item) => {
-                  return <Accordion_vic {...item}></Accordion_vic>;
-                }) 
-               // : info_vic.map((item) => {
-                //     return;
-                //     <Accordion_vic {...item}></Accordion_vic>;
-                //   })
-          //       (<Grid
-          //         container
-          //         spacing={1}
-          //         justify="center"
-          //         alignItems="center"
-          //         display="block"
-          //         className={classes.Spacer1}
-          //       >
-          //         {info_vic.map((info_vics) => {
-          //           return <Accordion_vic {...info_vics}></Accordion_vic>;
-          //         })}
-          //       </Grid>)}
-              // </div> */}
-          {/* {Object.keys(info_vic).length !== 0 ? (
-            <Grid
-              container
-              spacing={1}
-              justify="center"
-              alignItems="center"
-              display="block"
-              className={classes.Spacer1}
-            >
-              {info_vic.map((info_vics) => {
-                return <Accordion_vic {...info_vics}></Accordion_vic>;
-              })}
-            </Grid>
-          ) : null}  */}
         </Grid>
         <Grid item xs={2}></Grid>
       </Grid>

@@ -73,7 +73,6 @@ export default function Header_admin(props) {
             </Link>
             <Typography>&nbsp;&nbsp;&nbsp;</Typography>
 
-            <Typography color="secondary" style={{fontSize:"1.3vw"}}>|&nbsp;&nbsp;&nbsp;</Typography>
             <Link
               style={{textDecorationLine:"none", fontFamily:"Kanit", fontSize:"1.3vw", color:"#ffffff"}}
               to={{
@@ -82,6 +81,16 @@ export default function Header_admin(props) {
               }}
             >
             information
+            </Link>
+            <Typography color="secondary" style={{fontSize:"1.3vw"}}>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</Typography>
+            <Link
+              style={{textDecorationLine:"none", fontFamily:"Kanit", fontSize:"1.3vw", color:"#ffffff"}}
+              to={{
+                pathname: `/`,
+                // state: { Mobile: Mobile },
+              }}
+            >
+            sign out
             </Link>
           </Toolbar>
         </AppBar>
