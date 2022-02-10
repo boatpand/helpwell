@@ -415,7 +415,7 @@ export default class HelperEditProfile extends Component {
                 search: '',
                 state: {Mobile:this.state.Mobile}
               })
-            alert(text);
+            // alert(text);
           }
         })
         .catch((error) => {
@@ -731,127 +731,6 @@ export default class HelperEditProfile extends Component {
                 onChange={this.onChangeDisease}
               />
             </div>
-
-            {/* <div
-              style={{
-                marginTop: "5%",
-                marginBottom: "2%",
-                display: this.state.isOrg ? "flex" : "none",
-              }}
-            >
-              <label
-                style={{
-                  marginLeft: "8%",
-                  marginRight: "2%",
-                  color: "#707070",
-                  fontSize: "1.5vw",
-                }}
-              >
-                Help :{" "}
-              </label>
-
-              <input
-                type="checkbox"
-                style={{ margin: "1% 1% 0 0" }}
-                checked={this.state.Food}
-                onChange={this.handleFood}
-              ></input>
-              <label
-                style={{
-                  margin: "0 2% 0 0",
-                  color: "#707070",
-                  fontSize: "1.5vw",
-                }}
-              >
-                Food
-              </label>
-
-              <input
-                type="checkbox"
-                style={{ margin: "1% 1% 0 0" }}
-                checked={this.state.Medicine}
-                onChange={this.handleMedicine}
-              ></input>
-              <label
-                style={{
-                  margin: "0 2% 0 0",
-                  color: "#707070",
-                  fontSize: "1.5vw",
-                }}
-              >
-                Medicine
-              </label>
-
-              <input
-                type="checkbox"
-                style={{ margin: "1% 1% 0 0" }}
-                checked={this.state.Bed}
-                onChange={this.handleBed}
-              ></input>
-              <label
-                style={{
-                  margin: "0 2% 0 0",
-                  color: "#707070",
-                  fontSize: "1.5vw",
-                }}
-              >
-                Bed
-              </label>
-
-              <input
-                type="checkbox"
-                style={{ margin: "1% 1% 0 0" }}
-                checked={this.state.Hospital}
-                onChange={this.handleHospital}
-              ></input>
-              <label
-                style={{
-                  margin: "0 2% 0 0",
-                  color: "#707070",
-                  fontSize: "1.5vw",
-                }}
-              >
-                Hospital
-              </label>
-
-              <input
-                type="checkbox"
-                style={{ margin: "1% 1% 0 0" }}
-                checked={this.state.Home}
-                onChange={this.handleHome}
-              ></input>
-              <label
-                style={{
-                  margin: "0 2% 0 0",
-                  color: "#707070",
-                  fontSize: "1.5vw",
-                }}
-              >
-                Home
-              </label>
-
-              <label
-                style={{
-                  margin: "0 2% 0 0",
-                  color: "#707070",
-                  fontSize: "1.5vw",
-                }}
-              >
-                Other
-              </label>
-              <input
-                type="text"
-                placeholder="   ระบุ"
-                class="rounded-pill"
-                style={{
-                  border: "2px solid #B4B6BB",
-                  fontSize: "1.5vw",
-                  width: "10%",
-                }}
-                value={this.state.Other}
-                onChange={this.handleOther}
-              ></input>
-            </div> */}
 
             <div
               style={{ marginTop: "5%", display: "flex", marginBottom: "2%" }}

@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Accordion_vic(props) {
+export default function Acc(props) {
   const classes = useStyles();
   const {
     Mobile,
@@ -60,12 +60,12 @@ export default function Accordion_vic(props) {
   } = props;
   const [info, setInfo] = useState("");
   const [congenital, setCongenital] = useState("-");
-  const [request, setRequest] = useState([]);
-
+  const [request_vic, setRequest_vic] = useState([]);
 
   console.log("Mobile_Accordion : ", Mobile);
 
-  useEffect(async() => {
+  useEffect(async () => {
+    // console.log("MO: ", Mobile);
     await axios
       .get(`http://localhost:4000/victimuser/victim-disease/${Mobile}`)
       .then((res) => {
@@ -75,11 +75,12 @@ export default function Accordion_vic(props) {
       .catch((err) => {
         Promise.reject(err);
       });
+    // console.log("MO_1: ", Mobile);
     await axios
       .get(`http://localhost:4000/request/request/${Mobile}`)
       .then((res) => {
         console.log("resquest is ", res.data);
-        setRequest(res.data);
+        setRequest_vic(res.data);
       })
       .catch((err) => {
         Promise.reject(err);
@@ -87,7 +88,7 @@ export default function Accordion_vic(props) {
   }, [Mobile]);
   // console.log("Accordion_Mobile : ", { Mobile });
   // console.log("Accordion_congenital : ", congenital);
-  console.log("Accordion_request : ", request);
+//   console.log("Accordion_request : ", request_vic);
 
   return (
     <ThemeProvider theme={theme_admin}>
@@ -163,8 +164,8 @@ export default function Accordion_vic(props) {
                 </Typography>
               </Box>
 
-              {request.map((requests) => {
-                return <CardItem {...requests} ></CardItem>;
+              {request_vic.map((requests) => {
+                return <CardItem {...requests}></CardItem>;
               })}
             </Grid>
           </AccordionDetails>
