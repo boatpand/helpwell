@@ -86,9 +86,6 @@ export default function Acc(props) {
         Promise.reject(err);
       });
   }, [Mobile]);
-  // console.log("Accordion_Mobile : ", { Mobile });
-  // console.log("Accordion_congenital : ", congenital);
-//   console.log("Accordion_request : ", request_vic);
 
   return (
     <ThemeProvider theme={theme_admin}>

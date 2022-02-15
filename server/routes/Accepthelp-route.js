@@ -16,6 +16,16 @@ router.route('/accept').post((req, res, next) => {
     })
 })
 
+router.route("/all-accepthelp/success").get((req, res, next) => {
+    AccepthelpSchema.find({ Status: "ช่วยเหลือสำเร็จ" }, (error, data) => {
+      if (error) {
+        return next(error);
+      } else {
+        res.json(data);
+      }
+    });
+  });
+
 // get help history from user mobile
 router.route('/status/:mobile').get((req, res, next) => {
     AccepthelpSchema.find({Helper_Mobile:req.params.mobile}, (error,data) => {
