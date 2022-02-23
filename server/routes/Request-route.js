@@ -2,8 +2,12 @@ let mongoose = require("mongoose"),
   express = require("express"),
   router = express.Router();
 
-// helpoptionstatus model
+// Request model
 let RequestSchema = require("../models/Request");
+// Request_Detail mmodel
+let RequestDetailSchema = require("../models/Request_Detail");
+// Helpcode model
+let HelpCodeSchema = require("../models/Helpcode");
 
 router.route("/insert").post((req, res, next) => {
   RequestSchema.create(req.body, (error, data) => {

@@ -162,12 +162,12 @@ render() {
         <div style={{display:"flex"}}>
         <div style={{width:"80%"}}>
         <Link style={{textDecorationLine:"none"}} to={{pathname: "/accept-request/"+this.props.obj.RequestID,state:{Mobile:this.state.Mobile, Cancel:true}}}>
-            <h1 style={{fontFamily:"Kanit", color:"#FFB172", fontSize:"1.8vw", fontWeight:"bold"}}> 
+            <h1 style={{fontFamily:"Kanit", color:"#FFB172", fontSize:"1.8vw"}}> 
             ความช่วยเหลือที่ต้องการ : {this.props.obj.help}</h1>
         </Link>
 
         {/* <button type="submit" class="helpbutton" style={{fontFamily:"Kanit"}} onClick={this.onSubmitRequest}>แผนที่</button> */}
-        <p style={{fontFamily:"Kanit", color:"#B4B6BB", fontSize:"1.2vw"}}>รายละเอียด : {this.props.obj.Option}</p>
+        {/* <p style={{fontFamily:"Kanit", color:"#B4B6BB", fontSize:"1.2vw"}}>รายละเอียด : {this.props.obj.Option}</p> */}
 
         <div style={{ display:"flex"}}>
         <p style={{fontFamily:"Kanit", color:"#B4B6BB", fontSize:"1.2vw"}}>ที่อยู่ :</p>
@@ -180,7 +180,7 @@ render() {
         <p style={{fontFamily:"Kanit", color:"#B4B6BB", fontSize:"1.2vw"}}> &nbsp; {this.state.Province}</p>  
         </div> 
         
-        <p style={{fontFamily:"Kanit", color:"#B4B6BB", fontSize:"1.2vw"}}>ช่องทางติดต่อ : {this.props.obj.Victim_Mobile}</p>
+        {/* <p style={{fontFamily:"Kanit", color:"#B4B6BB", fontSize:"1.2vw"}}>ช่องทางติดต่อ : {this.props.obj.Victim_Mobile}</p> */}
         </div>
 
         <div style={{width:"20%"}}>
@@ -190,26 +190,26 @@ render() {
         <h1 style={{fontFamily:"Kanit", color:"#F1C40F", fontSize:"1.5vw", display:(this.state.some ? 'block':'none')}}> &nbsp;{this.state.Status}</h1> 
         <h1 style={{fontFamily:"Kanit", color:"#2ECC71", fontSize:"1.5vw", display:(this.state.all ? 'block':'none')}}> &nbsp;{this.state.Status}</h1> 
         </div>
+        </div>
+        </div>
 
-        <div style={{display:(this.state.show_button ? 'block':'none')}}>
+        <div style={{display:(this.state.show_button ? 'flex':'none'), width:"80%", margin:"0 10% 0 10%"}}>
         <button class="rounded-pill " 
                 style={{border:"2px solid #FFB172", backgroundColor:"#ffffff", color:"#FFB172", 
-                      width:"100%", height:"20%", fontWeight:"bold", marginBottom:"5%", fontSize:"1.2vw"}}
+                      width:"30%", margin:"0 2% 0 0",height:"20%", fontWeight:"bold", fontSize:"1.2vw"}}
                 onClick={this.onSubmitSome}>ช่วยเหลือแล้วบางส่วน
         </button>
         <button class="rounded-pill " 
                 style={{border:"2px solid #FFB172",backgroundColor:"#ffffff", color:"#FFB172", 
-                      width:"100%", height:"20%", fontWeight:"bold", marginBottom:"5%", fontSize:"1.2vw"}}
+                      width:"30%",margin:"0 2% 0 0", height:"20%", fontWeight:"bold", fontSize:"1.2vw"}}
                 onClick={this.onSubmitAll}>ช่วยเหลือแล้วทั้งหมด
         </button> 
         <button class="rounded-pill " 
                 style={{border:"2px solid #FFB172",backgroundColor:"#ffffff", color:"#FFB172", 
-                      width:"100%", height:"20%", fontWeight:"bold", fontSize:"1.2vw"}}
+                      width:"30%", height:"20%", fontWeight:"bold", fontSize:"1.2vw"}}
                 onClick={this.Navigation}>นำทาง
         </button> 
-        </div>  
-        </div>
-        </div>
+        </div> 
 
         <div style={{display:(this.state.show_some ? 'block':'none')}}> 
         <textarea type="text" class="rounded" placeholder='อัพเดทความคืบหน้า' rows="3" onChange={this.onChangeSome}
