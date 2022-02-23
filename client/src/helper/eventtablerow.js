@@ -52,14 +52,16 @@ render() {
     return (
         <div>
         <div class="container-lg" style={{width:"100%"}}>
+        
         <Link style={{textDecorationLine:"none"}} to={{pathname: "/accept-request/"+this.props.obj.RequestID,state:{Mobile:this.state.Mobile, Cancel:false}}}>
             <h1 style={{fontFamily:"Kanit", color:"#FFB172", fontSize:"1.8vw"}}> 
             ความช่วยเหลือที่ต้องการ : {this.props.obj.help}</h1>
         </Link>
         {/* <button type="submit" class="helpbutton" style={{fontFamily:"Kanit"}} onClick={this.onSubmitRequest}>แผนที่</button> */}
-        <p style={{fontFamily:"Kanit", color:"#B4B6BB", fontSize:"1.2vw", margin:"2% 0 0 0"}}>ขอความช่วยเหลือเมื่อ : {this.props.obj.date}</p>
-        <p style={{fontFamily:"Kanit", color:"#B4B6BB", fontSize:"1.2vw", margin:"2% 0 0 0"}}>รายละเอียด : {this.props.obj.Option}</p>
-        <p style={{fontFamily:"Kanit", color:"#B4B6BB", fontSize:"1.2vw", margin:"2% 0 0 0"}}>ความคืบหน้า : {this.props.obj.Status_Text}</p>
+
+        {/* <p style={{fontFamily:"Kanit", color:"#B4B6BB", fontSize:"1.2vw", margin:"2% 0 0 0"}}>ขอความช่วยเหลือเมื่อ : {this.props.obj.date}</p> */}
+        {/* <p style={{fontFamily:"Kanit", color:"#B4B6BB", fontSize:"1.2vw", margin:"2% 0 0 0"}}>รายละเอียด : {this.props.obj.Option}</p>
+        <p style={{fontFamily:"Kanit", color:"#B4B6BB", fontSize:"1.2vw", margin:"2% 0 0 0"}}>ความคืบหน้า : {this.props.obj.Status_Text}</p> */}
 
         <div style={{ display:"flex",margin:"2% 0 0 0"}}>
         <p style={{fontFamily:"Kanit", color:"#B4B6BB", fontSize:"1.2vw"}}>ที่อยู่ :</p>
@@ -72,7 +74,7 @@ render() {
         <p style={{fontFamily:"Kanit", color:"#B4B6BB", fontSize:"1.2vw"}}> &nbsp; {this.state.Province}</p>  
         </div> 
         
-        <p style={{fontFamily:"Kanit", color:"#B4B6BB", fontSize:"1.2vw", margin:"0 0 0 0"}}>ช่องทางติดต่อ : {this.props.obj.Victim_Mobile}</p>
+        {/* <p style={{fontFamily:"Kanit", color:"#B4B6BB", fontSize:"1.2vw", margin:"0 0 0 0"}}>ช่องทางติดต่อ : {this.props.obj.Victim_Mobile}</p> */}
         <hr/>
         </div>
     </div>

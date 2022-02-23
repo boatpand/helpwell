@@ -108,7 +108,67 @@ render() {
     <div>
       <Header Mobile={this.state.Mobile}/>
       <div class="container-lg" style={{width:"100%"}}>
-      <h1 style={{fontFamily:"Kanit", color:"#FFB172", textAlign:"left", margin:"5rem 0 0 2%"}}>รายการผู้ขอความช่วยเหลือ</h1>
+      <h1 style={{fontFamily:"Kanit", color:"#FFB172", textAlign:"left", margin:"4rem 0 0 2%", fontSize:"2.5vw"}}>รายการขอความช่วยเหลือที่ยังไม่ได้รับการช่วยเหลือ</h1>
+      
+      <div style={{display:"inline-flex", margin:"5% 0 0 5%", width:"100%"}}>
+      <h1 style={{fontFamily:"Kanit", color:"#FFB172", textAlign:"left", fontSize:"1.8vw"}}>ให้ความช่วยเหลือโดยค้นหาจากเขต</h1>
+      <select class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"50%", 
+                        marginLeft:"3%",fontFamily:"Kanit", fontSize:"1.5vw", color:"#707070"}} 
+                    onChange={this.onChangeDistrict}>
+                    <option style={{fontFamily:"Kanit"}}></option>
+                    <option style={{fontFamily:"Kanit"}}>พระนคร</option>
+                    <option style={{fontFamily:"Kanit"}}>ดุสิต</option>
+                    <option style={{fontFamily:"Kanit"}}>หนองจอก</option>
+                    <option style={{fontFamily:"Kanit"}}>บางรัก</option>
+                    <option style={{fontFamily:"Kanit"}}>บางเขน</option>
+                    <option style={{fontFamily:"Kanit"}}>บางกะปิ</option>
+                    <option style={{fontFamily:"Kanit"}}>ปทุมวัน</option>
+                    <option style={{fontFamily:"Kanit"}}>ป้อมปราบศัตรูพ่าย</option>
+                    <option style={{fontFamily:"Kanit"}}>พระโขนง</option>
+                    <option style={{fontFamily:"Kanit"}}>มีนบุรี</option>
+                    <option style={{fontFamily:"Kanit"}}>ลาดกระบัง</option>
+                    <option style={{fontFamily:"Kanit"}}>ยานนาวา</option>
+                    <option style={{fontFamily:"Kanit"}}>สัมพันธวงศ์</option>
+                    <option style={{fontFamily:"Kanit"}}>พญาไท</option>
+                    <option style={{fontFamily:"Kanit"}}>ธนบุรี</option>
+                    <option style={{fontFamily:"Kanit"}}>บางกอกใหญ่</option>
+                    <option style={{fontFamily:"Kanit"}}>ห้วยขวาง</option>
+                    <option style={{fontFamily:"Kanit"}}>คลองสาน</option>
+                    <option style={{fontFamily:"Kanit"}}>ตลิ่งชัน</option>
+                    <option style={{fontFamily:"Kanit"}}>บางกอกน้อย</option>
+                    <option style={{fontFamily:"Kanit"}}>บางขุนเทียน</option>
+                    <option style={{fontFamily:"Kanit"}}>ภาษีเจริญ</option>
+                    <option style={{fontFamily:"Kanit"}}>หนองแขม</option>
+                    <option style={{fontFamily:"Kanit"}}>ราษฎร์บูรณะ</option>
+                    <option style={{fontFamily:"Kanit"}}>บางพลัด</option>
+                    <option style={{fontFamily:"Kanit"}}>ดินแดง</option>
+                    <option style={{fontFamily:"Kanit"}}>บึงกุ่ม</option>
+                    <option style={{fontFamily:"Kanit"}}>สาทร</option>
+                    <option style={{fontFamily:"Kanit"}}>บางซื่อ</option>
+                    <option style={{fontFamily:"Kanit"}}>จตุจักร</option>
+                    <option style={{fontFamily:"Kanit"}}>บางคอแหลม</option>
+                    <option style={{fontFamily:"Kanit"}}>ประเวศ</option>
+                    <option style={{fontFamily:"Kanit"}}>คลองเตย</option>
+                    <option style={{fontFamily:"Kanit"}}>สวนหลวง</option>
+                    <option style={{fontFamily:"Kanit"}}>จอมทอง</option>
+                    <option style={{fontFamily:"Kanit"}}>ดอนเมือง</option>
+                    <option style={{fontFamily:"Kanit"}}>ราชเทวี</option>
+                    <option style={{fontFamily:"Kanit"}}>ลาดพร้าว</option>
+                    <option style={{fontFamily:"Kanit"}}>วัฒนา</option>
+                    <option style={{fontFamily:"Kanit"}}>บางแค</option>
+                    <option style={{fontFamily:"Kanit"}}>หลักสี่</option>
+                    <option style={{fontFamily:"Kanit"}}>สายไหม</option>
+                    <option style={{fontFamily:"Kanit"}}>คันนายาว</option>
+                    <option style={{fontFamily:"Kanit"}}>สะพานสูง</option>
+                    <option style={{fontFamily:"Kanit"}}>วังทองหลาง</option>
+                    <option style={{fontFamily:"Kanit"}}>คลองสามวา</option>
+                    <option style={{fontFamily:"Kanit"}}>บางนา</option>
+                    <option style={{fontFamily:"Kanit"}}>ทวีวัฒนา</option>
+                    <option style={{fontFamily:"Kanit"}}>ทุ่งครุ</option>
+                    <option style={{fontFamily:"Kanit"}}>บางบอน</option>
+      </select>
+      </div>
+      
       <div style={{display:"flex"}}>
       <div style={{fontFamily:"Kanit", color:"#FFB172", textAlign:"left", margin:"5% 0 0 2%", position:"fixed", width:"20%"}}>
         <h4 style={{fontSize:"2vw", color:"#FFB172", textAlign:"left"}}>Filter</h4>

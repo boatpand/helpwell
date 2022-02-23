@@ -21,43 +21,7 @@ let RequestSchema = new Schema(
     Mobile: {
       type: String,
     },
-    Food: {
-      type: Boolean,
-    },
-    count_Food: {
-      type: Number,
-    },
-    Medicine: {
-      type: Boolean,
-    },
-    count_Medicine: {
-      type: Number,
-    },
-    Bed: {
-      type: Boolean,
-    },
-    count_Bed: {
-      type: Number,
-    },
-    Hospital: {
-      type: Boolean,
-    },
-    count_Hospital: {
-      type: Number,
-    },
-    Home: {
-      type: Boolean,
-    },
-    count_Home: {
-      type: Number,
-    },
     Other: {
-      type: String,
-    },
-    count_Other: {
-      type: Number,
-    },
-    Option: {
       type: String,
     },
     Status: {
