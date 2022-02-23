@@ -2,7 +2,8 @@ let mongoose = require('mongoose'),
     express = require('express'),
     router = express.Router();
 
-let AccepthelpSchema = require('../models/Accepthelp')
+let AccepthelpSchema = require('../models/Accepthelp');
+let AcceptupdateSchema = require('../models/Acceptupdate');
 
 // create 
 router.route('/accept').post((req, res, next) => {

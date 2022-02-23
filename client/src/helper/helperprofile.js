@@ -241,9 +241,22 @@ class HelperProfile extends Component {
               <hr class="rounded-pill" style={{border:"2px solid #B4B6BB"}}/>
               
               <div>
-              <h1 style={{margin:"2% 0 2% 2%", color:"#FFB172", fontWeight:"bold",
+              <h1 style={{margin:"3% 0 0 2%", color:"#FFB172", fontWeight:"bold",
                   fontSize:"2vw", fontFamily:"Kanit", textAlign:"left"}}>รายการผู้ขอความช่วยเหลือที่เข้าช่วยเหลือ</h1>
               </div>  
+
+              <div style={{display:"inline-flex", margin:"5% 0 5% 5%", width:"100%"}}>
+              <h1 style={{fontFamily:"Kanit", color:"#FFB172", textAlign:"left", fontSize:"1.8vw"}}>เลือกสถานะของรายการความช่วยเหลือ</h1>
+              <select class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"50%", 
+                                marginLeft:"3%",fontFamily:"Kanit", fontSize:"1.5vw", color:"#707070"}} 
+                            onChange={this.onChangeDistrict}>
+                            <option style={{fontFamily:"Kanit"}}></option>
+                            <option style={{fontFamily:"Kanit"}}>กำลังช่วยเหลือ</option>
+                            <option style={{fontFamily:"Kanit"}}>รอการช่วยเหลือ</option>
+                            <option style={{fontFamily:"Kanit"}}>ช่วยเหลือสำเร็จ</option>
+                            
+              </select>
+              </div>
               <form>
               <table class="table table-borderless">
               <tbody>{this.requestTable()}</tbody>

@@ -67,6 +67,10 @@ class EventDetail extends Component {
             Lastname: "",
             Org_Name: "",
             isOrg: false,
+
+            datet:"",
+            month:"",
+            datetime:""
         }
     }
 
@@ -133,7 +137,11 @@ class EventDetail extends Component {
                 date:res.data.date,
 
                 RequestID:id,
-                requestID_state:[]
+                requestID_state:[],
+
+                month:res.data.date.slice(5,7),
+                datet:"วันที่ " + res.data.date.slice(8,10) + " / " + res.data.date.slice(5,7) + " / " + res.data.date.slice(0,4),
+                datetime:" เวลา " + res.data.date.slice(11,16) + " " + "น."
             })
         });
 
@@ -408,7 +416,7 @@ class EventDetail extends Component {
         });
 
         // Redirect to helplist
-        this.props.history.push({pathname:`/helper`,state:{Mobile:this.state.Helper_Mobile}})
+        this.props.history.push({pathname:`/helperprofile/${this.state.Helper_Mobile}`,state:{Mobile:this.state.Helper_Mobile}})
         }
       }
 
@@ -454,13 +462,21 @@ class EventDetail extends Component {
   <div>
       <Header Mobile={this.state.Helper_Mobile}/>
       <div class="container-lg" style={{width:"100%"}}>
-      <h1 style={{fontFamily:"Kanit", color:"#FFB172", textAlign:"left", margin:"5rem 0 0 2%"}}>รายละเอียดผู้ขอความช่วยเหลือ</h1>
+      <h1 style={{fontFamily:"Kanit", color:"#FFB172", textAlign:"left", margin:"4rem 0 0 2%"}}>รายละเอียดผู้ขอความช่วยเหลือ</h1>
       <form onSubmit={this.onSubmit}>
       
-      <div style={{display:"flex", margin:"3% 0 0 3%"}}>
-      <h1 style={{fontFamily:"Kanit", fontSize:"1.5vw"}}>ความช่วยเหลือ : </h1>
+      <div style={{display:"flex", margin:"5% 0 0 3%"}}>
+
+      <div style={{width:"60%", textAlign:"left", display:"flex"}}>
+      <h1 style={{fontFamily:"Kanit", fontSize:"1.5vw"}}>ความช่วยเหลือที่ต้องการ</h1>
       <h1 style={{fontFamily:"Kanit", fontSize:"1.5vw",color:"#707070", marginLeft:"5%"}} >{this.state.help}</h1>
-      <h1 style={{color:"#707070", marginLeft:"30%", fontFamily:"Kanit", fontSize:"1.5vw"}}>เวลาที่ขอความช่วยเหลือ : {this.state.date}</h1>
+      </div>
+
+      <div style={{width:"40%", textAlign:"left"}}>
+      {/* <h1 style={{color:"#707070", marginLeft:"30%", fontFamily:"Kanit", fontSize:"1.5vw"}}>เวลาที่ขอความช่วยเหลือ : {this.state.date} </h1> */}
+      <h1 style={{color:"#707070", margin:"0 0 0 0", fontFamily:"Kanit", fontSize:"1.5vw"}}>ขอความช่วยเหลือเมื่อ : {this.state.datet}</h1>
+      <h1 style={{color:"#707070", margin:"0 0 0 45%", fontFamily:"Kanit", fontSize:"1.5vw"}}>{this.state.datetime}</h1>
+      </div>
       </div>
 
       <div style={{display:"flex", margin:"3% 0 0 3%"}}>
@@ -515,7 +531,7 @@ class EventDetail extends Component {
       <div class="col-12" style={{display:(this.state.Cancel? 'none':'block')}}>
           <button  class="rounded-pill" onClick={this.onSubmit}
                   style={{marginBottom:"5%", background:"#FFB172", color:"#ffffff",
-                          border:"2px solid #B4B6BB", width:"100%", fontSize:"1.5vw"}}>Confirm</button>
+                          border:"2px solid #B4B6BB", width:"100%", fontSize:"1.5vw"}}>ให้ความช่วยเหลือ</button>
       </div>
 
       {/* Cancel? */}
