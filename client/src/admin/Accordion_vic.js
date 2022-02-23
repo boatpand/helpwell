@@ -62,10 +62,9 @@ export default function Accordion_vic(props) {
   const [congenital, setCongenital] = useState("-");
   const [request, setRequest] = useState([]);
 
-
   console.log("Mobile_Accordion : ", Mobile);
 
-  useEffect(async() => {
+  useEffect(async () => {
     await axios
       .get(`http://localhost:4000/victimuser/victim-disease/${Mobile}`)
       .then((res) => {
@@ -164,7 +163,7 @@ export default function Accordion_vic(props) {
               </Box>
 
               {request.map((requests) => {
-                return <CardItem {...requests} ></CardItem>;
+                return <CardItem {...requests}></CardItem>;
               })}
             </Grid>
           </AccordionDetails>

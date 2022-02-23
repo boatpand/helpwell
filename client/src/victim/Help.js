@@ -35,7 +35,7 @@ import theme_vic from "./theme_vic";
 
 import Header_Vic from "./Header_vic";
 
-import food_img from "./image/food.jpg";
+import food_img from "./image/kaprao.jpg";
 import medicine_img from "./image/medicine.jpg";
 import bed_img from "./image/bed.jpg";
 import hospital_img from "./image/Hospital.jpg";
@@ -66,7 +66,7 @@ export default function Help(props) {
   const classes = useStyles();
 
   const GetStateParam = useLocation().state;
-  const { Mobile } = GetStateParam ;
+  const { Mobile } = GetStateParam;
   console.log("Help_Mobile : ", Mobile);
 
   const [count_Food, setcount_Food] = useState(0);
@@ -74,8 +74,8 @@ export default function Help(props) {
   const [count_Bed, setcount_Bed] = useState(0);
   const [count_Hospital, setcount_Hospital] = useState(0);
   const [count_Home, setcount_Home] = useState(0);
-  const [count_Other, setcount_Other] = useState("");
   const [value_Other, setvalue_Other] = useState("");
+  const [count_Other, setcount_Other] = useState(0);
 
   const [open, setOpen] = useState(false);
 
@@ -119,6 +119,8 @@ export default function Help(props) {
     setcount_Other(event.target.value);
   };
 
+  const onClick = () => {};
+
   const data = {
     Mobile: Mobile,
     count_Food: count_Food,
@@ -149,7 +151,7 @@ export default function Help(props) {
         <Link
           to={{
             pathname: `/victims/summary`,
-            state: { data: data },
+            state: { data: data, Mobile: Mobile },
           }}
         >
           <Button variant="outlined" size="small">
@@ -162,7 +164,7 @@ export default function Help(props) {
 
       <Grid display="flex" className={classes.GridSpacer}>
         {/* Card Food */}
-        <Card sx={{ width: 300 }}>
+        <Card sx={{ width: 400 }}>
           <CardMedia component="img" height="200" image={food_img} alt="food" />
 
           <CardContent>
@@ -170,6 +172,7 @@ export default function Help(props) {
               fontFamily="Kanit"
               variant="body1"
               color="text.secondary"
+              sx={{ fontSize: "1.2vw" }}
             >
               จำนวนอาหารที่ต้องการ (วัน)
             </Typography>
@@ -179,13 +182,13 @@ export default function Help(props) {
             <Badge
               color="secondary"
               badgeContent={count_Food}
-              sx={{ display: "flex", alignItems: "center", pl: 5, pb: 1 }}
-              size="medium"
+              sx={{ display: "flex", alignItems: "center", pl: 10, pb: 1 }}
+              size="large"
             >
               <Fastfood size="large" />
             </Badge>
             <ButtonGroup
-              sx={{ display: "flex", alignItems: "center", pl: 10, pb: 1 }}
+              sx={{ display: "flex", alignItems: "center", pl: 15, pb: 1 }}
             >
               <Button aria-label="reduce" onClick={handleFood_Reduce}>
                 <RemoveIcon fontSize="small" />
@@ -198,7 +201,7 @@ export default function Help(props) {
         </Card>
 
         {/* Card Medicine */}
-        <Card sx={{ width: 300 }}>
+        <Card sx={{ width: 400 }}>
           <CardMedia
             component="img"
             height="200"
@@ -211,6 +214,7 @@ export default function Help(props) {
               fontFamily="Kanit"
               variant="body1"
               color="text.secondary"
+              sx={{ fontSize: "1.2vw" }}
             >
               จำนวนยาที่ต้องการ (วัน)
             </Typography>
@@ -220,13 +224,13 @@ export default function Help(props) {
             <Badge
               color="secondary"
               badgeContent={count_Medicine}
-              sx={{ display: "flex", alignItems: "center", pl: 5, pb: 1 }}
+              sx={{ display: "flex", alignItems: "center", pl: 10, pb: 1 }}
               size="medium"
             >
               <MedicalServices size="large" />
             </Badge>
             <ButtonGroup
-              sx={{ display: "flex", alignItems: "center", pl: 10, pb: 1 }}
+              sx={{ display: "flex", alignItems: "center", pl: 15, pb: 1 }}
             >
               <Button aria-label="reduce" onClick={handleMedicine_Reduce}>
                 <RemoveIcon fontSize="small" />
@@ -239,7 +243,7 @@ export default function Help(props) {
         </Card>
 
         {/* Card Bed */}
-        <Card sx={{ width: 300 }}>
+        <Card sx={{ width: 400 }}>
           <CardMedia component="img" height="200" image={bed_img} alt="food" />
 
           <CardContent>
@@ -247,8 +251,9 @@ export default function Help(props) {
               fontFamily="Kanit"
               variant="body1"
               color="text.secondary"
+              sx={{ fontSize: "1.2vw" }}
             >
-              จำนวนผู้ป่วยที่หาเตียง (คน)
+              จำนวนเตียงที่ต้องการขอ (เตียง)
             </Typography>
           </CardContent>
 
@@ -256,13 +261,13 @@ export default function Help(props) {
             <Badge
               color="secondary"
               badgeContent={count_Bed}
-              sx={{ display: "flex", alignItems: "center", pl: 5, pb: 1 }}
+              sx={{ display: "flex", alignItems: "center", pl: 10, pb: 1 }}
               size="medium"
             >
               <Hotel size="large" />
             </Badge>
             <ButtonGroup
-              sx={{ display: "flex", alignItems: "center", pl: 10, pb: 1 }}
+              sx={{ display: "flex", alignItems: "center", pl: 15, pb: 1 }}
             >
               <Button aria-label="reduce" onClick={handleBed_Reduce}>
                 <RemoveIcon fontSize="small" />
@@ -278,7 +283,7 @@ export default function Help(props) {
       <div className={classes.Spacer} />
       <Grid display="flex" className={classes.GridSpacer}>
         {/* Card Hospital */}
-        <Card sx={{ width: 300 }}>
+        <Card sx={{ width: 400 }}>
           <CardMedia
             component="img"
             height="200"
@@ -291,8 +296,9 @@ export default function Help(props) {
               fontFamily="Kanit"
               variant="body1"
               color="text.secondary"
+              sx={{ fontSize: "1.2vw" }}
             >
-              จำนวนผู้ป่วยที่นำส่งโรงพยาบาล (คน)
+              จำนวนผู่ป่วยที่ต้องการรถนำส่งโรงพยาบาล (คน)
             </Typography>
           </CardContent>
 
@@ -300,13 +306,13 @@ export default function Help(props) {
             <Badge
               color="secondary"
               badgeContent={count_Hospital}
-              sx={{ display: "flex", alignItems: "center", pl: 5, pb: 1 }}
+              sx={{ display: "flex", alignItems: "center", pl: 10, pb: 1 }}
               size="medium"
             >
               <LocalHospitalRounded size="large" />
             </Badge>
             <ButtonGroup
-              sx={{ display: "flex", alignItems: "center", pl: 10, pb: 1 }}
+              sx={{ display: "flex", alignItems: "center", pl: 15, pb: 1 }}
             >
               <Button aria-label="reduce" onClick={handleHospital_Reduce}>
                 <RemoveIcon fontSize="small" />
@@ -319,7 +325,7 @@ export default function Help(props) {
         </Card>
 
         {/* Card Home */}
-        <Card sx={{ width: 300 }}>
+        <Card sx={{ width: 400 }}>
           <CardMedia component="img" height="200" image={home_img} alt="food" />
 
           <CardContent>
@@ -327,8 +333,9 @@ export default function Help(props) {
               fontFamily="Kanit"
               variant="body1"
               color="text.secondary"
+              sx={{ fontSize: "1.2vw" }}
             >
-              จำนวนผู้ป่วยที่นำส่งภูมิลำเนา (คน)
+              จำนวนผู้ป่วยที่ต้องการรถนำส่งภูมิลำเนา (คน)
             </Typography>
           </CardContent>
 
@@ -336,13 +343,13 @@ export default function Help(props) {
             <Badge
               color="secondary"
               badgeContent={count_Home}
-              sx={{ display: "flex", alignItems: "center", pl: 5, pb: 1 }}
+              sx={{ display: "flex", alignItems: "center", pl: 10, pb: 1 }}
               size="medium"
             >
               <HomeRounded size="large" />
             </Badge>
             <ButtonGroup
-              sx={{ display: "flex", alignItems: "center", pl: 10, pb: 1 }}
+              sx={{ display: "flex", alignItems: "center", pl: 15, pb: 1 }}
             >
               <Button aria-label="reduce" onClick={handleHome_Reduce}>
                 <RemoveIcon fontSize="small" />
@@ -355,7 +362,7 @@ export default function Help(props) {
         </Card>
 
         {/* Card Other */}
-        <Card sx={{ width: 300 }}>
+        <Card sx={{ width: 400 }}>
           <CardActionArea button onClick={handleOpen}>
             <CardMedia
               component="img"
@@ -369,6 +376,7 @@ export default function Help(props) {
                 fontFamily="Kanit"
                 variant="body1"
                 color="text.secondary"
+                sx={{ fontSize: "1.2vw" }}
               >
                 อื่นๆ
               </Typography>
@@ -378,7 +386,13 @@ export default function Help(props) {
                 fontFamily="Kanit"
                 variant="body1"
                 color="text.secondary"
-                sx={{ display: "flex", alignItems: "center", pl: 7, pb: 1 }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  pl: 12,
+                  pb: 1,
+                  fontSize: "1.2vw",
+                }}
               >
                 กดที่รูปเพื่อระบุความต้องการ
               </Typography>
@@ -390,7 +404,7 @@ export default function Help(props) {
             display="flex"
             alignItems="center"
             justifyContent="center"
-            sx={{ flexGrow: 1 }}
+            sx={{ flexGrow: 1, fontFamily: "Kanit" }}
           >
             ระบุความต้องการ
           </DialogTitle>
@@ -406,16 +420,19 @@ export default function Help(props) {
                 variant="standard"
                 value={value_Other}
                 onChange={handleOther}
+                sx={{ fontFamily: "Kanit" }}
               />
               <TextField
                 autoFocus
                 margin="dense"
-                id="name"
+                id="int"
+                type="number"
                 label="จำนวน (ชุด)"
                 fullWidth
                 variant="standard"
                 value={count_Other}
                 onChange={handleCountOther}
+                sx={{ fontFamily: "Kanit" }}
               />
             </form>
           </DialogContent>

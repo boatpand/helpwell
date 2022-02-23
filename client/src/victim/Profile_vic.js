@@ -3,7 +3,7 @@ import { useLocation } from "react-router";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Grid, Typography, Button } from "@mui/material";
+import { Grid, Typography, Button, Box } from "@mui/material";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@mui/material/styles";
@@ -15,7 +15,7 @@ const fontSize = 22;
 
 const useStyles = makeStyles((theme) => ({
   Spacer1: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
   },
   Spacer2: {
     marginRight: theme.spacing(50),
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Profile_vic(props) {
   const classes = useStyles();
   const GetStateParam = useLocation().state;
-  const { Mobile } = GetStateParam || {};
+  const { Mobile } = GetStateParam;
   console.log("Profile_Mobile : ", Mobile);
 
   const [info, setInfo] = useState("");
@@ -51,7 +51,7 @@ export default function Profile_vic(props) {
     axios
       .get(`http://localhost:4000/victimuser/victim-disease/${Mobile}`)
       .then((res) => {
-        console.log("res is ", res.data);
+        // console.log("res is ", res.data);
         setCongenital(res.data);
       })
       .catch((err) => {
@@ -60,7 +60,7 @@ export default function Profile_vic(props) {
     axios
       .get(`http://localhost:4000/request/request/${Mobile}`)
       .then((res) => {
-        console.log("res is ", res.data);
+        // console.log("res is ", res.data);
         setRequest(res.data);
       })
       .catch((err) => {
@@ -72,147 +72,204 @@ export default function Profile_vic(props) {
   console.log("Profile_request : ", request);
   return (
     <ThemeProvider theme={theme_vic}>
-      <Header_Vic />
-      <div className={classes.Spacer1} />
-      <Grid container direction="row">
-        <Typography
-          ml={30}
-          align="left"
-          fontFamily="Kanit"
-          fontSize={fontSize}
-          variant="h5"
-          color="text.primary"
-        >
-          Profile
-        </Typography>
-        <div className={classes.Spancer} />
-
-        <Link
-          to={{
-            pathname: `/victims/profile/edit`,
-            state: { Mobile: Mobile },
-          }}
-        >
-          <Button variant="outlined" size="small">
-            Edit Profile
-          </Button>
-        </Link>
-        <div className={classes.Spacer3} />
-        <Link
-          to={{
-            pathname: `/`,
-            // state: { Mobile: Mobile },
-          }}
-        >
-          <Button variant="outlined" size="small">
-            sign out
-          </Button>
-        </Link>
-      </Grid>
+      <Header_Vic Mobile={Mobile} />
 
       <div className={classes.Spacer1} />
-      <Grid container direction="row">
-        <Typography
-          ml={35}
-          align="left"
-          fontFamily="Kanit"
-          fontSize={fontSize}
-          variant="h5"
-          color="text.primary"
-        >
-          ชื่อ - สกุล : &nbsp;&nbsp;&nbsp;{info.Firstname}{" "}
-          &nbsp;&nbsp;&nbsp;&nbsp; {info.Lastname}
-        </Typography>
-        <div className={classes.Spacer2} />
-        <Typography
-          mr={30}
-          align="right"
-          fontFamily="Kanit"
-          fontSize={fontSize}
-          variant="h5"
-          color="text.primary"
-        >
-          เบอร์โทรศัพท์ : &nbsp;&nbsp;&nbsp;{info.Mobile}
-        </Typography>
-      </Grid>
-      <div className={classes.Spacer1} />
-      <Grid container direction="row">
-        <Typography
-          ml={35}
-          mr={30}
-          align="left"
-          fontFamily="Kanit"
-          fontSize={fontSize}
-          variant="h5"
-          color="text.primary"
-        >
-          อายุ : &nbsp;&nbsp;&nbsp;{info.Age}
-        </Typography>
+      <Grid container direction="row" justifyContent="space-around">
+        <Grid item xs={1} alignItems="center"></Grid>
+        <Grid item xs={10} alignItems="center">
+          <div style={{ width: "100%" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                m: 2,
+              }}
+            >
+              <Typography
+                fontFamily="Kanit"
+                color="#2F4A8A"
+                sx={{ flexShrink: 0 }}
+                style={{
+                  color: "#2F4A8A",
+                  fontFamily: "Kanit",
+                  fontSize: "1.8vw",
+                }}
+              >
+                Profile
+              </Typography>
+              <Typography>
+                <Link
+                  to={{
+                    pathname: `/victims/profile/edit`,
+                    state: { Mobile: Mobile },
+                  }}
+                  style={{textDecorationLine:"none"}}
+                >
+                  <Button variant="outlined" size="small" style={{ fontFamily:"Kanit", fontSize:"1.1vw"}}>
+                    Edit Profile
+                  </Button>
+                </Link>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <Link
+                  to={{
+                    pathname: `/`,
+                    // state: { Mobile: Mobile },
+                  }}
+                  style={{textDecorationLine:"none"}}
+                >
+                  <Button variant="outlined" size="small" style={{ fontFamily:"Kanit", fontSize:"1.1vw"}}>
+                    sign out
+                  </Button>
+                </Link>
+              </Typography>
+            </Box>
+          </div>
+          <div style={{ width: "100%" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                m: 2,
+              }}
+            >
+              <Typography
+                fontFamily="Kanit"
+                color="#2F4A8A"
+                sx={{ flexShrink: 0 }}
+                style={{
+                  color: "#2F4A8A",
+                  fontFamily: "Kanit",
+                  fontSize: "1.3vw",
+                }}
+              >
+                ชื่อ - สกุล : &nbsp;&nbsp;&nbsp;{info.Firstname}
+                &nbsp;&nbsp;&nbsp;&nbsp; {info.Lastname}
+              </Typography>
 
-        <Typography
-          mr={30}
-          align="right"
-          fontFamily="Kanit"
-          fontSize={fontSize}
-          variant="h5"
-          color="text.primary"
-        >
-          เพศ : &nbsp;&nbsp;&nbsp;{info.Gender}
-        </Typography>
+              <Typography
+                style={{
+                  color: "#2F4A8A",
+                  fontFamily: "Kanit",
+                  fontSize: "1.3vw",
+                }}
+              >
+                เบอร์โทรศัพท์ : &nbsp;&nbsp;&nbsp;{info.Mobile}
+              </Typography>
+            </Box>
+          </div>
 
-        <Typography
-          mr={30}
-          align="right"
-          fontFamily="Kanit"
-          fontSize={fontSize}
-          variant="h5"
-          color="text.primary"
-        >
-          โรคประจำตัว : &nbsp;&nbsp;&nbsp;{congenital.Disease}
-        </Typography>
-      </Grid>
-      <div className={classes.Spacer1} />
-      <Typography
-        ml={35}
-        align="left"
-        fontFamily="Kanit"
-        fontSize={fontSize}
-        variant="h5"
-        color="text.primary"
-      >
-        ที่อยู่ : &nbsp;&nbsp;&nbsp;{info.House_No}&nbsp;&nbsp;ซอย&nbsp;
-        {info.Soi}&nbsp;&nbsp;ถนน&nbsp;
-        {info.Road}&nbsp;&nbsp;แขวง&nbsp;{info.Subdistrict}&nbsp;&nbsp;เขต&nbsp;
-        {info.District}&nbsp;&nbsp;
-        {info.Province}&nbsp;&nbsp;
-        {info.ZIP_Code}
-      </Typography>
-      <hr />
-      {Object.keys(request).length !== 0 ? (
-        <Grid
-          container
-          spacing={2}
-          justify="center"
-          alignItems="center"
-          display="block"
-        >
-          <div className={classes.Spacer1} />
-          <Typography
-            ml={35}
-            align="left"
-            fontFamily="Kanit"
-            fontSize={fontSize}
-            variant="h5"
-            color="text.primary"
-          >
-            รายการขอความช่วยเหลือ
-          </Typography>
+          <div style={{ width: "100%" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                m: 2,
+              }}
+            >
+              <Typography
+                fontFamily="Kanit"
+                color="#2F4A8A"
+                sx={{ flexShrink: 0 }}
+                style={{
+                  color: "#2F4A8A",
+                  fontFamily: "Kanit",
+                  fontSize: "1.3vw",
+                }}
+              >
+                อายุ : &nbsp;&nbsp;&nbsp;{info.Age}
+              </Typography>
 
-          {request.map((requests) => {
-            return <CardItem {...requests}></CardItem>;
-          })}
+              <Typography
+                style={{
+                  color: "#2F4A8A",
+                  fontFamily: "Kanit",
+                  fontSize: "1.3vw",
+                }}
+              >
+                เพศ : &nbsp;&nbsp;&nbsp;{info.Gender}
+              </Typography>
+              <Typography
+                style={{
+                  color: "#2F4A8A",
+                  fontFamily: "Kanit",
+                  fontSize: "1.3vw",
+                }}
+              >
+                โรคประจำตัว : &nbsp;&nbsp;&nbsp;{congenital.Disease}
+              </Typography>
+            </Box>
+          </div>
+
+          <div style={{ width: "100%" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                m: 2,
+              }}
+            >
+              <Typography
+                fontFamily="Kanit"
+                color="#2F4A8A"
+                sx={{ flexShrink: 0 }}
+                style={{
+                  color: "#2F4A8A",
+                  fontFamily: "Kanit",
+                  fontSize: "1.3vw",
+                }}
+              >
+                ที่อยู่ : &nbsp;&nbsp;&nbsp;{info.House_No}&nbsp;&nbsp;ซอย&nbsp;
+                {info.Soi}&nbsp;&nbsp;ถนน&nbsp;
+                {info.Road}&nbsp;&nbsp;แขวง&nbsp;{info.Subdistrict}
+                &nbsp;&nbsp;เขต&nbsp;
+                {info.District}&nbsp;&nbsp;
+                {info.Province}&nbsp;&nbsp;
+                {info.ZIP_Code}
+              </Typography>
+            </Box>
+          </div>
+          <hr />
+
+          {Object.keys(request).length !== 0 ? (
+            <Grid
+              container
+              spacing={2}
+              justify="center"
+              alignItems="center"
+              display="block"
+            >
+              <div style={{ width: "100%" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    m: 2,
+                  }}
+                >
+                  <Typography
+                    fontFamily="Kanit"
+                    color="#2F4A8A"
+                    sx={{ flexShrink: 0 }}
+                    style={{
+                      color: "#2F4A8A",
+                      fontFamily: "Kanit",
+                      fontSize: "1.5vw",
+                    }}
+                  >
+                    รายการการขอความช่วยเหลือ
+                  </Typography>
+                </Box>
+              </div>
+
+              {request.map((requests) => {
+                return <CardItem {...requests}></CardItem>;
+              })}
+            </Grid>
+          ) : null}
         </Grid>
-      ) : null}
+        <Grid item xs={1} alignItems="center"></Grid>
+      </Grid>
     </ThemeProvider>
   );
 }
