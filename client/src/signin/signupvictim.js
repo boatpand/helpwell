@@ -169,6 +169,9 @@ export default class SignupVictim extends Component {
 
         // console.log(this.state.check)
         if(this.state.check===true){
+            if (this.state.Congenital_Disease==="อื่นๆ"){
+                this.setState({Congenital_Disease:this.state.Other_Disease})
+            }
             this.props.history.push({
                 pathname: '/signup-victim2',
                   search: '',

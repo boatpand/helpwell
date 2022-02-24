@@ -22,8 +22,6 @@ export default class HelperMap extends Component {
             place_victim:[],
             name:"",
             mobile:"",
-            // show_info:false,
-            show_info:true,
 
             address:"",
             city:"",
@@ -34,12 +32,11 @@ export default class HelperMap extends Component {
             mapPosition:{lat:0,lng:0},
             markerPosition:{lat:0,lng:0},
 
-            activeMarker: {},
-            selectedPlace: {},
-
             org_mobile:"",
             helptype:"",
-            vic_mobile:""
+            vic_mobile:"",
+
+            activeMarker:"",
         }
     }
 
@@ -264,14 +261,11 @@ export default class HelperMap extends Component {
         }) 
     }
 
-    handleMarkerClick = (e) =>{
-        this.setState({
-            show_info:!this.state.show_block,
-            mapPosition:{
-                lat:e.latLng.lat(),
-                lng:e.latLng.lng()
-            }
-        })
+    handleActiveMarker = (marker) => {
+        if (marker === this.state.activeMarker) {
+            return;
+          }
+          this.setState({activeMarker:marker});
     }
 
     // handle radio box filter
@@ -282,7 +276,6 @@ export default class HelperMap extends Component {
         axios.get('http://localhost:4000/request/all-request').then(res => {
         this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})
     }
-
 
     handleFood = (e) => {
         //console.log("done")
@@ -347,43 +340,24 @@ export default class HelperMap extends Component {
         const org_markers = [], victim_markers = [];
         for (let i=0; i<this.state.place_org.length; i++){
             org_markers.push(
-                <Marker draggable={false}
-                        position={{lat: parseFloat(this.state.place_org[i].lat), 
-                                    lng: parseFloat(this.state.place_org[i].lng)}}
-                        onClick={this.handleMarkerClick}
-                        icon={'http://maps.google.com/mapfiles/ms/icons/orange-dot.png'}
-                >
-                    {this.state.show_info === true && (
-                    <InfoWindow>
-                    <p><button style={{background:"#ffffff", border:"0"}} value={this.state.place_org[i].mobile}>{this.state.place_org[i].name}</button> 
-                    <br/> 
-                    {this.state.place_org[i].mobile}
-                    <br/>
-                    ความช่วยเหลือ : {this.state.place_org[i].helptype_text}
-                    </p>
-                    </InfoWindow>
-                    )}
-                </Marker>
+                {
+                    id:i+1,
+                    name:this.state.place_org[i].name,
+                    mobile:this.state.place_org[i].mobile,
+                    help:this.state.place_org[i].helptype_text,
+                    position:{lat:parseFloat(this.state.place_org[i].lat),lng: parseFloat(this.state.place_org[i].lng)}
+                }
             )
         }
 
         for (let i=0; i<this.state.place_victim.length; i++){
             victim_markers.push(
-                <Marker draggable={false}
-                        position={{lat: parseFloat(this.state.place_victim[i].lat), 
-                                    lng: parseFloat(this.state.place_victim[i].lng)}}
-                        onClick={this.handleMarkerClick}
-                        icon={'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'}
-                >
-                    {this.state.show_info === true && (
-                    <InfoWindow>
-                    <p><button style={{background:"#ffffff", border:"0"}} onClick={this.onClickName} value={this.state.place_victim[i].mobile}>{this.state.place_victim[i].name}</button> 
-                    <br/> 
-                    {this.state.place_victim[i].mobile}
-                    </p>
-                    </InfoWindow>
-                    )}
-                </Marker>
+                {
+                    id:i+1001,
+                    name:this.state.place_victim[i].name,
+                    mobile:this.state.place_victim[i].mobile,
+                    position:{lat:parseFloat(this.state.place_victim[i].lat),lng: parseFloat(this.state.place_victim[i].lng)}
+                }
             )
         }
 
@@ -392,8 +366,45 @@ export default class HelperMap extends Component {
               defaultZoom={18}
               defaultCenter={{ lat: this.state.mapPosition.lat, lng: this.state.mapPosition.lng }}
             >
-              {org_markers}
-              {victim_markers}
+
+            {org_markers.map(({ id, name, mobile, help, position }) => (
+            <Marker
+            key={id}
+            position={position}
+            onClick={() => this.handleActiveMarker(id)}
+            icon={'http://maps.google.com/mapfiles/ms/icons/orange-dot.png'}
+            >
+            {this.state.activeMarker === id ? (
+                <InfoWindow onCloseClick={() => this.setState({activeMarker:""})}>
+                <div>
+                <p>ชื่อหน่วยงาน : {name}</p>
+                <p>ช่องทางติดต่อ : {mobile}</p>
+                <p>ความช่วยเหลือ : {help}</p>
+                </div>
+                </InfoWindow>
+            ) : null}
+            </Marker>
+            ))}
+
+            {victim_markers.map(({ id, name, mobile, position }) => (
+            <Marker
+            key={id}
+            position={position}
+            onClick={() => this.handleActiveMarker(id)}
+            icon={'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'}
+            >
+            {this.state.activeMarker === id ? (
+                <InfoWindow onCloseClick={() => this.setState({activeMarker:""})}>
+                <div>
+                <p><button style={{background:"#ffffff", border:"0"}} onClick={this.onClickName} value={mobile}>
+                    ชื่อ : {name}</button></p>
+                <p>ช่องทางติดต่อ : {mobile}</p>
+                </div>
+                </InfoWindow>
+            ) : null}
+            </Marker>
+            ))}
+
             </GoogleMap>
           ));
 
