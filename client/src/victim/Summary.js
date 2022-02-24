@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Typography, TextField, Box, Button } from "@mui/material";
+import { Typography, TextField, Box, Button, Grid } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@mui/material/styles";
 import theme_vic from "./theme_vic";
-
-import { insertCount, insertName } from "./Api_vic";
 import Header_Vic from "./Header_vic";
+import { default as uuid } from "node-uuid";
 
 const useStyles = makeStyles((theme) => ({
   GridSpacer: {
@@ -49,272 +48,571 @@ export default function Summary(props) {
     count_Hospital,
     count_Home,
     count_Other,
-    value_Other,
+    name_Other,
   } = GetStateParam;
-  console.log("Sum_Mobile : ", Mobile)
+
+  console.log(Mobile);
+
+  const [request, setRequest] = useState([]);
+
+  const [requestID, setRequestID] = useState(uuid.v4());
 
   const [name_Food, setname_Food] = useState(count_Food !== 0 ? true : false);
+  const [option_Food, setoption_Food] = useState("");
+  const [status_Food, setstatus_Food] = useState("รอการช่วยเหลือ");
+
   const [name_Medicine, setname_Medicine] = useState(
     count_Medicine !== 0 ? true : false
   );
+  const [option_Medicine, setoption_Medicine] = useState("");
+  const [status_Medicine, setstatus_Medicine] = useState("รอการช่วยเหลือ");
+
   const [name_Bed, setname_Bed] = useState(count_Bed !== 0 ? true : false);
+  const [option_Bed, setoption_Bed] = useState("");
+  const [status_Bed, setstatus_Bed] = useState("รอการช่วยเหลือ");
+
   const [name_Hospital, setname_Hospital] = useState(
     count_Hospital !== 0 ? true : false
   );
+  const [option_Hospital, setoption_Hospital] = useState("");
+  const [status_Hospital, setstatus_Hospital] = useState("รอการช่วยเหลือ");
+
   const [name_Home, setname_Home] = useState(count_Home !== 0 ? true : false);
-  const [value_Option, setvalue_Option] = useState("");
+  const [option_Home, setoption_Home] = useState("");
+  const [status_Home, setstatus_Home] = useState("รอการช่วยเหลือ");
 
-  const [Status, set_Status] = useState("รอการช่วยเหลือ");
-  const [Status_Text, set_Status_Text] = useState("");
+  const [option_Other, setoption_Other] = useState(""); // หมายเหตุอื่นๆ
+  const [status_Other, setstatus_Other] = useState("รอการช่วยเหลือ");
 
-  const handleOption = (event) => {
-    setvalue_Option(event.target.value);
+  const [status_Request, setstatus_Request] = useState("รอการช่วยเหลือ");
+  const [Status_Text, set_Status_Text] = useState(""); //ความคืบหน้า
+
+  const handleFood = (event) => {
+    setoption_Food(event.target.value);
+  };
+  const handleMedicine = (event) => {
+    setoption_Medicine(event.target.value);
+  };
+  const handleBed = (event) => {
+    setoption_Bed(event.target.value);
+  };
+  const handleHospital = (event) => {
+    setoption_Hospital(event.target.value);
+  };
+  const handleHome = (event) => {
+    setoption_Home(event.target.value);
+  };
+  const handleOther = (event) => {
+    setoption_Other(event.target.value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     let data = {
       Mobile: Mobile,
-      Food: name_Food,
-      count_Food: count_Food,
-      Medicine: name_Medicine,
-      count_Medicine: count_Medicine,
-      Bed: name_Bed,
-      count_Bed: count_Bed,
-      Hospital: name_Hospital,
-      count_Hospital: count_Hospital,
-      Home: name_Home,
-      count_Home: count_Home,
-      Other: value_Other,
-      count_Other: count_Other,
-      Option: value_Option,
-      Status: Status,
+      RequestID: requestID,
+      Other: name_Other,
+      Status: status_Request,
       Status_Text: Status_Text,
     };
-
-    // insertCount(data_count).then((response) => {
-    //   console.log("insertCount : ", response);
-    // });
-    // console.log("before insert");
-    // console.log(data_name);
-    // insertName(data_name).then((response) => {
-    //   console.log("insertName : ", response);
-    //   history.push(`/victims`);
-    // });
-    // await axios
-    //   .post("http://localhost:4000/request/insert-count", data_count)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   })
-    //   .catch((err) => {
-    //     Promise.reject(err);
-    //   });
-
     await axios
-      .post("http://localhost:4000/request/insert", data)
+      .post(`http://localhost:4000/request/insert`, data)
       .then((res) => {
-        console.log(res.data);
-        history.push({ pathname: `/victims`, state: { Mobile: Mobile } });
+        console.log("post id : ", res.data);
       })
       .catch((err) => {
         Promise.reject(err);
       });
+
+    //  Food 
+    if (name_Food) {
+      let data_Item = {
+        RequestID: requestID,
+        Helpcode: "101",
+        Count: count_Food,
+        Option: option_Food,
+        Status: status_Food,
+      };
+      await axios
+        .post(`http://localhost:4000/request/insert-detailed`, data_Item)
+        .then((res) => {
+          console.log("post item : ", res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+    }
+
+    //  Medicine
+    if (name_Medicine) {
+      let data_Item = {
+        RequestID: requestID,
+        Helpcode: "102",
+        Count: count_Medicine,
+        Option: option_Medicine,
+        Status: status_Medicine,
+      };
+      await axios
+        .post(`http://localhost:4000/request/insert-detailed`, data_Item)
+        .then((res) => {
+          console.log("post item : ", res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+    }
+
+    //  Bed
+    if (name_Bed) {
+      let data_Item = {
+        RequestID: requestID,
+        Helpcode: "103",
+        Count: count_Bed,
+        Option: option_Bed,
+        Status: status_Bed,
+      };
+      await axios
+        .post(`http://localhost:4000/request/insert-detailed`, data_Item)
+        .then((res) => {
+          console.log("post item : ", res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+    }
+
+    //  Hospital
+    if (name_Hospital) {
+      let data_Item = {
+        RequestID: requestID,
+        Helpcode: "104",
+        Count: count_Hospital,
+        Option: option_Hospital,
+        Status: status_Hospital,
+      };
+      await axios
+        .post(`http://localhost:4000/request/insert-detailed`, data_Item)
+        .then((res) => {
+          console.log("post item : ", res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+    }
+
+    //  Home
+    if (name_Home) {
+      let data_Item = {
+        RequestID: requestID,
+        Helpcode: "105",
+        Count: count_Home,
+        Option: option_Home,
+        Status: status_Home,
+      };
+      await axios
+        .post(`http://localhost:4000/request/insert-detailed`, data_Item)
+        .then((res) => {
+          console.log("post item : ", res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+    }
+
+    //  Other
+    if (count_Other != 0) {
+      let data_Item = {
+        RequestID: requestID,
+        Helpcode: name_Other,
+        Count: count_Other,
+        Option: option_Other,
+        Status: status_Other,
+      };
+      await axios
+        .post(`http://localhost:4000/request/insert-detailed`, data_Item)
+        .then((res) => {
+          console.log("post item : ", res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+    }
+
   };
 
   return (
     <ThemeProvider theme={theme_vic}>
       <Header_Vic />
+
       <div className={classes.Spacer1} />
-
-      <div style={{ width: "100%" }}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-around",
-            p: 1,
-            m: 1,
-          }}
-        >
-          <Typography fontFamily="Kanit" variant="h5" color="text.primary">
-            ยืนยันการขอความช่วยเหลือ
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-around",
-            pl: 15,
-            m: 3,
-          }}
-        >
-          <Typography fontFamily="Kanit" variant="body1" color="text.secondary">
-            ที่อยู่สำหรับการช่วยเหลือ :
-          </Typography>
-        </Box>
-      </div>
-
-      <form>
-        {name_Food ? (
+      <Grid container direction="row" justifyContent="space-around">
+        <Grid item xs={2} alignItems="center"></Grid>
+        <Grid item xs={8} alignItems="center">
           <div style={{ width: "100%" }}>
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "space-around",
-                pl: 5,
-                m: 3,
+                p: 1,
+                m: 1,
+              }}
+            >
+              <Typography
+                style={{
+                  color: "#2F4A8A",
+                  fontFamily: "Kanit",
+                  fontSize: "1.7vw",
+                }}
+              >
+                ยืนยันการขอความช่วยเหลือ
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                m: 2,
               }}
             >
               <Typography
                 fontFamily="Kanit"
-                variant="h6"
-                color="text.primary"
-                sx={{ flexShrink: 0 }}
+                variant="body1"
+                color="text.secondary"
+                style={{
+                  fontFamily: "Kanit",
+                  fontSize: "1.1vw",
+                }}
               >
-                จำนวนอาหารที่ต้องการ
-              </Typography>
-              <div className={classes.Spacer} />
-              <Typography fontFamily="Kanit" variant="h6" color="text.primary">
-                {count_Food}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;วัน
+                {/* ที่อยู่สำหรับการช่วยเหลือ :&nbsp;&nbsp;&nbsp;
+                {info.House_No}&nbsp;&nbsp;ซอย&nbsp;
+                {info.Soi}&nbsp;&nbsp;ถนน&nbsp;
+                {info.Road}&nbsp;&nbsp;แขวง&nbsp;{info.Subdistrict}
+                &nbsp;&nbsp;เขต&nbsp;
+                {info.District}&nbsp;&nbsp;
+                {info.Province}&nbsp;&nbsp;
+                {info.ZIP_Code} */}
               </Typography>
             </Box>
           </div>
-        ) : null}
 
-        {name_Medicine ? (
-          <div style={{ width: "100%" }}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-around",
-                pl: 5,
-                m: 3,
-                pb: 2,
-              }}
-            >
-              <Typography
-                fontFamily="Kanit"
-                variant="h6"
-                color="text.primary"
-                sx={{ flexShrink: 0 }}
+          {/* Food */}
+          {name_Food ? (
+            <div style={{ width: "100%" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  m: 2,
+                }}
               >
-                จำนวนยาที่ต้องการ
-              </Typography>
-              <div className={classes.Spacer} />
-              <Typography fontFamily="Kanit" variant="h6" color="text.primary">
-                {count_Medicine}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;วัน
-              </Typography>
-            </Box>
-          </div>
-        ) : null}
+                <Typography
+                  fontFamily="Kanit"
+                  color="#2F4A8A"
+                  sx={{ flexShrink: 0 }}
+                  style={{
+                    color: "#2F4A8A",
+                    fontFamily: "Kanit",
+                    fontSize: "1.3vw",
+                  }}
+                >
+                  จำนวนอาหารที่ต้องการ
+                </Typography>
 
-        {name_Bed ? (
-          <div style={{ width: "100%" }}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-around",
-                pl: 5,
-                m: 3,
-                pb: 2,
-              }}
-            >
-              <Typography
-                fontFamily="Kanit"
-                variant="h6"
-                color="text.primary"
-                sx={{ flexShrink: 0 }}
-              >
-                จำนวนผู้ป่วยที่หาเตียง
-              </Typography>
-              <div className={classes.Spacer} />
-              <Typography fontFamily="Kanit" variant="h6" color="text.primary">
-                {count_Bed}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;คน
-              </Typography>
-            </Box>
-          </div>
-        ) : null}
-
-        {name_Hospital ? (
-          <div style={{ width: "100%" }}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-around",
-                pl: 5,
-                m: 3,
-                pb: 2,
-              }}
-            >
-              <Typography fontFamily="Kanit" variant="h6" color="text.primary">
-                จำนวนผู้ป่วยที่นำส่งโรงพยาบาล
-              </Typography>
-              <div className={classes.Spacer} />
-              <Typography fontFamily="Kanit" variant="h6" color="text.primary">
-                {count_Hospital}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;คน
-              </Typography>
-            </Box>
-          </div>
-        ) : null}
-
-        {name_Home ? (
-          <div style={{ width: "100%" }}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-around",
-                pl: 5,
-                m: 3,
-                pb: 2,
-              }}
-            >
-              <Typography fontFamily="Kanit" variant="h6" color="text.primary">
-                จำนวนผู้ป่วยที่นำส่งภูมิลำเนา
-              </Typography>
-              <div className={classes.Spacer} />
-              <Typography fontFamily="Kanit" variant="h6" color="text.primary">
-                {count_Home}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;คน
-              </Typography>
-            </Box>
-          </div>
-        ) : null}
-
-        {count_Other != 0 ? (
-          <div style={{ width: "100%" }}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-around",
-                pl: 5,
-                m: 3,
-                pb: 2,
-              }}
-            >
-              <Typography fontFamily="Kanit" variant="h6" color="text.primary">
-                {value_Other}
-              </Typography>
-              <div className={classes.Spacer} />
-              <Typography fontFamily="Kanit" variant="h6" color="text.primary">
-                {count_Other}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ชุด
-              </Typography>
-            </Box>
-          </div>
-        ) : null}
-
-        {/* หมายเหตุ */}
-        {name_Food ||
-        name_Medicine ||
-        name_Bed ||
-        name_Hospital ||
-        name_Home ||
-        count_Other !== 0 ? (
-          <div style={{ width: "100%" }}>
-            <div className={classes.paper}>
+                <Typography
+                  style={{
+                    color: "#2F4A8A",
+                    fontFamily: "Kanit",
+                    fontSize: "1.3vw",
+                  }}
+                >
+                  {count_Food}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;วัน
+                </Typography>
+              </Box>
               <TextField
-                style={{ width: "80%" }}
+                style={{ width: "50%" }}
                 fontFamily="Kanit"
                 multiline
-                rows={4}
+                rows={2}
+                autoFocus
+                margin="dense"
+                id="name"
+                label="หมายเหตุด้านอาหาร"
+                type="text"
+                fullWidth
+                variant="outlined"
+                value={option_Food}
+                onChange={handleFood}
+                style={{
+                  color: "#2F4A8A",
+                  fontFamily: "Kanit",
+                  fontSize: "1.3vw",
+                }}
+              />
+            </div>
+          ) : null}
+
+          {/* Medicine */}
+          {name_Medicine ? (
+            <div style={{ width: "100%" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  m: 2,
+                }}
+              >
+                <Typography
+                  fontFamily="Kanit"
+                  color="#2F4A8A"
+                  sx={{ flexShrink: 0 }}
+                  style={{
+                    color: "#2F4A8A",
+                    fontFamily: "Kanit",
+                    fontSize: "1.3vw",
+                  }}
+                >
+                  จำนวนยาที่ต้องการ
+                </Typography>
+
+                <Typography
+                  style={{
+                    color: "#2F4A8A",
+                    fontFamily: "Kanit",
+                    fontSize: "1.3vw",
+                  }}
+                >
+                  {count_Medicine}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;วัน
+                </Typography>
+              </Box>
+              <TextField
+                style={{ width: "50%" }}
+                fontFamily="Kanit"
+                multiline
+                rows={2}
+                autoFocus
+                margin="dense"
+                id="name"
+                label="หมายเหตุด้านยา"
+                type="text"
+                fullWidth
+                variant="outlined"
+                value={option_Medicine}
+                onChange={handleMedicine}
+                style={{
+                  color: "#2F4A8A",
+                  fontFamily: "Kanit",
+                  fontSize: "1.3vw",
+                }}
+              />
+            </div>
+          ) : null}
+
+          {/* Bed */}
+          {name_Bed ? (
+            <div style={{ width: "100%" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  m: 2,
+                }}
+              >
+                <Typography
+                  fontFamily="Kanit"
+                  color="#2F4A8A"
+                  sx={{ flexShrink: 0 }}
+                  style={{
+                    color: "#2F4A8A",
+                    fontFamily: "Kanit",
+                    fontSize: "1.3vw",
+                  }}
+                >
+                  จำนวนเตียงที่ต้องการขอ
+                </Typography>
+
+                <Typography
+                  style={{
+                    color: "#2F4A8A",
+                    fontFamily: "Kanit",
+                    fontSize: "1.3vw",
+                  }}
+                >
+                  {count_Bed}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;วัน
+                </Typography>
+              </Box>
+              <TextField
+                style={{ width: "50%" }}
+                fontFamily="Kanit"
+                multiline
+                rows={2}
+                autoFocus
+                margin="dense"
+                id="name"
+                label="หมายเหตุด้านผู้ป่วยที่ขอเตียง"
+                type="text"
+                fullWidth
+                variant="outlined"
+                value={option_Bed}
+                onChange={handleBed}
+                style={{
+                  color: "#2F4A8A",
+                  fontFamily: "Kanit",
+                  fontSize: "1.3vw",
+                }}
+              />
+            </div>
+          ) : null}
+
+          {/* Hospital */}
+          {name_Hospital ? (
+            <div style={{ width: "100%" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  m: 2,
+                }}
+              >
+                <Typography
+                  fontFamily="Kanit"
+                  color="#2F4A8A"
+                  sx={{ flexShrink: 0 }}
+                  style={{
+                    color: "#2F4A8A",
+                    fontFamily: "Kanit",
+                    fontSize: "1.3vw",
+                  }}
+                >
+                  จำนวนผู่ป่วยที่ต้องการรถนำส่งโรงพยาบาล
+                </Typography>
+
+                <Typography
+                  style={{
+                    color: "#2F4A8A",
+                    fontFamily: "Kanit",
+                    fontSize: "1.3vw",
+                  }}
+                >
+                  {count_Hospital}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;วัน
+                </Typography>
+              </Box>
+              <TextField
+                style={{ width: "50%" }}
+                fontFamily="Kanit"
+                multiline
+                rows={2}
+                autoFocus
+                margin="dense"
+                id="name"
+                label="หมายเหตุด้านผู้ป่วยที่ต้องการรถนำส่งโรงพยาบาล"
+                type="text"
+                fullWidth
+                variant="outlined"
+                value={option_Hospital}
+                onChange={handleHospital}
+                style={{
+                  color: "#2F4A8A",
+                  fontFamily: "Kanit",
+                  fontSize: "1.3vw",
+                }}
+              />
+            </div>
+          ) : null}
+
+          {/* Home */}
+          {name_Home ? (
+            <div style={{ width: "100%" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  m: 2,
+                }}
+              >
+                <Typography
+                  fontFamily="Kanit"
+                  color="#2F4A8A"
+                  sx={{ flexShrink: 0 }}
+                  style={{
+                    color: "#2F4A8A",
+                    fontFamily: "Kanit",
+                    fontSize: "1.3vw",
+                  }}
+                >
+                  จำนวนผู่ป่วยที่ต้องการรถนำส่งภูมิลำเนา
+                </Typography>
+
+                <Typography
+                  style={{
+                    color: "#2F4A8A",
+                    fontFamily: "Kanit",
+                    fontSize: "1.3vw",
+                  }}
+                >
+                  {count_Home}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;วัน
+                </Typography>
+              </Box>
+              <TextField
+                style={{ width: "50%" }}
+                fontFamily="Kanit"
+                multiline
+                rows={2}
+                autoFocus
+                margin="dense"
+                id="name"
+                label="หมายเหตุด้านผู้ป่วยที่ต้องการรถนำส่งภูมิลำเนา"
+                type="text"
+                fullWidth
+                variant="outlined"
+                value={option_Home}
+                onChange={handleHome}
+                style={{
+                  color: "#2F4A8A",
+                  fontFamily: "Kanit",
+                  fontSize: "1.3vw",
+                }}
+              />
+            </div>
+          ) : null}
+
+          {/* Other */}
+          {count_Other != 0 ? (
+            <div style={{ width: "100%" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  m: 2,
+                }}
+              >
+                <Typography
+                  fontFamily="Kanit"
+                  color="#2F4A8A"
+                  sx={{ flexShrink: 0 }}
+                  style={{
+                    color: "#2F4A8A",
+                    fontFamily: "Kanit",
+                    fontSize: "1.3vw",
+                  }}
+                >
+                  {name_Other}
+                </Typography>
+
+                <Typography
+                  style={{
+                    color: "#2F4A8A",
+                    fontFamily: "Kanit",
+                    fontSize: "1.3vw",
+                  }}
+                >
+                  {count_Other}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ชุด
+                </Typography>
+              </Box>
+              <TextField
+                style={{ width: "50%" }}
+                fontFamily="Kanit"
+                multiline
+                rows={2}
                 autoFocus
                 margin="dense"
                 id="name"
@@ -322,32 +620,41 @@ export default function Summary(props) {
                 type="text"
                 fullWidth
                 variant="outlined"
-                value={value_Option}
-                onChange={handleOption}
+                value={option_Other}
+                onChange={handleOther}
+                style={{
+                  color: "#2F4A8A",
+                  fontFamily: "Kanit",
+                  fontSize: "1.3vw",
+                }}
               />
             </div>
-          </div>
-        ) : null}
+          ) : null}
 
-        {/* submit button */}
-        {name_Food ||
-        name_Medicine ||
-        name_Bed ||
-        name_Hospital ||
-        name_Home ||
-        count_Other !== 0 ? (
-          <div className={classes.paper}>
-            <Button
-              style={{ width: "10%" }}
-              variant="contained"
-              size="small"
-              onClick={handleSubmit}
-            >
-              Submit
-            </Button>
-          </div>
-        ) : null}
-      </form>
+          <div className={classes.Spacer1} />
+          {/* Submit button*/}
+          {name_Food ||
+          name_Medicine ||
+          name_Bed ||
+          name_Hospital ||
+          name_Home ||
+          count_Other != 0 ? (
+            <div>
+              <Button
+                style={{ width: "100%" }}
+                variant="contained"
+                size="large"
+                onClick={handleSubmit}
+              >
+                Submit
+              </Button>
+            </div>
+          ) : null}
+
+          <div className={classes.Spacer1} />
+        </Grid>
+        <Grid item xs={2} alignItems="center"></Grid>
+      </Grid>
     </ThemeProvider>
   );
 }

@@ -22,10 +22,10 @@ export default function Information(props) {
 
   const [food, setFood] = useState([]);
   const [bed, setBed] = useState([]);
-  const [med,setMed] = useState([]);
-  const [home,setHome] = useState([]);
-  const [hospital,setHospital] = useState([]);
-  const [other,setOther] = useState([]);
+  const [med, setMed] = useState([]);
+  const [home, setHome] = useState([]);
+  const [hospital, setHospital] = useState([]);
+  const [other, setOther] = useState([]);
 
   const [num_food, setNum_food] = useState(0);
   const [num_medicine, setNum_medicine] = useState(0);
@@ -73,7 +73,7 @@ export default function Information(props) {
       .catch((err) => {
         Promise.reject(err);
       });
-      await axios
+    await axios
       .get(`http://localhost:4000/request/medicine-request-no-status`)
       .then((res) => {
         // console.log("request is ", res.data);
@@ -82,7 +82,7 @@ export default function Information(props) {
       .catch((err) => {
         Promise.reject(err);
       });
-      await axios
+    await axios
       .get(`http://localhost:4000/request/home-request-no-status`)
       .then((res) => {
         // console.log("request is ", res.data);
@@ -91,7 +91,7 @@ export default function Information(props) {
       .catch((err) => {
         Promise.reject(err);
       });
-      await axios
+    await axios
       .get(`http://localhost:4000/request/hospital-request-no-status`)
       .then((res) => {
         console.log("request is ", res.data);
@@ -100,7 +100,7 @@ export default function Information(props) {
       .catch((err) => {
         Promise.reject(err);
       });
-      await axios
+    await axios
       .get(`http://localhost:4000/request/other-request-no-status`)
       .then((res) => {
         console.log("request is ", res.data);
@@ -201,53 +201,26 @@ export default function Information(props) {
   const data = [
     {
       name: "การขอความช่วยเหลือ",
-      อาหาร: (food.length/request.length) * 100,
+      อาหาร: (food.length / request.length) * 100,
       เตียงนอน: bed.length,
       english: food.length + bed.length,
       social: request.length,
     },
   ];
-  const data1 = [{
-      "name": "Group A",
-      "value": food.length
+  const data1 = [
+    {
+      name: "Group A",
+      value: food.length,
     },
     {
-      "name": "Group B",
-      "value": bed.length
+      name: "Group B",
+      value: bed.length,
     },
-   
-  ]
-
-    // {
-    //   "name": "Group A",
-    //   "value": 2400
-    // },
-    // {
-    //   "name": "Group B",
-    //   "value": 4567
-    // },
-    // {
-    //   "name": "Group C",
-    //   "value": 1398
-    // },
-    // {
-    //   "name": "Group D",
-    //   "value": 9800
-    // },
-    // {
-    //   "name": "Group E",
-    //   "value": 3908
-    // },
-    // {
-    //   "name": "Group F",
-    //   "value": 4800
-    // }
-  
-  // console.log(data.name)
-    const renderLabel = (data1) => {
-      console.log(data1.name)
-      return data1.name;
-  }
+  ];
+  const renderLabel = (data1) => {
+    console.log(data1.name);
+    return data1.name;
+  };
   const renderLineChart = (
     <div>
       <PieChart width={730} height={250}>
