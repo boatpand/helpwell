@@ -8,6 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@mui/material/styles";
 import theme_vic from "./theme_vic";
 import Header_Vic from "./Header_vic";
+import { default as uuid } from "node-uuid";
 
 const useStyles = makeStyles((theme) => ({
   GridSpacer: {
@@ -47,107 +48,197 @@ export default function Summary(props) {
     count_Hospital,
     count_Home,
     count_Other,
-    value_Other,
+    name_Other,
   } = GetStateParam;
 
-  console.log(Mobile)
+  console.log(Mobile);
+
+  const [request, setRequest] = useState([]);
+
+  const [requestID, setRequestID] = useState(uuid.v4());
 
   const [name_Food, setname_Food] = useState(count_Food !== 0 ? true : false);
-  const [value_Food, setvalue_Food] = useState("");
+  const [option_Food, setoption_Food] = useState("");
+  const [status_Food, setstatus_Food] = useState("รอการช่วยเหลือ");
 
   const [name_Medicine, setname_Medicine] = useState(
     count_Medicine !== 0 ? true : false
   );
-  const [value_Medicine, setvalue_Medicine] = useState("");
+  const [option_Medicine, setoption_Medicine] = useState("");
+  const [status_Medicine, setstatus_Medicine] = useState("รอการช่วยเหลือ");
 
   const [name_Bed, setname_Bed] = useState(count_Bed !== 0 ? true : false);
-  const [value_Bed, setvalue_Bed] = useState("");
+  const [option_Bed, setoption_Bed] = useState("");
+  const [status_Bed, setstatus_Bed] = useState("รอการช่วยเหลือ");
 
   const [name_Hospital, setname_Hospital] = useState(
     count_Hospital !== 0 ? true : false
   );
-  const [value_Hospital, setvalue_Hospital] = useState("");
+  const [option_Hospital, setoption_Hospital] = useState("");
+  const [status_Hospital, setstatus_Hospital] = useState("รอการช่วยเหลือ");
 
   const [name_Home, setname_Home] = useState(count_Home !== 0 ? true : false);
-  const [value_Home, setvalue_Home] = useState("");
+  const [option_Home, setoption_Home] = useState("");
+  const [status_Home, setstatus_Home] = useState("รอการช่วยเหลือ");
 
-  const [value_Ot, setvalue_Ot] = useState(""); // หมายเหตุอื่นๆ
-  const [value_Option, setvalue_Option] = useState("");
+  const [option_Other, setoption_Other] = useState(""); // หมายเหตุอื่นๆ
+  const [status_Other, setstatus_Other] = useState("รอการช่วยเหลือ");
 
-  const [Status, set_Status] = useState("รอการช่วยเหลือ");
-  const [Status_Text, set_Status_Text] = useState("");
-
-  const [info, setInfo] = useState("");
+  const [status_Request, setstatus_Request] = useState("รอการช่วยเหลือ");
+  const [Status_Text, set_Status_Text] = useState(""); //ความคืบหน้า
 
   const handleFood = (event) => {
-    setvalue_Food(event.target.value);
+    setoption_Food(event.target.value);
   };
   const handleMedicine = (event) => {
-    setvalue_Medicine(event.target.value);
+    setoption_Medicine(event.target.value);
   };
   const handleBed = (event) => {
-    setvalue_Bed(event.target.value);
+    setoption_Bed(event.target.value);
   };
   const handleHospital = (event) => {
-    setvalue_Hospital(event.target.value);
+    setoption_Hospital(event.target.value);
   };
   const handleHome = (event) => {
-    setvalue_Home(event.target.value);
+    setoption_Home(event.target.value);
   };
-  const handleOt = (event) => {
-    setvalue_Ot(event.target.value);
-  };
-
-  const handleOption = (event) => {
-    setvalue_Option(event.target.value);
+  const handleOther = (event) => {
+    setoption_Other(event.target.value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     let data = {
       Mobile: Mobile,
-      Food: name_Food,
-      count_Food: count_Food,
-      Medicine: name_Medicine,
-      count_Medicine: count_Medicine,
-      Bed: name_Bed,
-      count_Bed: count_Bed,
-      Hospital: name_Hospital,
-      count_Hospital: count_Hospital,
-      Home: name_Home,
-      count_Home: count_Home,
-      Other: value_Other,
-      count_Other: count_Other,
-      Option: value_Option,
-      Status: Status,
+      RequestID: requestID,
+      Other: name_Other,
+      Status: status_Request,
       Status_Text: Status_Text,
     };
-
     await axios
-      .post("http://localhost:4000/request/insert", data)
+      .post(`http://localhost:4000/request/insert`, data)
       .then((res) => {
-        console.log(res.data);
-        history.push({ pathname: `/victims`, state: { Mobile: Mobile } });
+        console.log("post id : ", res.data);
       })
       .catch((err) => {
         Promise.reject(err);
       });
+
+    //  Food 
+    if (name_Food) {
+      let data_Item = {
+        RequestID: requestID,
+        Helpcode: "101",
+        Count: count_Food,
+        Option: option_Food,
+        Status: status_Food,
+      };
+      await axios
+        .post(`http://localhost:4000/request/insert-detailed`, data_Item)
+        .then((res) => {
+          console.log("post item : ", res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+    }
+
+    //  Medicine
+    if (name_Medicine) {
+      let data_Item = {
+        RequestID: requestID,
+        Helpcode: "102",
+        Count: count_Medicine,
+        Option: option_Medicine,
+        Status: status_Medicine,
+      };
+      await axios
+        .post(`http://localhost:4000/request/insert-detailed`, data_Item)
+        .then((res) => {
+          console.log("post item : ", res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+    }
+
+    //  Bed
+    if (name_Bed) {
+      let data_Item = {
+        RequestID: requestID,
+        Helpcode: "103",
+        Count: count_Bed,
+        Option: option_Bed,
+        Status: status_Bed,
+      };
+      await axios
+        .post(`http://localhost:4000/request/insert-detailed`, data_Item)
+        .then((res) => {
+          console.log("post item : ", res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+    }
+
+    //  Hospital
+    if (name_Hospital) {
+      let data_Item = {
+        RequestID: requestID,
+        Helpcode: "104",
+        Count: count_Hospital,
+        Option: option_Hospital,
+        Status: status_Hospital,
+      };
+      await axios
+        .post(`http://localhost:4000/request/insert-detailed`, data_Item)
+        .then((res) => {
+          console.log("post item : ", res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+    }
+
+    //  Home
+    if (name_Home) {
+      let data_Item = {
+        RequestID: requestID,
+        Helpcode: "105",
+        Count: count_Home,
+        Option: option_Home,
+        Status: status_Home,
+      };
+      await axios
+        .post(`http://localhost:4000/request/insert-detailed`, data_Item)
+        .then((res) => {
+          console.log("post item : ", res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+    }
+
+    //  Other
+    if (count_Other != 0) {
+      let data_Item = {
+        RequestID: requestID,
+        Helpcode: name_Other,
+        Count: count_Other,
+        Option: option_Other,
+        Status: status_Other,
+      };
+      await axios
+        .post(`http://localhost:4000/request/insert-detailed`, data_Item)
+        .then((res) => {
+          console.log("post item : ", res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+    }
+
   };
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:4000/victimuser/victim-profile/${Mobile}`)
-      .then((res) => {
-        setInfo(res.data);
-      })
-      .catch((err) => {
-        Promise.reject(err);
-      });
-  }, []);
-
-  console.log(name_Bed)
-  console.log(count_Other)
 
   return (
     <ThemeProvider theme={theme_vic}>
@@ -249,7 +340,7 @@ export default function Summary(props) {
                 type="text"
                 fullWidth
                 variant="outlined"
-                value={value_Food}
+                value={option_Food}
                 onChange={handleFood}
                 style={{
                   color: "#2F4A8A",
@@ -305,7 +396,7 @@ export default function Summary(props) {
                 type="text"
                 fullWidth
                 variant="outlined"
-                value={value_Medicine}
+                value={option_Medicine}
                 onChange={handleMedicine}
                 style={{
                   color: "#2F4A8A",
@@ -361,7 +452,7 @@ export default function Summary(props) {
                 type="text"
                 fullWidth
                 variant="outlined"
-                value={value_Bed}
+                value={option_Bed}
                 onChange={handleBed}
                 style={{
                   color: "#2F4A8A",
@@ -417,7 +508,7 @@ export default function Summary(props) {
                 type="text"
                 fullWidth
                 variant="outlined"
-                value={value_Hospital}
+                value={option_Hospital}
                 onChange={handleHospital}
                 style={{
                   color: "#2F4A8A",
@@ -473,7 +564,7 @@ export default function Summary(props) {
                 type="text"
                 fullWidth
                 variant="outlined"
-                value={value_Home}
+                value={option_Home}
                 onChange={handleHome}
                 style={{
                   color: "#2F4A8A",
@@ -504,7 +595,7 @@ export default function Summary(props) {
                     fontSize: "1.3vw",
                   }}
                 >
-                  {value_Other}
+                  {name_Other}
                 </Typography>
 
                 <Typography
@@ -529,8 +620,8 @@ export default function Summary(props) {
                 type="text"
                 fullWidth
                 variant="outlined"
-                value={value_Ot}
-                onChange={handleOt}
+                value={option_Other}
+                onChange={handleOther}
                 style={{
                   color: "#2F4A8A",
                   fontFamily: "Kanit",
@@ -564,24 +655,6 @@ export default function Summary(props) {
         </Grid>
         <Grid item xs={2} alignItems="center"></Grid>
       </Grid>
-
-      {/* {name_Food ||
-      name_Medicine ||
-      name_Bed ||
-      name_Hospital ||
-      name_Home ||
-      count_Other !== 0 ? (
-        <div className={classes.paper}>
-          <Button
-            style={{ width: "10%" }}
-            variant="contained"
-            size="small"
-            onClick={handleSubmit}
-          >
-            Submit
-          </Button>
-        </div>
-      ) : null} */}
     </ThemeProvider>
   );
 }

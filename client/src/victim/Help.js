@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import {
   Typography,
   Grid,
@@ -74,9 +75,9 @@ export default function Help(props) {
   const [count_Bed, setcount_Bed] = useState(0);
   const [count_Hospital, setcount_Hospital] = useState(0);
   const [count_Home, setcount_Home] = useState(0);
-  const [value_Other, setvalue_Other] = useState("");
-  const [count_Other, setcount_Other] = useState(0);
 
+  const [name_Other, setname_Other] = useState("");
+  const [count_Other, setcount_Other] = useState(0);
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -113,13 +114,11 @@ export default function Help(props) {
     setcount_Home(Math.max(count_Home - 1, 0));
   };
   const handleOther = (event) => {
-    setvalue_Other(event.target.value);
+    setname_Other(event.target.value);
   };
   const handleCountOther = (event) => {
     setcount_Other(event.target.value);
   };
-
-  const onClick = () => {};
 
   const data = {
     Mobile: Mobile,
@@ -129,7 +128,7 @@ export default function Help(props) {
     count_Hospital: count_Hospital,
     count_Home: count_Home,
     count_Other: count_Other,
-    value_Other: value_Other,
+    name_Other: name_Other,
   };
 
   return (
@@ -153,6 +152,7 @@ export default function Help(props) {
             pathname: `/victims/summary`,
             state: { data: data, Mobile: Mobile },
           }}
+          style={{textDecorationLine:"none"}}
         >
           <Button variant="outlined" size="small">
             Next
@@ -418,7 +418,7 @@ export default function Help(props) {
                 type="text"
                 fullWidth
                 variant="standard"
-                value={value_Other}
+                value={name_Other}
                 onChange={handleOther}
                 sx={{ fontFamily: "Kanit" }}
               />

@@ -60,7 +60,7 @@ export default function Profile_vic(props) {
     axios
       .get(`http://localhost:4000/request/request/${Mobile}`)
       .then((res) => {
-        // console.log("res is ", res.data);
+        console.log("resquest is ", res.data);
         setRequest(res.data);
       })
       .catch((err) => {
