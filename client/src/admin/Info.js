@@ -268,7 +268,7 @@ export default function Info(props) {
     console.log(mo);
     console.log(mo_acc);
   };
-  // console.log(mo["01"]);
+
 
   const data_month = [
     {
@@ -353,7 +353,7 @@ export default function Info(props) {
       ช่วยเหลือสำเร็จ: (success.length / request.length) * 100,
     },
   ];
-  //Math.round((((food.length / all) * 100) + Number.EPSILON) * 100) / 100
+ 
   const data_type_pie = [
     {
       name: "อาหาร",
@@ -617,7 +617,7 @@ export default function Info(props) {
         </Grid>
 
         <Grid item xs={4} alignItems="center">
-          {/* [Line]-การขอความช่วยเหลือในแต่ละเดือน */}
+          {/* [Line]-การขอและความช่วยเหลือในแต่ละเดือน */}
           <Typography
             style={{
               fontFamily: "Kanit",
@@ -626,13 +626,13 @@ export default function Info(props) {
               margin: "5% 0% 5% 0%",
             }}
           >
-            การขอความช่วยเหลือในแต่ละเดือน
+            การขอและให้ความช่วยเหลือในแต่ละเดือน
           </Typography>
           <ResponsiveContainer width="95%" height={250}>
             <LineChart
               style={{
                 fontFamily: "Kanit",
-                color: "#90D1CB",
+                color: "#666",
                 fontSize: "1.0vw",
                 // margin: "0% 0% 0% 0%",
               }}
@@ -649,12 +649,13 @@ export default function Info(props) {
                 type="monotone"
                 dataKey="ขอความช่วยเหลือ"
                 stroke="#8884d8"
-                // activeDot={{ r: 8 }}
+                activeDot={{ r: 5 }}
               />
               <Line
                 type="monotone"
                 dataKey="ให้ความช่วยเหลือ"
                 stroke="#82ca9d"
+                activeDot={{ r: 5 }}
               />
             </LineChart>
           </ResponsiveContainer>

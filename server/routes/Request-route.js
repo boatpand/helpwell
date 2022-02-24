@@ -9,6 +9,7 @@ let RequestDetailSchema = require("../models/Request_Detail");
 // Helpcode model
 let HelpCodeSchema = require("../models/Helpcode");
 
+// Insert Request in RequestSchema
 router.route("/insert").post((req, res, next) => {
   RequestSchema.create(req.body, (error, data) => {
     if (error) {
@@ -19,6 +20,19 @@ router.route("/insert").post((req, res, next) => {
     }
   });
 });
+
+// Insert Request_Detail in RequestDetailSchema
+router.route("/insert-detailed").post((req, res, next) => {
+  RequestDetailSchema.create(req.body, (error, data) => {
+    if (error) {
+      return next(error);
+    } else {
+      // console.log(error);
+      res.json(data);
+    }
+  });
+});
+
 
 // Get all requests with no status
 router.route("/all-request-no-status").get((req, res, next) => {

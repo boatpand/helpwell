@@ -29,7 +29,7 @@ export default function Header_Vic(props) {
   const classes = useStyles();
   const GetStateParam = useLocation().state;
   const { Mobile } = GetStateParam ;
-  console.log("Header_Mobile : ", Mobile);
+  
   return (
     <ThemeProvider theme={theme_vic}>
       <Box
