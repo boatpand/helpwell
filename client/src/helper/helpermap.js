@@ -18,8 +18,9 @@ export default class HelperMap extends Component {
         this.state ={
             Mobile:this.props.location.state.Mobile,
             helpRequest:[],
+            Helpdetai:[],
             user:"",
-            flag:0,
+            // flag:0,
             place:[],
             name:"",
             mobile:"",
@@ -73,7 +74,7 @@ export default class HelperMap extends Component {
         await axios.get('http://localhost:4000/request/all-request').then(res => {
         this.setState({
             helpRequest: res.data,
-            flag: 1
+            // flag: 1
         })
         }).catch((error)=>{
         console.log(error)
@@ -82,7 +83,7 @@ export default class HelperMap extends Component {
     }
 
     async componentDidUpdate(prevProps,prevState){
-        if(this.state.flag!==prevState.flag){
+        if(this.state.helpRequest!==prevState.helpRequest){
             let address_list = [], mobile_list = [], mobile = "", id=0
             for (var y = 0; y < this.state.helpRequest.length; y++) {
                 mobile = String(this.state.helpRequest[y].Mobile)
@@ -220,37 +221,86 @@ export default class HelperMap extends Component {
     handleAll = (e) =>{
         axios.get('http://localhost:4000/request/all-request').then(res => {
         this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
+    
+    handleFood = async(e) => {
+        await axios.get('http://localhost:4000/request/food-request').then(res => {
+        this.setState({Helpdetail: res.data})}).catch((error)=>{console.log(error)})
 
-    handleFood = (e) => {
-        //console.log("done")
-        axios.get('http://localhost:4000/request/food-request').then(res => {
-        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
+        let request_list=[];
+        for(var i=0;i<this.state.Helpdetail.length;i++){
+        let id = this.state.Helpdetail[i].RequestID
+        await axios.get(`http://localhost:4000/request/request-detail/${id}`).then(res => {
+        request_list.push(res.data)}).catch((error)=>{console.log(error)})
+        }
+        console.log(request_list)
+        await this.setState({helpRequest:request_list})
+    }
 
-    handleMedicine = (e) => {
-        //console.log("done")
-        axios.get('http://localhost:4000/request/medicine-request').then(res => {
-        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
-    
-    handleHospital = (e) => {
-        //console.log("done")
-        axios.get('http://localhost:4000/request/hospital-request').then(res => {
-        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
-    
-    handleHome = (e) => {
-        //console.log("done")
-        axios.get('http://localhost:4000/request/home-request').then(res => {
-        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
-    
-    handleBed = (e) => {
-        //console.log("done")
-        axios.get('http://localhost:4000/request/bed-request').then(res => {
-        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
-    
-    handleOther = (e) => {
-        //console.log("done")
-        axios.get('http://localhost:4000/request/other-request').then(res => {
-        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
-    
+    handleMedicine = async(e) => {
+        await axios.get('http://localhost:4000/request/medicine-request').then(res => {
+        this.setState({Helpdetail: res.data})}).catch((error)=>{console.log(error)})
+      
+        let request_list=[];
+        for(var i=0;i<this.state.Helpdetail.length;i++){
+          let id = this.state.Helpdetail[i].RequestID
+          await axios.get(`http://localhost:4000/request/request-detail/${id}`).then(res => {
+           request_list.push(res.data)}).catch((error)=>{console.log(error)})
+        }
+        await this.setState({helpRequest:request_list})
+      }
+        
+      handleHospital = async(e) => {
+        await axios.get('http://localhost:4000/request/hospital-request').then(res => {
+        this.setState({Helpdetail: res.data})}).catch((error)=>{console.log(error)})
+      
+        let request_list=[];
+        for(var i=0;i<this.state.Helpdetail.length;i++){
+          let id = this.state.Helpdetail[i].RequestID
+          await axios.get(`http://localhost:4000/request/request-detail/${id}`).then(res => {
+           request_list.push(res.data)}).catch((error)=>{console.log(error)})
+        }
+        await this.setState({helpRequest:request_list})
+      }
+      
+      handleHome = async(e) => {
+        await axios.get('http://localhost:4000/request/home-request').then(res => {
+        this.setState({Helpdetail: res.data})}).catch((error)=>{console.log(error)})
+      
+        let request_list=[];
+        for(var i=0;i<this.state.Helpdetail.length;i++){
+          let id = this.state.Helpdetail[i].RequestID
+          await axios.get(`http://localhost:4000/request/request-detail/${id}`).then(res => {
+           request_list.push(res.data)}).catch((error)=>{console.log(error)})
+        }
+        await this.setState({helpRequest:request_list})
+      }
+      
+      handleBed = async(e) => {
+        await axios.get('http://localhost:4000/request/bed-request').then(res => {
+        this.setState({Helpdetail: res.data})}).catch((error)=>{console.log(error)})
+        
+        let request_list=[];
+        for(var i=0;i<this.state.Helpdetail.length;i++){
+          let id = this.state.Helpdetail[i].RequestID
+          await axios.get(`http://localhost:4000/request/request-detail/${id}`).then(res => {
+           request_list.push(res.data)}).catch((error)=>{console.log(error)})
+        }
+        await this.setState({helpRequest:request_list})
+      }
+      
+      handleOther = async(e) => {
+        await axios.get('http://localhost:4000/request/other-request').then(res => {
+        this.setState({Helpdetail: res.data})}).catch((error)=>{console.log(error)})
+      
+        let request_list=[];
+        for(var i=0;i<this.state.Helpdetail.length;i++){
+          let id = this.state.Helpdetail[i].RequestID
+          await axios.get(`http://localhost:4000/request/request-detail/${id}`).then(res => {
+           request_list.push(res.data)}).catch((error)=>{console.log(error)})
+        }
+        await this.setState({helpRequest:request_list})
+      }
+      
     onClickName = async(e) => {
         console.log(e.target.value)
         await this.setState({vic_mobile:e.target.value})

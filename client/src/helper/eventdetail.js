@@ -17,31 +17,32 @@ class EventDetail extends Component {
         super(props);
 
         this.state = {
+            // RequestSchema
             Mobile:"",
-            Food:false,
-            count_Food:0,
-            Medicine:false,
-            count_Medicine:0,
-            Hospital:false,
-            count_Hospital:0,
-            Home:false,
-            count_Home:0,
-            Bed:false,
-            count_Bed:0,
+            RequestID:"",
             Other:"",
-            count_Other:0,
-            Option:'',
-            Status:'',
-            Status_Text:'',
-            date:'',
-        
+            Status:"",
+            Status_Text:"",
+            date:"",
+
+            // RequestDetailSchema
+            Detail:[],
+
+            // check each status
+            // wait:true,
+            // all:false,
+  
+            // show user address
             show_soi:true,
             show_road:true,
             count:0,
 
-            RequestID:"",
+            // RequestID:"",
+            // From eventtablerow.js
             Helper_Mobile:this.props.location.state.Mobile,
+            HelpTopic:this.props.location.state.HelpTopic,
 
+            // map : get user location
             address:"",
             city:"",
             area:"",
@@ -51,23 +52,26 @@ class EventDetail extends Component {
             mapPosition:{lat:0,lng:0},
             markerPosition:{lat:0,lng:0},
 
+            // map : direction
             currentLocation: { lat: 0, lng: 0},
             victimLocation: { lat: 0, lng: 0},
             directions:null,
 
-            Cancel:this.props.location.state.Cancel,
-            request:[],
-
+            // map : direction detail
             route:"",
             distance:"",
             time:"",
 
+            // helper check accept help
+            Cancel:this.props.location.state.Cancel,
+            request:[],
             user:"",
             Firstname: "",
             Lastname: "",
             Org_Name: "",
             isOrg: false,
 
+            // datetime format
             datet:"",
             month:"",
             datetime:""
@@ -78,6 +82,8 @@ class EventDetail extends Component {
       // check cancel button
       console.log(this.state.Cancel)
       console.log(this.state.Helper_Mobile)
+
+      // get location
       if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(position => {
             this.setState({
@@ -113,39 +119,130 @@ class EventDetail extends Component {
         })
     }
 
+      // get request from RequestID
       console.log(`Helper_Mobile : ${this.state.Helper_Mobile}`)
         console.log(this.props.match.params.id)
         let id = this.props.match.params.id 
         await axios.get(`http://localhost:4000/request/request-detail/${id}`).then(res=>{
             this.setState({
                 Mobile:res.data.Mobile,
-                Food:res.data.Food,
-                count_Food:res.data.count_Food,
-                Medicine:res.data.Medicine,
-                count_Medicine:res.data.count_Medicine,
-                Hospital:res.data.Hospital,
-                count_Hospital:res.data.count_Hospital,
-                Home:res.data.Home,
-                count_Home:res.data.count_Home,
-                Bed:res.data.Bed,
-                count_Bed:res.data.count_Bed,
+                RequestID:res.data.RequestID,
                 Other:res.data.Other,
-                count_Other:res.data.count_Other,
-                Option:res.data.Option,
                 Status:res.data.Status,
                 Status_Text:res.data.Status_Text,
                 date:res.data.date,
 
-                RequestID:id,
-                requestID_state:[],
-
+                // format datetime
                 month:res.data.date.slice(5,7),
                 datet:"วันที่ " + res.data.date.slice(8,10) + " / " + res.data.date.slice(5,7) + " / " + res.data.date.slice(0,4),
                 datetime:" เวลา " + res.data.date.slice(11,16) + " " + "น."
             })
         });
 
+        // get request detail from RequestID
+        await axios.get(`http://localhost:4000/request/request-detail-detail/${id}`).then(res=>{
+            this.setState({
+              Detail:res.data
+            })
+        });
+        console.log(this.state.Detail)
+
+        let detail=[];
+        // let help=""; let option=""; let count=0; let status="";
+        let tmp={};
+        for(var i=0;i<this.state.Detail.length;i++){
+          if(this.state.Detail[i].Helpcode==="101"){
+            // if(this.state.Detail[i].Status==="รอการช่วยเหลือ"){
+            //   this.setState({wait:true, all:false})
+            // }
+            // else if(this.state.Detail[i].Status==="ช่วยเหลือสำเร็จ"){
+            //   this.setState({wait:false, all:true})
+            // }
+            tmp={
+              help:"อาหาร",
+              option:this.state.Detail[i].Option,
+              count:this.state.Detail[i].Count,
+              status:this.state.Detail[i].Status,
+            }
+          }
+          if(this.state.Detail[i].Helpcode==="102"){
+            // if(this.state.Detail[i].Status==="รอการช่วยเหลือ"){
+            //   this.setState({wait:true, all:false})
+            // }
+            // else if(this.state.Detail[i].Status==="ช่วยเหลือสำเร็จ"){
+            //   this.setState({wait:false, all:true})
+            // }
+            tmp={
+              help:"ยา",
+              option:this.state.Detail[i].Option,
+              count:this.state.Detail[i].Count,
+              status:this.state.Detail[i].Status,
+            }
+          }
+          if(this.state.Detail[i].Helpcode==="103"){
+            // if(this.state.Detail[i].Status==="รอการช่วยเหลือ"){
+            //   this.setState({wait:true, all:false})
+            // }
+            // else if(this.state.Detail[i].Status==="ช่วยเหลือสำเร็จ"){
+            //   this.setState({wait:false, all:true})
+            // }
+            tmp={
+              help:"เตียง",
+              option:this.state.Detail[i].Option,
+              count:this.state.Detail[i].Count,
+              status:this.state.Detail[i].Status,
+            }
+          }
+          if(this.state.Detail[i].Helpcode==="104"){
+            // if(this.state.Detail[i].Status==="รอการช่วยเหลือ"){
+            //   this.setState({wait:true, all:false})
+            // }
+            // else if(this.state.Detail[i].Status==="ช่วยเหลือสำเร็จ"){
+            //   this.setState({wait:false, all:true})
+            // }
+            tmp={
+              help:"รถนำส่งโรงพยาบาล",
+              option:this.state.Detail[i].Option,
+              count:this.state.Detail[i].Count,
+              status:this.state.Detail[i].Status,
+            }
+          }
+          if(this.state.Detail[i].Helpcode==="105"){
+            // if(this.state.Detail[i].Status==="รอการช่วยเหลือ"){
+            //   this.setState({wait:true, all:false})
+            // }
+            // else if(this.state.Detail[i].Status==="ช่วยเหลือสำเร็จ"){
+            //   this.setState({wait:false, all:true})
+            // }
+            tmp={
+              help:"รถนำส่งภูมิลำเนา",
+              option:this.state.Detail[i].Option,
+              count:this.state.Detail[i].Count,
+              status:this.state.Detail[i].Status,
+            }
+          }
+          if(this.state.Detail[i].Helpcode==="106"){
+            // if(this.state.Detail[i].Status==="รอการช่วยเหลือ"){
+            //   this.setState({wait:true, all:false})
+            // }
+            // else if(this.state.Detail[i].Status==="ช่วยเหลือสำเร็จ"){
+            //   this.setState({wait:false, all:true})
+            // }
+            tmp={
+              help:"อื่นๆ",
+              option:this.state.Detail[i].Option,
+              count:this.state.Detail[i].Count,
+              status:this.state.Detail[i].Status,
+            }
+          }
+          detail.push(tmp)
+        }
+        console.log(detail)
+        this.setState({Detail:detail})
+
+        // get victim address 
         let mobile = this.state.Mobile
+        console.log(mobile)
         await axios.get(`http://localhost:4000/victimuser/victim-profile/${mobile}`).then(res => {
             this.setState({
             user: res.data
@@ -169,6 +266,7 @@ class EventDetail extends Component {
         console.log(this.state.victimLocation)
         console.log(this.state.currentLocation)
 
+        // chek accept help
         mobile = String(this.state.Helper_Mobile)
         console.log(`${mobile}`)
         await axios.get(`http://localhost:4000/accept/status/${mobile}`).then(res => {
@@ -190,36 +288,6 @@ class EventDetail extends Component {
     }
 
     componentDidUpdate(prevProps,prevState){
-      if(this.state.Status!==prevState.Status){
-        var t = "";
-            // var count = 0;
-            if (this.state.Food === true) {
-              t= t+"อาหาร"+" ";
-            //   count++;
-            }
-            if (this.state.Medicine === true) {
-              t= t+"ยา"+" ";
-              // count++;
-            }
-            if (this.state.Hospital === true) {
-              t= t+"นำส่งโรงพยาบาล"+" ";
-              // count++;
-            }
-            if (this.state.Home === true) {
-              t= t+"นำส่งภูมิลำเนา"+" ";
-              // count++;
-            }
-            if (this.state.Bed === true) {
-              t= t+"หาเตียง"+" ";
-              // count++;
-            }
-            if (this.state.Other !== "") {
-                t= t+this.state.Other;
-              // count++;
-            }
-            t=t+" "
-            this.setState({help:t})
-      }
         if(this.state.currentLocation!==prevState.currentLocation){
           if(this.state.currentLocation.lat!==0){
             const directionsService = new google.maps.DirectionsService();
@@ -348,104 +416,79 @@ class EventDetail extends Component {
       }) 
   }
 
+  // accept help
     onSubmit = async(e) =>{
         e.preventDefault();
 
         var RequestID_Check = String(this.state.RequestID)
         var RequestID_Checklist = this.state.requestID_state
 
-        let mobile = this.state.Helper_Mobile
-        await axios.get(`http://localhost:4000/helperuser/helper-profile/${mobile}`).then(res => {
-            this.setState({
-            user: res.data
-          })
-        }).catch((error)=>{
-          console.log(error)
-        })
-        console.log(this.state.user)
-        this.setState({Firstname:this.state.user.Firstname,
-                      Lastname:this.state.user.Lastname,
-                      Org_Name:this.state.user.Org_Name,
-                      isOrg:this.state.user.isOrg,
-                    })
-
         if(RequestID_Checklist.includes(RequestID_Check)){
           alert('คุณให้ความช่วยเหลือรายการนี้อยู่แล้ว')
         }
-
         else{
           const acceptObject = {
-          Firstname:this.state.user.Firstname,
-          Lastname:this.state.user.Lastname,
-          Org_Name:this.state.user.Org_Name,
-          isOrg:this.state.user.isOrg,
           RequestID:this.state.RequestID,
           Helper_Mobile:this.state.Helper_Mobile,
           Status:'กำลังช่วยเหลือ'
-        }
+          }
+          await axios.post('http://localhost:4000/accept/accept', acceptObject).then(res =>
+          console.log(res.data));
 
-        await axios.post('http://localhost:4000/accept/accept', acceptObject).then(res =>
-        console.log(res.data));
+          const eventObject = {
+            Mobile:this.state.Mobile,
+            Other:this.state.Other,
+            Status:'กำลังช่วยเหลือ',
+            Status_Text:this.state.Status_Text,
+            date:this.state.date,
+          }
+          let RequestID = String(this.state.RequestID)
+          axios.put(`http://localhost:4000/request/update-help/${RequestID}`,eventObject).then((res)=>{
+              console.log('event status successfully updated')
+              console.log(res.data);
+          }).catch((error)=>{
+              console.log(error)
+          });
 
-        const eventObject = {
-          Mobile:this.state.Mobile,
-          Food:this.state.Food,
-          count_Food:this.state.count_Food,
-          Medicine:this.state.Medicine,
-          count_Medicine:this.state.count_Medicine,
-          Hospital:this.state.Hospital,
-          count_Hospital:this.state.count_Hospital,
-          Home:this.state.Home,
-          count_Home:this.state.count_Home,
-          Bed:this.state.Bed,
-          count_Bed:this.state.count_Bed,
-          Other:this.state.Other,
-          count_Other:this.state.count_Other,
-          Option:this.state.Option,
-          Status:'กำลังช่วยเหลือ',
-          Status_Text:this.state.Status_Text,
-          date:this.state.date,
-        }
-
-        let RequestID = String(this.state.RequestID)
-        axios.put(`http://localhost:4000/request/update-help/${RequestID}`,eventObject).then((res)=>{
-            console.log('event status successfully updated')
-            console.log(res.data);
-        }).catch((error)=>{
-            console.log(error)
-        });
+          const detailObject = {
+            Status:'กำลังช่วยเหลือ',
+          }
+          axios.put(`http://localhost:4000/request/update-help-detail/${RequestID}`,detailObject).then((res)=>{
+              console.log('event detail successfully updated')
+              console.log(res.data);
+          }).catch((error)=>{
+              console.log(error)
+          });
 
         // Redirect to helplist
         this.props.history.push({pathname:`/helperprofile/${this.state.Helper_Mobile}`,state:{Mobile:this.state.Helper_Mobile}})
         }
-      }
+    }
 
-    render() {
-        var t = [];
-        if (this.state.Food === true) {t.push("อาหาร");}
-        if (this.state.Medicine === true) {t.push("ยา");}
-        if (this.state.Hospital === true) {t.push("นำส่งโรงพยาบาล");}
-        if (this.state.Home === true) {t.push("นำส่งภูมิลำเนา");}
-        if (this.state.Bed === true) {t.push("หาเตียง")}
-        if (this.state.Other !== "") {t.push(this.state.Other);}
-
-        var n = [];
-        if (this.state.count_Food !== 0) {n.push(this.state.count_Food);}
-        if (this.state.count_Medicine !== 0) {n.push(this.state.count_Medicine);}
-        if (this.state.count_Hospital !== 0) {n.push(this.state.count_Hospital);}
-        if (this.state.count_Home !== 0) {n.push(this.state.count_Home);}
-        if (this.state.count_Bed !== 0) {n.push(this.state.count_Bed);}
-        if (this.state.count_Other !== 0) {n.push(this.state.count_Other);}
-        // console.log(n)
-
+    render() {        
         const inputs = [];
-        for (let i = 0; i < t.length; i++) {
-        inputs.push(
-        <label style={{fontFamily:"Kanit", fontSize:"1.5vw"}}>ความต้องการ
-        <input  style={{marginRight:"10%" ,marginLeft:"10%", width:"30%", textAlign:"center", fontFamily:"Kanit"}} 
-                name={`input-${i}`} value ={t[i]}/>จำนวน
-        <input  style={{marginLeft:"10%", width:"10%", textAlign:"center", fontFamily:"Kanit"}}
-                name={`input-${i}`} value={n[i]}/></label>)}  
+        for (var i=0;i<this.state.Detail.length;i++){
+          inputs.push(
+            <div style={{fontFamily:"Kanit", fontSize:"1.5vw", width:"100%"}}>
+            <label>ความต้องการ&nbsp;&nbsp;&nbsp;</label>
+            <input class="rounded-pill" style={{width:"20%", textAlign:"center", border:"2px solid #B4B6BB", marginTop:"2%"}} 
+                name={`input-${i}`} value ={this.state.Detail[i].help}/>
+            <label>&nbsp;&nbsp;&nbsp;จำนวน&nbsp;&nbsp;&nbsp;</label>
+            <input class="rounded-pill" style={{width:"5%", textAlign:"center", border:"2px solid #B4B6BB", marginTop:"2%"}}
+                name={`input-${i}`} value={this.state.Detail[i].count}/>
+            <label>&nbsp;&nbsp;&nbsp;สถานะ&nbsp;&nbsp;&nbsp;</label>
+            {/* <input class="rounded-pill" style={{width:"20%", textAlign:"center", border:"2px solid #B4B6BB", color:"#B4B6BB", display:(this.state.wait ? 'inline-flex':'none'), marginTop:"2%"}}
+                name={`input-${i}`} value={this.state.Detail[i].status}/>
+            <input class="rounded-pill" style={{width:"20%", textAlign:"center", border:"2px solid #B4B6BB", color:"#2ECC71", display:(this.state.all ? 'inline-flex':'none'), marginTop:"2%"}}
+                name={`input-${i}`} value={this.state.Detail[i].status}/> */}
+            <input class="rounded-pill" style={{width:"20%", textAlign:"center", border:"2px solid #B4B6BB", marginTop:"2%"}}
+                name={`input-${i}`} value={this.state.Detail[i].status}/>
+            <div>
+            <label>&nbsp;&nbsp;&nbsp;หมายเหตุ&nbsp;&nbsp;&nbsp;</label>
+            <input class="rounded-pill" style={{width:"65%", textAlign:"center", border:"2px solid #B4B6BB", marginTop:"2%"}}
+                name={`input-${i}`} value={this.state.Detail[i].option}/>
+            </div>
+            </div>)} 
                 
         const GoogleMapExample = withGoogleMap(props => (
           <GoogleMap
@@ -460,7 +503,7 @@ class EventDetail extends Component {
 
   return (
   <div>
-      <Header Mobile={this.state.Helper_Mobile}/>
+      <Header />
       <div class="container-lg" style={{width:"100%"}}>
       <h1 style={{fontFamily:"Kanit", color:"#FFB172", textAlign:"left", margin:"4rem 0 0 2%"}}>รายละเอียดผู้ขอความช่วยเหลือ</h1>
       <form onSubmit={this.onSubmit}>
@@ -469,7 +512,7 @@ class EventDetail extends Component {
 
       <div style={{width:"60%", textAlign:"left", display:"flex"}}>
       <h1 style={{fontFamily:"Kanit", fontSize:"1.5vw"}}>ความช่วยเหลือที่ต้องการ</h1>
-      <h1 style={{fontFamily:"Kanit", fontSize:"1.5vw",color:"#707070", marginLeft:"5%"}} >{this.state.help}</h1>
+      <h1 style={{fontFamily:"Kanit", fontSize:"1.5vw",color:"#707070", marginLeft:"5%"}} >{this.state.HelpTopic}</h1>
       </div>
 
       <div style={{width:"40%", textAlign:"left"}}>
@@ -477,11 +520,6 @@ class EventDetail extends Component {
       <h1 style={{color:"#707070", margin:"0 0 0 0", fontFamily:"Kanit", fontSize:"1.5vw"}}>ขอความช่วยเหลือเมื่อ : {this.state.datet}</h1>
       <h1 style={{color:"#707070", margin:"0 0 0 45%", fontFamily:"Kanit", fontSize:"1.5vw"}}>{this.state.datetime}</h1>
       </div>
-      </div>
-
-      <div style={{display:"flex", margin:"3% 0 0 3%"}}>
-      <h1 style={{fontFamily:"Kanit", fontSize:"1.5vw"}} >รายละเอียด :</h1>
-      <h1 style={{fontFamily:"Kanit", fontSize:"1.5vw",color:"#707070", marginLeft:"5%"}} >{this.state.Option}</h1>
       </div>
 
       <div style={{display:"flex", margin:"3% 0 0 3%"}}>
@@ -506,9 +544,10 @@ class EventDetail extends Component {
       </div>
 
       <div>
-      <hr style={{marginBottom:"5%"}}/>
+      <hr style={{marginBottom:"3%"}}/>
       {inputs}  
       </div>
+
       <div>
 
       <div style={{display:"flex", margin:"5% 0 0 10%"}}>
