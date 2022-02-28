@@ -9,8 +9,15 @@ class HelperProfile extends Component {
         super(props)
     
         this.state ={
+          
+            // profile data
             userMobile:this.props.location.state.Mobile,
             user:"",
+
+            // request accept check
+            Helpdetail:[],
+            helpRequest:[],
+            AcceptID_state:[],
 
             Firstname: "",
             Lastname: "",
@@ -39,6 +46,7 @@ class HelperProfile extends Component {
         }
     }
     async componentDidMount(){
+        // get user data
         const mobile = String(this.state.userMobile)
         await axios.get(`http://localhost:4000/helperuser/helper-profile/${mobile}`).then(res => {
             this.setState({
@@ -67,13 +75,12 @@ class HelperProfile extends Component {
         if(this.state.Road==""){this.setState({show_road:false})}
 
         await axios.get(`http://localhost:4000/accept/status/${mobile}`).then(res => {
-            this.setState({
-            request: res.data
-          })
+            this.setState({request:res.data})
         }).catch((error)=>{
           console.log(error)
         })
         console.log(this.state.request)
+
         this.setState({flag:true})
     }
 
@@ -81,70 +88,89 @@ class HelperProfile extends Component {
       var requestID_list = [];
       var requset_list = [];
       if(this.state.flag!==prevState.flag){
-        for(var x=0; x<this.state.request.length;x++){
-          requestID_list.push(this.state.request[x].RequestID)
-        }
-        // console.log(requestID_list)
+        console.log(this.state.request.length)
+        for (var i=0;i<this.state.request.length;i++){
+          let Helpdetail_list=[]; let Otherhelp=[];
+          let id = this.state.request[i].RequestID;
+          let Mobile = this.state.userMobile;
+          await console.log(id)
 
-        for(var y=0;y<requestID_list.length;y++){
-          var t="";
-          var id = requestID_list[y];
-          await axios.get(`http://localhost:4000/request/request-detail/${id}`).then(res=>{
+          await axios.get(`http://localhost:4000/accept/acceptID/${id}/${Mobile}`).then(res=>{
             this.setState({
-                Mobile:res.data.Mobile,
-                Food:res.data.Food,
-                count_Food:res.data.count_Food,
-                Medicine:res.data.Medicine,
-                count_Medicine:res.data.count_Medicine,
-                Hospital:res.data.Hospital,
-                count_Hospital:res.data.count_Hospital,
-                Home:res.data.Home,
-                count_Home:res.data.count_Home,
-                Bed:res.data.Bed,
-                count_Bed:res.data.count_Bed,
-                Other:res.data.Other,
-                count_Other:res.data.count_Other,
-                Option:res.data.Option,
-                Status:res.data.Status,
-                Status_Text:res.data.Status_Text,
-                date:res.data.date,
-
-                RequestID:res.data._id
+              AcceptID_state: res.data
             })
-        });
+          }).catch((error)=>{
+            console.log(error)
+          })
+          console.log(this.state.AcceptID_state)
 
-        if (this.state.Food === true) {
-          t= t+"อาหาร"+" "
-        }
-        if (this.state.Medicine === true) {
-          t= t+"ยา"+" "
-        }
-        if (this.state.Hospital === true) {
-          t= t+"นำส่งโรงพยาบาล"+" "
-        }
-        if (this.state.Home === true) {
-          t= t+"นำส่งภูมิลำเนา"+" "
-        }
-        if (this.state.Bed === true) {
-          t= t+"หาเตียง"+" "
-        }
-        t=t+this.state.Other + " "
-        // console.log(t)
+          await axios.get(`http://localhost:4000/request/accept/${id}`).then(res=>{
+            this.setState({
+              helpRequest: res.data
+            })
+          }).catch((error)=>{
+            console.log(error)
+          })
+          console.log(this.state.helpRequest)
+          console.log(this.state.helpRequest.Other)
+          console.log(this.state.helpRequest.Status_Text)
+     
+          await axios.get(`http://localhost:4000/request/all-accept-helpcode/${id}`).then(res=>{
+            this.setState({
+              Helpdetail: res.data
+            })
+          }).catch((error)=>{
+            console.log(error)
+          })
+          console.log(this.state.Helpdetail)
 
-        var tmp = {
-          help:t ,
-          Option: this.state.Option,
-          Status: this.state.Status,
-          Victim_Mobile: this.state.Mobile,
-          date: this.state.date,
-          RequestID: this.state.RequestID
-        }
-        requset_list.push(tmp)
-        requset_list.reverse()
-        // console.log(requset_list)
+          for(var j=0;j<this.state.Helpdetail.length;j++){
+            Helpdetail_list.push(this.state.Helpdetail[j].Helpcode)
+          }
+
+          console.log(Helpdetail_list)
+          this.setState({Helpdetail:Helpdetail_list})
+          console.log(this.state.Helpdetail)
+
+          var t ="";
+          if (this.state.Helpdetail.indexOf("101") >-1) {
+            t= t+"อาหาร"+" "
+          }
+          if (this.state.Helpdetail.indexOf("102") >-1) {
+            t= t+"ยา"+" "
+          }
+          if (this.state.Helpdetail.indexOf("103") >-1) {
+            t= t+"เตียง"+" "
+          }
+          if (this.state.Helpdetail.indexOf("104") >-1) {
+            t= t+"รถนำส่งโรงพยาบาล"+" "
+          }
+          if (this.state.Helpdetail.indexOf("105") >-1) {
+            t= t+"รถนำส่งภูมิลำเนา"+" "
+          }
+          if (this.state.helpRequest.Other!=="") {
+            t= t+this.state.helpRequest.Other+" "
+          }
+
+          console.log(t)
+          console.log(this.state.Helpdetail)
+          var tmp = {
+            help:t ,
+            // Option: this.state.Option,
+            status: this.state.helpRequest.Status,
+            // Victim_Mobile: this.state.Mobile,
+            // date: this.state.date,
+            RequestID: id,
+            AcceptID:this.state.AcceptID_state[0]._id,
+            Helpcode:this.state.Helpdetail,
+            status_text:this.state.helpRequest.Status_Text
+          }
+          var t ="";
+          requset_list.push(tmp)
+          requset_list.reverse()
+          console.log(requset_list)
         }
         this.setState({request_state:requset_list})
-        console.log(this.state.request_state)
       }
     }
 
@@ -153,27 +179,32 @@ class HelperProfile extends Component {
       for (var z = 0; z < this.state.request_state.length; z++) {
         var temp = {
           help: this.state.request_state[z].help,
-          Option: this.state.request_state[z].Option,
-          Status: this.state.request_state[z].Status,
-          Victim_Mobile: this.state.request_state[z].Victim_Mobile,
-          date: this.state.request_state[z].date,
-          RequestID: this.state.request_state[z].RequestID
+          // Option: this.state.request_state[z].Option,
+          status: this.state.request_state[z].status,
+          // Victim_Mobile: this.state.request_state[z].Victim_Mobile,
+          // date: this.state.request_state[z].date,
+          RequestID: this.state.request_state[z].RequestID,
+          AcceptID:this.state.AcceptID_state[0]._id,
+          Helpcode:this.state.request_state[z].Helpcode,
+          status_text:this.state.request_state[z].status_text
         }
         topics.push(temp);
       }
-      // // console.log(topics);
+      console.log(topics);
       // topics.reverse()
       return topics.map((res,i)=>{
         return <HelpRow obj={res} key={i} Mobile={this.state.userMobile}/>
       });
     }
 
+      // sign out
       onSubmit=(e)=>{
         e.preventDefault()
 
         this.props.history.push({pathname:"/"})
       }
 
+      // edit profile
       onSubmitEdit=(e)=>{
         e.preventDefault()
 
@@ -241,12 +272,13 @@ class HelperProfile extends Component {
               <hr class="rounded-pill" style={{border:"2px solid #B4B6BB"}}/>
               
               <div>
-              <h1 style={{margin:"3% 0 0 2%", color:"#FFB172", fontWeight:"bold",
+              <h1 style={{margin:"3% 0 3% 2%", color:"#FFB172", fontWeight:"bold",
                   fontSize:"2vw", fontFamily:"Kanit", textAlign:"left"}}>รายการผู้ขอความช่วยเหลือที่เข้าช่วยเหลือ</h1>
               </div>  
 
-              <div style={{display:"inline-flex", margin:"5% 0 5% 5%", width:"100%"}}>
+              {/* <div style={{display:"inline-flex", margin:"5% 0 5% 5%", width:"100%"}}>
               <h1 style={{fontFamily:"Kanit", color:"#FFB172", textAlign:"left", fontSize:"1.8vw"}}>เลือกสถานะของรายการความช่วยเหลือ</h1>
+              
               <select class="rounded-pill" style={{border:"2px solid #B4B6BB", width:"50%", 
                                 marginLeft:"3%",fontFamily:"Kanit", fontSize:"1.5vw", color:"#707070"}} 
                             onChange={this.onChangeDistrict}>
@@ -256,7 +288,8 @@ class HelperProfile extends Component {
                             <option style={{fontFamily:"Kanit"}}>ช่วยเหลือสำเร็จ</option>
                             
               </select>
-              </div>
+              
+              </div> */}
               <form>
               <table class="table table-borderless">
               <tbody>{this.requestTable()}</tbody>

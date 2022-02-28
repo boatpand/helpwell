@@ -5,7 +5,7 @@ let mongoose = require('mongoose'),
 let AccepthelpSchema = require('../models/Accepthelp');
 let AcceptupdateSchema = require('../models/Acceptupdate');
 
-// create 
+// create Accepthelp
 router.route('/accept').post((req, res, next) => {
     AccepthelpSchema.create(req.body, (error,data) => {
         if(error){
@@ -16,6 +16,32 @@ router.route('/accept').post((req, res, next) => {
         }
     })
 })
+
+// create Acceptupdate
+router.route('/accept-update').post((req, res, next) => {
+    AcceptupdateSchema.create(req.body, (error,data) => {
+        if(error){
+            return next(error);
+        } else {
+            // console.log(error);
+            res.json(data);
+        }
+    })
+})
+
+// get AcceptID from RequestID & HelperMobile
+router.route("/acceptID/:RequestID/:Mobile").get((req, res, next) => {
+    AccepthelpSchema.find(
+      { $and: [{ RequestID: req.params.RequestID }, { Helper_Mobile: req.params.Mobile }] },
+      (error, data) => {
+        if (error) {
+          return next(error);
+        } else {
+          res.json(data);
+        }
+      }
+    );
+  });
 
 router.route("/all-accepthelp/success").get((req, res, next) => {
     AccepthelpSchema.find({ Status: "ช่วยเหลือสำเร็จ" }, (error, data) => {
@@ -33,7 +59,7 @@ router.route('/status/:mobile').get((req, res, next) => {
         if(error){return next(error);} else{
             res.json(data)}})})
 
-// update status & Status Text
+// update status & Status Text in AccepthelpSchema
 router.route(`/update-status/:RequestID`).put((req,res,next) => {
     AccepthelpSchema.findOneAndUpdate({RequestID:req.params.RequestID},{
         $set: req.body
