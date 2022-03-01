@@ -45,7 +45,7 @@ router.route("/all-request-no-status").get((req, res, next) => {
   });
 });
 
-// Get bed request with waiting
+// Get all request with waiting
 router.route("/all-request").get((req, res, next) => {
   RequestSchema.find({ Status: "รอการช่วยเหลือ" }, (error, data) => {
     if (error) {
@@ -56,7 +56,7 @@ router.route("/all-request").get((req, res, next) => {
   });
 });
 
-// Get bed request with helping
+// Get all request with helping
 router.route("/all-request/help").get((req, res, next) => {
   RequestSchema.find({ Status: "กำลังช่วยเหลือ" }, (error, data) => {
     if (error) {
@@ -67,7 +67,7 @@ router.route("/all-request/help").get((req, res, next) => {
   });
 });
 
-// Get bed request with success
+// Get all request with success
 router.route("/all-request/success").get((req, res, next) => {
   RequestSchema.find({ Status: "ช่วยเหลือสำเร็จ" }, (error, data) => {
     if (error) {
@@ -117,7 +117,7 @@ router.route("/food-request").get((req, res, next) => {
 
 // Getfood request with no status
 router.route("/food-request-no-status").get((req, res, next) => {
-  RequestSchema.find({ Food: true }, (error, data) => {
+  RequestDetailSchema.find({ Helpcode: "101" }, (error, data) => {
     if (error) {
       return next(error);
     } else {
@@ -142,7 +142,7 @@ router.route("/medicine-request").get((req, res, next) => {
 
 // Get medicine request with no status
 router.route("/medicine-request-no-status").get((req, res, next) => {
-  RequestSchema.find({ Medicine: true }, (error, data) => {
+  RequestDetailSchema.find({ Helpcode: "102" }, (error, data) => {
     if (error) {
       return next(error);
     } else {
@@ -167,7 +167,7 @@ router.route("/hospital-request").get((req, res, next) => {
 
 // Get hospital request with no status
 router.route("/hospital-request-no-status").get((req, res, next) => {
-  RequestSchema.find({ Hospital: true }, (error, data) => {
+  RequestDetailSchema.find({ Helpcode: "104" }, (error, data) => {
     if (error) {
       return next(error);
     } else {
@@ -192,7 +192,7 @@ router.route("/home-request").get((req, res, next) => {
 
 // Get home request with no status
 router.route("/home-request-no-status").get((req, res, next) => {
-  RequestSchema.find({ Home: true }, (error, data) => {
+  RequestDetailSchema.find({ Helpcode: "105" }, (error, data) => {
     if (error) {
       return next(error);
     } else {
@@ -217,7 +217,7 @@ router.route("/bed-request").get((req, res, next) => {
 
 // Get bed request with no status
 router.route("/bed-request-no-status").get((req, res, next) => {
-  RequestSchema.find({ Bed: true }, (error, data) => {
+  RequestDetailSchema.find({ Helpcode: "103" }, (error, data) => {
     if (error) {
       return next(error);
     } else {
@@ -242,7 +242,7 @@ router.route("/other-request").get((req, res, next) => {
 
 // Get other request with no status
 router.route("/other-request-no-status").get((req, res, next) => {
-  RequestSchema.find({ Other: { $ne: "" } }, (error, data) => {
+  RequestDetailSchema.find({ Helpcode: { $ne: "" } }, (error, data) => {
     if (error) {
       return next(error);
     } else {
@@ -254,6 +254,17 @@ router.route("/other-request-no-status").get((req, res, next) => {
 // get request detail with request id
 router.route(`/request-detail/:id`).get((req, res, next) => {
   RequestSchema.findOne({ _id: req.params.id }, (error, data) => {
+    if (error) {
+      return next(error);
+    } else {
+      res.json(data);
+    }
+  });
+});
+
+// get request detail with request id
+router.route(`/request-detailed/:id`).get((req, res, next) => {
+  RequestDetailSchema.find({ RequestID: req.params.id }, (error, data) => {
     if (error) {
       return next(error);
     } else {

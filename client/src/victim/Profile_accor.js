@@ -18,8 +18,6 @@ import {
   AccordionDetails,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Profile_accor from "./Profile_accor";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 900,
@@ -36,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CardItem(props) {
+export default function Profile_accor(props) {
   const classes = useStyles();
   const {
     Mobile,
@@ -63,117 +61,10 @@ export default function CardItem(props) {
     // Status_Text,
     date,
   } = props;
-  // console.log(RequestID);
-  const [flag, setFlag] = useState(false);
-
-  const [Request, setRequest] = useState([]);
-  const [Request_Detail, setRequest_Detail] = useState([]);
-
-  useEffect(() => {
-    async function FetchRequestDetail() {
-      await axios
-        .get(`http://localhost:4000/request/request/${Mobile}`)
-        .then((res) => {
-          setRequest(res.data);
-        })
-        .catch((err) => {
-          Promise.reject(err);
-        });
-      await axios
-        .get(`http://localhost:4000/request/request-detailed/${RequestID}`)
-        .then((res) => {
-          // console.log("detail is ", res.data);
-          setRequest_Detail(res.data);
-          // console.log(Request_Detail[0].RequestID);
-        })
-        .catch((err) => {
-          Promise.reject(err);
-        });
-      await setFlag(true);
-    }
-    FetchRequestDetail();
-  }, []);
-
-  useEffect(() => {
-    console.log("Request Detail: ", Request_Detail);
-    Extract_Detail();
-  }, [flag]);
-
-  // console.log("Request_Detail[0].RequestID: ",Request_Detail[0].RequestID);
-  const [res, setRes] = useState([]);
-  var help_count = [];
-
-  const Extract_Detail = () => {
-    console.log("Request.length: ", Request.length);
-    console.log("Request_Detail.length: ", Request_Detail.length);
-    for (var i = 0; i < Request.length; i++) {
-      for (var j = 0; j < Request_Detail.length; j++) {
-        if (Request[i].RequestID == Request_Detail[j].RequestID) {
-          let code = Request_Detail[j].Helpcode; // 101, 102, ..., 105, VARCHAR
-          if (code == "101") {
-            help_count.push({
-              key: "อาหาร",
-              value: Request_Detail[j].Count,
-            });
-          }
-          else if (code == "102") {
-            help_count.push({
-              key: "ยา",
-              value: Request_Detail[j].Count,
-            });
-          }
-          else if (code == "103") {
-            help_count.push({
-              key: "หาเตียง",
-              value: Request_Detail[j].Count,
-            });
-          }
-          else if (code == "104") {
-            help_count.push({
-              key: "รถนำส่งโรงพยาบาล",
-              value: Request_Detail[j].Count,
-            });
-          }
-          else if (code == "105") {
-            help_count.push({
-              key: "รถนำส่งลำเนา",
-              value: Request_Detail[j].Count,
-            });
-          }
-          else if (code != '') {
-            help_count.push({
-              key: code,
-              value: Request_Detail[j].Count,
-            });
-          }
-          // setRes((res) => [...res, code]); // res = ['101', '102'] ตามรอบที่ i
-        }
-      }
-      let data = [
-        {
-          Mobile: Mobile,
-          RequestID: RequestID,
-          Other: Other,
-          Status: Status,
-          Status_Text: Status_Text,
-          date: date,
-          Helpcode: help_count, //['101', '102']
-        },
-      ];
-      console.log("res: ", res);
-      console.log("tmp: ", help_count);
-
-      <Typography>Card Item</Typography>
-      data.map((datas) => {
-        return <Profile_accor {...datas}></Profile_accor>;
-      });
-    }
-  };
-
+  
   return (
     <ThemeProvider theme={theme_vic}>
-      {Extract_Detail()}
-      {/* <Grid item xs={12}>
+      <Grid item xs={12}>
         <Accordion style={{ width: "100%" }}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -197,7 +88,7 @@ export default function CardItem(props) {
             <div className={classes.spancer} />
 
             <div className={classes.status}>
-              {/* Status
+              {/* Status*/}
               {Status === "รอการช่วยเหลือ" ? (
                   <Typography
                     color="text.primary"
@@ -258,10 +149,10 @@ export default function CardItem(props) {
                 {Extract_Detail()}
               </Typography>
             ) : null} */}
-      {/* {Extract_Detail()} 
+            {/* {Extract_Detail()} */}
           </AccordionSummary>
           <AccordionDetails>
-            {/* Food 
+            {/* Food */}
             {Food ? (
               <div style={{ width: "100%" }}>
                 <Box
@@ -289,7 +180,7 @@ export default function CardItem(props) {
           </AccordionDetails>
           <hr />
         </Accordion>
-      </Grid> */}
+      </Grid>
 
       {/* <Grid item>
         <Card className={classes.root}>

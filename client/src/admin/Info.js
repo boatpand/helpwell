@@ -50,100 +50,103 @@ export default function Info(props) {
   const [help, setHelp] = useState([]);
   const [success, setSuccess] = useState([]);
 
-  useEffect(async () => {
-    await axios
-      .get(`http://localhost:4000/request/all-request-no-status`)
-      .then((res) => {
-        setRequest(res.data);
-        // console.log(res.data.Bed)
-        // setRes(res.data.Bed)
-      })
-      .catch((err) => {
-        Promise.reject(err);
-      });
-    await axios
-      .get(`http://localhost:4000/accept/all-accepthelp/success`)
-      .then((res) => {
-        setAccept(res.data);
-        // console.log(res.data.Bed)
-        // setRes(res.data.Bed)
-      })
-      .catch((err) => {
-        Promise.reject(err);
-      });
-    await axios
-      .get(`http://localhost:4000/request/food-request-no-status`)
-      .then((res) => {
-        setFood(res.data);
-      })
-      .catch((err) => {
-        Promise.reject(err);
-      });
-    await axios
-      .get(`http://localhost:4000/request/bed-request-no-status`)
-      .then((res) => {
-        setBed(res.data);
-      })
-      .catch((err) => {
-        Promise.reject(err);
-      });
-    await axios
-      .get(`http://localhost:4000/request/medicine-request-no-status`)
-      .then((res) => {
-        setMed(res.data);
-      })
-      .catch((err) => {
-        Promise.reject(err);
-      });
-    await axios
-      .get(`http://localhost:4000/request/home-request-no-status`)
-      .then((res) => {
-        setHome(res.data);
-      })
-      .catch((err) => {
-        Promise.reject(err);
-      });
-    await axios
-      .get(`http://localhost:4000/request/hospital-request-no-status`)
-      .then((res) => {
-        setHospital(res.data);
-      })
-      .catch((err) => {
-        Promise.reject(err);
-      });
-    await axios
-      .get(`http://localhost:4000/request/other-request-no-status`)
-      .then((res) => {
-        setOther(res.data);
-      })
-      .catch((err) => {
-        Promise.reject(err);
-      });
-    await axios
-      .get(`http://localhost:4000/request/all-request`)
-      .then((res) => {
-        setWait(res.data);
-      })
-      .catch((err) => {
-        Promise.reject(err);
-      });
-    await axios
-      .get(`http://localhost:4000/request/all-request/help`)
-      .then((res) => {
-        setHelp(res.data);
-      })
-      .catch((err) => {
-        Promise.reject(err);
-      });
-    await axios
-      .get(`http://localhost:4000/request/all-request/success`)
-      .then((res) => {
-        setSuccess(res.data);
-      })
-      .catch((err) => {
-        Promise.reject(err);
-      });
-    await setFlag(1);
+  useEffect(() => {
+    async function FetchData() {
+      await axios
+        .get(`http://localhost:4000/request/all-request-no-status`)
+        .then((res) => {
+          setRequest(res.data);
+          // console.log(res.data.Bed)
+          // setRes(res.data.Bed)
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+      await axios
+        .get(`http://localhost:4000/accept/all-accepthelp/success`)
+        .then((res) => {
+          setAccept(res.data);
+          // console.log(res.data.Bed)
+          // setRes(res.data.Bed)
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+      await axios
+        .get(`http://localhost:4000/request/food-request-no-status`)
+        .then((res) => {
+          setFood(res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+      await axios
+        .get(`http://localhost:4000/request/bed-request-no-status`)
+        .then((res) => {
+          setBed(res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+      await axios
+        .get(`http://localhost:4000/request/medicine-request-no-status`)
+        .then((res) => {
+          setMed(res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+      await axios
+        .get(`http://localhost:4000/request/home-request-no-status`)
+        .then((res) => {
+          setHome(res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+      await axios
+        .get(`http://localhost:4000/request/hospital-request-no-status`)
+        .then((res) => {
+          setHospital(res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+      await axios
+        .get(`http://localhost:4000/request/other-request-no-status`)
+        .then((res) => {
+          setOther(res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+      await axios
+        .get(`http://localhost:4000/request/all-request`)
+        .then((res) => {
+          setWait(res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+      await axios
+        .get(`http://localhost:4000/request/all-request/help`)
+        .then((res) => {
+          setHelp(res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+      await axios
+        .get(`http://localhost:4000/request/all-request/success`)
+        .then((res) => {
+          setSuccess(res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+      await setFlag(1);
+    }
+    FetchData();
   }, []);
 
   useEffect(() => {
@@ -269,7 +272,6 @@ export default function Info(props) {
     console.log(mo_acc);
   };
 
-
   const data_month = [
     {
       name: "Jan",
@@ -353,7 +355,7 @@ export default function Info(props) {
       ช่วยเหลือสำเร็จ: (success.length / request.length) * 100,
     },
   ];
- 
+
   const data_type_pie = [
     {
       name: "อาหาร",
@@ -390,16 +392,20 @@ export default function Info(props) {
 
   const data_status_pie = [
     {
-      name: "กำลังช่วยเหลือ",
-      value: (help.length / num_re) * 100,
+      name: "รอการช่วยเหลือ",
+      value:
+        Math.round(((wait.length / num_re) * 100 + Number.EPSILON) * 100) / 100,
     },
     {
-      name: "รอการช่วยเหลือ",
-      value: (wait.length / num_re) * 100,
+      name: "กำลังช่วยเหลือ",
+      value:
+        Math.round(((help.length / num_re) * 100 + Number.EPSILON) * 100) / 100,
     },
     {
       name: "ช่วยเหลือสำเร็จ",
-      value: (success.length / num_re) * 100,
+      value:
+        Math.round(((success.length / num_re) * 100 + Number.EPSILON) * 100) /
+        100,
     },
   ];
 
@@ -464,8 +470,8 @@ export default function Info(props) {
           >
             การขอความช่วยเหลือแต่ละประเภท (%)
           </Typography>
-          <ResponsiveContainer width="100%" height={250}>
-            <PieChart height={250}>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart height={280}>
               <Pie
                 data={data_type_pie}
                 dataKey="value"
@@ -503,7 +509,6 @@ export default function Info(props) {
                   );
                 }}
               />
-
             </PieChart>
           </ResponsiveContainer>
           <hr />
@@ -518,8 +523,8 @@ export default function Info(props) {
           >
             สถานะการขอความช่วยเหลือ (%)
           </Typography>
-          <ResponsiveContainer width="100%" height={250}>
-            <PieChart height={250}>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart height={300}>
               <Pie
                 data={data_status_pie}
                 dataKey="value"
@@ -553,7 +558,6 @@ export default function Info(props) {
                       style={{
                         fontFamily: "Kanit",
                         fontSize: "0.9vw",
-                        
                       }}
                     >
                       {data_status_pie[index].name} ({value} %)
@@ -591,7 +595,7 @@ export default function Info(props) {
           >
             การขอความช่วยเหลือแต่ละประเภท
           </Typography>
-          <ResponsiveContainer width="100%" height={250}>
+          <ResponsiveContainer width="100%" height={300}>
             <BarChart
               style={{
                 fontFamily: "Kanit",
@@ -599,7 +603,7 @@ export default function Info(props) {
                 fontSize: "1.0vw",
               }}
               width={400}
-              height={250}
+              height={300}
               data={data_type}
             >
               <Bar dataKey="อาหาร" fill="#1abc9c" />
@@ -628,7 +632,7 @@ export default function Info(props) {
           >
             การขอและให้ความช่วยเหลือในแต่ละเดือน
           </Typography>
-          <ResponsiveContainer width="95%" height={250}>
+          <ResponsiveContainer width="95%" height={300}>
             <LineChart
               style={{
                 fontFamily: "Kanit",
