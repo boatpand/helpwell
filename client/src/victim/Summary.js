@@ -119,12 +119,16 @@ export default function Summary(props) {
       .post(`http://localhost:4000/request/insert`, data)
       .then((res) => {
         console.log("post id : ", res.data);
+        history.push({
+          pathname: "/victims",
+          state: { Mobile: Mobile },
+        });
       })
       .catch((err) => {
         Promise.reject(err);
       });
 
-    //  Food 
+    //  Food
     if (name_Food) {
       let data_Item = {
         RequestID: requestID,
@@ -237,7 +241,6 @@ export default function Summary(props) {
           Promise.reject(err);
         });
     }
-
   };
 
   return (

@@ -11,8 +11,6 @@ import theme_vic from "./theme_vic";
 import Header_Vic from "./Header_vic";
 import CardItem from "./CardItem";
 
-const fontSize = 22;
-
 const useStyles = makeStyles((theme) => ({
   Spacer1: {
     padding: theme.spacing(1),
@@ -32,17 +30,20 @@ export default function Profile_vic(props) {
   const classes = useStyles();
   const GetStateParam = useLocation().state;
   const { Mobile } = GetStateParam;
-  console.log("Profile_Mobile : ", Mobile);
+  // console.log("Profile_Mobile : ", Mobile);
 
   const [info, setInfo] = useState("");
   const [congenital, setCongenital] = useState("-");
   const [request, setRequest] = useState([]);
+  const [RequestID, setRequestID] = useState([]);
+  const [flag, setFlag] = useState(false);
+  const [Request_Detail, setRequest_Detail] = useState([]);
 
   useEffect(() => {
     axios
       .get(`http://localhost:4000/victimuser/victim-profile/${Mobile}`)
       .then((res) => {
-        console.log("res is ", res.data);
+        // console.log("res is ", res.data);
         setInfo(res.data);
       })
       .catch((err) => {
@@ -60,16 +61,34 @@ export default function Profile_vic(props) {
     axios
       .get(`http://localhost:4000/request/request/${Mobile}`)
       .then((res) => {
-        console.log("resquest is ", res.data);
         setRequest(res.data);
       })
       .catch((err) => {
         Promise.reject(err);
       });
+    setFlag(true)
   }, []);
 
-  console.log("Profile_info : ", info);
-  console.log("Profile_request : ", request);
+  useEffect(() => {
+    // console.log("Flag: ", flag)
+    // console.log("RequestID: ",RequestID)
+    // axios
+    //     .get(`http://localhost:4000/request/request-detailed/${RequestID}`)
+    //     .then((res) => {
+    //       console.log("detail is ", res.data);
+    //       setRequest_Detail(res.data);
+    //       // console.log(Request_Detail[0].RequestID);
+    //     })
+    //     .catch((err) => {
+    //       Promise.reject(err);
+    //     });
+
+  }, [flag])
+
+  
+
+  // console.log("Profile_info : ", info);
+  // console.log("Profile_request : ", request);
   return (
     <ThemeProvider theme={theme_vic}>
       <Header_Vic Mobile={Mobile} />
@@ -104,9 +123,13 @@ export default function Profile_vic(props) {
                     pathname: `/victims/profile/edit`,
                     state: { Mobile: Mobile },
                   }}
-                  style={{textDecorationLine:"none"}}
+                  style={{ textDecorationLine: "none" }}
                 >
-                  <Button variant="outlined" size="small" style={{ fontFamily:"Kanit", fontSize:"1.1vw"}}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    style={{ fontFamily: "Kanit", fontSize: "1.1vw" }}
+                  >
                     Edit Profile
                   </Button>
                 </Link>
@@ -116,9 +139,13 @@ export default function Profile_vic(props) {
                     pathname: `/`,
                     // state: { Mobile: Mobile },
                   }}
-                  style={{textDecorationLine:"none"}}
+                  style={{ textDecorationLine: "none" }}
                 >
-                  <Button variant="outlined" size="small" style={{ fontFamily:"Kanit", fontSize:"1.1vw"}}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    style={{ fontFamily: "Kanit", fontSize: "1.1vw" }}
+                  >
                     sign out
                   </Button>
                 </Link>
