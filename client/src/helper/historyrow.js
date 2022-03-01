@@ -8,16 +8,16 @@ class HistoryRow extends Component {
 
         this.state = {
             user:"",
-            House_No:"",
-            Soi:"",
-            Road:"",
-            Subdistrict:"",
-            District:"",
-            ZIP_Code:"",
-            Province:"",
+            // House_No:"",
+            // Soi:"",
+            // Road:"",
+            // Subdistrict:"",
+            // District:"",
+            // ZIP_Code:"",
+            // Province:"",
 
-            show_soi:true,
-            show_road:true,
+            // show_soi:true,
+            // show_road:true,
 
             Mobile:this.props.Mobile,
 
@@ -25,14 +25,17 @@ class HistoryRow extends Component {
             some:false,
             show_some:false,
             all:false,
-            Status_Text:this.props.obj.Status_Text,
-            Status:this.props.obj.Status,
+            // Status_Text:this.props.obj.Status_Text,
+            Status:this.props.obj.status,
             show_button:true,
+
+            // helped by who ? 
             isOrg:false,
-            H_Firstname:"g",
-            H_Lastname:"lk",
+            H_Firstname:"",
+            H_Lastname:"",
             Org_Name:"",
-            Helper:[]
+            Helper:[],
+            Name:""
         }
     }
 
@@ -40,34 +43,29 @@ class HistoryRow extends Component {
         console.log(`helper_mobile : ${this.state.Mobile}`)
         let id = this.props.obj.RequestID
         console.log(`${id}`)
-        // await axios.get(`http://localhost:4000/accept/list/${id}`).then(res=>{
-        //   this.setState({
-        //     H_Firstname:res.data.Firstname,
-        //     H_Lastname:res.data.Lastname,
-        //     isOrg:res.data.isOrg,
-        //     Org_Name:res.data.Org_Name
-        //   })
-        //   console.log(res.data)
-        // });
         await axios.get(`http://localhost:4000/accept/list/${id}`).then(res => {
             this.setState({
+                Helper:res.data.Helper_Mobile
+          })
+        }).catch((error)=>{
+          console.log(error)
+          this.setState({Helper:""})
+        })
+        console.log(this.state.Helper)
+
+        let mobile = this.state.Helper;
+        console.log(mobile)
+        await axios.get(`http://localhost:4000/helperuser/helper-profile/${mobile}`).then(res => {
+            this.setState({
+                isOrg:res.data.isOrg,
                 H_Firstname:res.data.Firstname,
                 H_Lastname:res.data.Lastname,
-                isOrg:res.data.isOrg,
-                Org_Name:res.data.Org_Name
+                Org_Name:res.data.Org_Name,
           })
         }).catch((error)=>{
           console.log(error)
           this.setState({H_Firstname:"", H_Lastname:""})
         })
-        console.log(this.state.Helper)
-        // this.setState({
-        //   H_Firstname:this.state.Helper.Firstname,
-        //   H_Lastname:this.state.Helper.Lastname,
-        //   isOrg:this.state.Helper.isOrg,
-        //   Org_Name:this.state.Helper.Org_Name
-        // })
-
 
         if(this.state.isOrg===true){this.setState({Name:this.state.Org_Name})}
         else {this.setState({Name:this.state.H_Firstname+" "+this.state.H_Lastname})}
@@ -91,7 +89,7 @@ render() {
         </Link>
 
         {/* <button type="submit" class="helpbutton" style={{fontFamily:"Kanit"}} onClick={this.onSubmitRequest}>แผนที่</button> */}
-        <p style={{fontFamily:"Kanit", color:"#B4B6BB", fontSize:"1.2vw"}}>รายละเอียด : {this.props.obj.Option}</p>
+        {/* <p style={{fontFamily:"Kanit", color:"#B4B6BB", fontSize:"1.2vw"}}>รายละเอียด : {this.props.obj.Option}</p> */}
 
         <div style={{ display:"flex"}}>
         <p style={{fontFamily:"Kanit", color:"#B4B6BB", fontSize:"1.2vw"}}>ผู้ให้ความช่วยเหลือ : {this.state.Name}</p>

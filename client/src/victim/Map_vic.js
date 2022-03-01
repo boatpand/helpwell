@@ -21,8 +21,6 @@ export default class HelperMap extends Component {
             place:[],
             name:"",
             mobile:"",
-            // show_info:false,
-            show_info:true,
 
             address:"",
             city:"",
@@ -33,11 +31,10 @@ export default class HelperMap extends Component {
             mapPosition:{lat:0,lng:0},
             markerPosition:{lat:0,lng:0},
 
-            activeMarker: {},
-            selectedPlace: {},
-
             org_mobile:"",
             helptype:"",
+
+            activeMarker:"",
         }
     }
 
@@ -225,16 +222,6 @@ export default class HelperMap extends Component {
         }) 
     }
 
-    handleMarkerClick = (e) =>{
-        this.setState({
-            show_info:!this.state.show_block,
-            mapPosition:{
-                lat:e.latLng.lat(),
-                lng:e.latLng.lng()
-            }
-        })
-    }
-
     // handle radio box filter
     handleAll = (e) =>{
         axios.get('http://localhost:4000/helperuser/all-org').then(res => {
@@ -282,36 +269,51 @@ export default class HelperMap extends Component {
     //       })
     // }
 
+    handleActiveMarker = (marker) => {
+        if (marker === this.state.activeMarker) {
+            return;
+          }
+          this.setState({activeMarker:marker});
+    }
+
     render() {
         // console.log(this.state.place.length)
         const markers = [];
         for (let i=0; i<this.state.place.length; i++){
             markers.push(
-                <Marker draggable={false}
-                        position={{lat: parseFloat(this.state.place[i].lat), 
-                                    lng: parseFloat(this.state.place[i].lng)}}
-                        onClick={this.handleMarkerClick}
-                >
-                    {this.state.show_info === true && (
-                    <InfoWindow>
-                    <p><button style={{background:"#ffffff", border:"0"}} onClick={this.onClickName} value={this.state.place[i].mobile}>{this.state.place[i].name}</button> 
-                    <br/> 
-                    {this.state.place[i].mobile}
-                    <br/>
-                    ความช่วยเหลือ : {this.state.place[i].helptype_text}
-                    </p>
-                    </InfoWindow>
-                    )}
-                </Marker>
+                {
+                    id:i+1,
+                    name:this.state.place[i].name,
+                    mobile:this.state.place[i].mobile,
+                    help:this.state.place[i].helptype_text,
+                    position:{lat:parseFloat(this.state.place[i].lat),lng: parseFloat(this.state.place[i].lng)}
+                }
             )
         }
 
         const MapWithAMarker = withScriptjs(withGoogleMap(props =>
             <GoogleMap
               defaultZoom={18}
+              onClick={() => this.setState({activeMarker:""})}
               defaultCenter={{ lat: this.state.mapPosition.lat, lng: this.state.mapPosition.lng }}
             >
-              {markers}
+              {markers.map(({ id, name, mobile, help, position }) => (
+            <Marker
+            key={id}
+            position={position}
+            onClick={() => this.handleActiveMarker(id)}
+            >
+            {this.state.activeMarker === id ? (
+                <InfoWindow onCloseClick={() => this.setState({activeMarker:""})}>
+                <div>
+                <p>ชื่อหน่วยงาน : {name}</p>
+                <p>ช่องทางติดต่อ : {mobile}</p>
+                <p>ความช่วยเหลือ : {help}</p>
+                </div>
+                </InfoWindow>
+            ) : null}
+            </Marker>
+            ))}
             </GoogleMap>
           ));
 
@@ -321,7 +323,7 @@ export default class HelperMap extends Component {
             <div class="container-lg" style={{width:"100%"}}>
             <div style={{margin:"4rem 0 0 15%", display:"flex"}}>
             <h2 style={{fontFamily:"Kanit", color:"#2F4A8A", textAlign:"left", fontSize:"1.5vw", 
-                        fontWeight:"bold"}}>เขตที่ต้องการจะค้นหา</h2>
+                        fontWeight:"bold"}}>ค้นหาหน่วยงานช่วยเหลือด้วยเขต</h2>
             <AutoComplete class="rounded-pill"
             style = {{ width:"50%", height:"2vw", marginLeft:"5%", fontSize:"1.5vw",
                     border:"2px solid #B4B6BB", fontFamily:"Kanit"}}

@@ -16,14 +16,14 @@ export default class HelperMap extends Component {
         this.state ={
             Mobile:this.props.location.state.Mobile,
             Org:[],
+            helpRequest:[],
+            Helpdetail:[],
             user:"",
             flag:0,
             place_org:[],
             place_victim:[],
             name:"",
             mobile:"",
-            // show_info:false,
-            show_info:true,
 
             address:"",
             city:"",
@@ -34,12 +34,11 @@ export default class HelperMap extends Component {
             mapPosition:{lat:0,lng:0},
             markerPosition:{lat:0,lng:0},
 
-            activeMarker: {},
-            selectedPlace: {},
-
             org_mobile:"",
             helptype:"",
-            vic_mobile:""
+            vic_mobile:"",
+
+            activeMarker:"",
         }
     }
 
@@ -264,73 +263,118 @@ export default class HelperMap extends Component {
         }) 
     }
 
-    handleMarkerClick = (e) =>{
-        this.setState({
-            show_info:!this.state.show_block,
-            mapPosition:{
-                lat:e.latLng.lat(),
-                lng:e.latLng.lng()
-            }
-        })
+    handleActiveMarker = (marker) => {
+        if (marker === this.state.activeMarker) {
+            return;
+          }
+          this.setState({activeMarker:marker});
     }
 
     // handle radio box filter
     handleAll = (e) =>{
-        axios.get('http://localhost:4000/helperuser/all-org').then(res => {
-        this.setState({Org: res.data})}).catch((error)=>{console.log(error)})
-
         axios.get('http://localhost:4000/request/all-request').then(res => {
-        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})
+        this.setState({helpRequest: res.data})}).catch((error)=>{console.log(error)})
+
+        axios.get('http://localhost:4000/helperuser/all-org').then(res => {
+        this.setState({Org: res.data, flag:1})}).catch((error)=>{console.log(error)})
     }
 
+    handleFood = async(e) => {
+        await axios.get('http://localhost:4000/request/food-request').then(res => {
+        this.setState({Helpdetail: res.data})}).catch((error)=>{console.log(error)})
 
-    handleFood = (e) => {
-        //console.log("done")
-        axios.get('http://localhost:4000/helperuser/food-request').then(res => {
-        this.setState({Org: res.data})}).catch((error)=>{console.log(error)})
+        let request_list=[];
+        for(var i=0;i<this.state.Helpdetail.length;i++){
+        let id = this.state.Helpdetail[i].RequestID
+        await axios.get(`http://localhost:4000/request/request-detail/${id}`).then(res => {
+        request_list.push(res.data)}).catch((error)=>{console.log(error)})
+        }
+        console.log(request_list)
+        await this.setState({helpRequest:request_list})
 
-        axios.get('http://localhost:4000/request/food-request').then(res => {
-        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
+        await axios.get('http://localhost:4000/helperuser/food-request').then(res => {
+        this.setState({Org: res.data, flag:1})}).catch((error)=>{console.log(error)})
+    }
 
-    handleMedicine = (e) => {
-        //console.log("done")
-        axios.get('http://localhost:4000/helperuser/medicine-request').then(res => {
-        this.setState({Org: res.data})}).catch((error)=>{console.log(error)})
+    handleMedicine = async(e) => {
+        await axios.get('http://localhost:4000/request/medicine-request').then(res => {
+        this.setState({Helpdetail: res.data})}).catch((error)=>{console.log(error)})
+      
+        let request_list=[];
+        for(var i=0;i<this.state.Helpdetail.length;i++){
+          let id = this.state.Helpdetail[i].RequestID
+          await axios.get(`http://localhost:4000/request/request-detail/${id}`).then(res => {
+           request_list.push(res.data)}).catch((error)=>{console.log(error)})
+        }
+        await this.setState({helpRequest:request_list})
 
-        axios.get('http://localhost:4000/request/medicine-request').then(res => {
-        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
+        await axios.get('http://localhost:4000/helperuser/medicine-request').then(res => {
+        this.setState({Org: res.data, flag:1})}).catch((error)=>{console.log(error)})
+    }
     
-    handleHospital = (e) => {
-        //console.log("done")
-        axios.get('http://localhost:4000/helperuser/hospital-request').then(res => {
-        this.setState({Org: res.data})}).catch((error)=>{console.log(error)})
+    handleHospital = async(e) => {
+        await axios.get('http://localhost:4000/request/hospital-request').then(res => {
+        this.setState({Helpdetail: res.data})}).catch((error)=>{console.log(error)})
+      
+        let request_list=[];
+        for(var i=0;i<this.state.Helpdetail.length;i++){
+          let id = this.state.Helpdetail[i].RequestID
+          await axios.get(`http://localhost:4000/request/request-detail/${id}`).then(res => {
+           request_list.push(res.data)}).catch((error)=>{console.log(error)})
+        }
+        await this.setState({helpRequest:request_list})
 
-        axios.get('http://localhost:4000/request/hospital-request').then(res => {
-        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
+        await axios.get('http://localhost:4000/helperuser/hospital-request').then(res => {
+        this.setState({Org: res.data, flag:1})}).catch((error)=>{console.log(error)})
+    }
     
-    handleHome = (e) => {
-        //console.log("done")
-        axios.get('http://localhost:4000/helperuser/home-request').then(res => {
-        this.setState({Org: res.data})}).catch((error)=>{console.log(error)})
+    handleHome = async(e) => {
+        await axios.get('http://localhost:4000/request/home-request').then(res => {
+        this.setState({Helpdetail: res.data})}).catch((error)=>{console.log(error)})
+      
+        let request_list=[];
+        for(var i=0;i<this.state.Helpdetail.length;i++){
+          let id = this.state.Helpdetail[i].RequestID
+          await axios.get(`http://localhost:4000/request/request-detail/${id}`).then(res => {
+           request_list.push(res.data)}).catch((error)=>{console.log(error)})
+        }
+        await this.setState({helpRequest:request_list})
+      
+        await axios.get('http://localhost:4000/helperuser/home-request').then(res => {
+        this.setState({Org: res.data, flag:1})}).catch((error)=>{console.log(error)})
+    }
 
-        axios.get('http://localhost:4000/request/home-request').then(res => {
-        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
+    handleBed = async(e) => {
+        await axios.get('http://localhost:4000/request/bed-request').then(res => {
+        this.setState({Helpdetail: res.data})}).catch((error)=>{console.log(error)})
+        
+        let request_list=[];
+        for(var i=0;i<this.state.Helpdetail.length;i++){
+          let id = this.state.Helpdetail[i].RequestID
+          await axios.get(`http://localhost:4000/request/request-detail/${id}`).then(res => {
+           request_list.push(res.data)}).catch((error)=>{console.log(error)})
+        }
+        await this.setState({helpRequest:request_list})
+      
+        await axios.get('http://localhost:4000/helperuser/bed-request').then(res => {
+        this.setState({Org: res.data, flag:1})}).catch((error)=>{console.log(error)})
+    }
     
-    handleBed = (e) => {
-        //console.log("done")
-        axios.get('http://localhost:4000/helperuser/bed-request').then(res => {
-        this.setState({Org: res.data})}).catch((error)=>{console.log(error)})
-
-        axios.get('http://localhost:4000/request/bed-request').then(res => {
-        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
+    handleOther = async(e) => {
+        await axios.get('http://localhost:4000/request/other-request').then(res => {
+        this.setState({Helpdetail: res.data})}).catch((error)=>{console.log(error)})
+      
+        let request_list=[];
+        for(var i=0;i<this.state.Helpdetail.length;i++){
+          let id = this.state.Helpdetail[i].RequestID
+          await axios.get(`http://localhost:4000/request/request-detail/${id}`).then(res => {
+           request_list.push(res.data)}).catch((error)=>{console.log(error)})
+        }
+        await this.setState({helpRequest:request_list})
     
-    handleOther = (e) => {
-        //console.log("done")
-        axios.get('http://localhost:4000/helperuser/other-request').then(res => {
-        this.setState({Org: res.data})}).catch((error)=>{console.log(error)})
-
-        axios.get('http://localhost:4000/request/other-request').then(res => {
-        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
+        await axios.get('http://localhost:4000/helperuser/other-request').then(res => {
+        this.setState({Org: res.data, flag:1})}).catch((error)=>{console.log(error)})
+    }
     
     onClickName = async(e) => {
         console.log(e.target.value)
@@ -347,43 +391,24 @@ export default class HelperMap extends Component {
         const org_markers = [], victim_markers = [];
         for (let i=0; i<this.state.place_org.length; i++){
             org_markers.push(
-                <Marker draggable={false}
-                        position={{lat: parseFloat(this.state.place_org[i].lat), 
-                                    lng: parseFloat(this.state.place_org[i].lng)}}
-                        onClick={this.handleMarkerClick}
-                        icon={'http://maps.google.com/mapfiles/ms/icons/orange-dot.png'}
-                >
-                    {this.state.show_info === true && (
-                    <InfoWindow>
-                    <p><button style={{background:"#ffffff", border:"0"}} value={this.state.place_org[i].mobile}>{this.state.place_org[i].name}</button> 
-                    <br/> 
-                    {this.state.place_org[i].mobile}
-                    <br/>
-                    ความช่วยเหลือ : {this.state.place_org[i].helptype_text}
-                    </p>
-                    </InfoWindow>
-                    )}
-                </Marker>
+                {
+                    id:i+1,
+                    name:this.state.place_org[i].name,
+                    mobile:this.state.place_org[i].mobile,
+                    help:this.state.place_org[i].helptype_text,
+                    position:{lat:parseFloat(this.state.place_org[i].lat),lng: parseFloat(this.state.place_org[i].lng)}
+                }
             )
         }
 
         for (let i=0; i<this.state.place_victim.length; i++){
             victim_markers.push(
-                <Marker draggable={false}
-                        position={{lat: parseFloat(this.state.place_victim[i].lat), 
-                                    lng: parseFloat(this.state.place_victim[i].lng)}}
-                        onClick={this.handleMarkerClick}
-                        icon={'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'}
-                >
-                    {this.state.show_info === true && (
-                    <InfoWindow>
-                    <p><button style={{background:"#ffffff", border:"0"}} onClick={this.onClickName} value={this.state.place_victim[i].mobile}>{this.state.place_victim[i].name}</button> 
-                    <br/> 
-                    {this.state.place_victim[i].mobile}
-                    </p>
-                    </InfoWindow>
-                    )}
-                </Marker>
+                {
+                    id:i+1001,
+                    name:this.state.place_victim[i].name,
+                    mobile:this.state.place_victim[i].mobile,
+                    position:{lat:parseFloat(this.state.place_victim[i].lat),lng: parseFloat(this.state.place_victim[i].lng)}
+                }
             )
         }
 
@@ -392,8 +417,45 @@ export default class HelperMap extends Component {
               defaultZoom={18}
               defaultCenter={{ lat: this.state.mapPosition.lat, lng: this.state.mapPosition.lng }}
             >
-              {org_markers}
-              {victim_markers}
+
+            {org_markers.map(({ id, name, mobile, help, position }) => (
+            <Marker
+            key={id}
+            position={position}
+            onClick={() => this.handleActiveMarker(id)}
+            icon={'http://maps.google.com/mapfiles/ms/icons/orange-dot.png'}
+            >
+            {this.state.activeMarker === id ? (
+                <InfoWindow onCloseClick={() => this.setState({activeMarker:""})}>
+                <div>
+                <p>ชื่อหน่วยงาน : {name}</p>
+                <p>ช่องทางติดต่อ : {mobile}</p>
+                <p>ความช่วยเหลือ : {help}</p>
+                </div>
+                </InfoWindow>
+            ) : null}
+            </Marker>
+            ))}
+
+            {victim_markers.map(({ id, name, mobile, position }) => (
+            <Marker
+            key={id}
+            position={position}
+            onClick={() => this.handleActiveMarker(id)}
+            icon={'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'}
+            >
+            {this.state.activeMarker === id ? (
+                <InfoWindow onCloseClick={() => this.setState({activeMarker:""})}>
+                <div>
+                <p><button style={{background:"#ffffff", border:"0"}} onClick={this.onClickName} value={mobile}>
+                    ชื่อ : {name}</button></p>
+                <p>ช่องทางติดต่อ : {mobile}</p>
+                </div>
+                </InfoWindow>
+            ) : null}
+            </Marker>
+            ))}
+
             </GoogleMap>
           ));
 

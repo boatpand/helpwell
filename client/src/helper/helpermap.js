@@ -18,13 +18,12 @@ export default class HelperMap extends Component {
         this.state ={
             Mobile:this.props.location.state.Mobile,
             helpRequest:[],
+            Helpdetai:[],
             user:"",
-            flag:0,
+            // flag:0,
             place:[],
             name:"",
             mobile:"",
-            // show_info:false,
-            show_info:true,
 
             address:"",
             city:"",
@@ -35,10 +34,9 @@ export default class HelperMap extends Component {
             mapPosition:{lat:0,lng:0},
             markerPosition:{lat:0,lng:0},
 
-            activeMarker: {},
-            selectedPlace: {},
+            vic_mobile:"",
 
-            vic_mobile:""
+            activeMarker:"",
         }
     }
 
@@ -76,7 +74,7 @@ export default class HelperMap extends Component {
         await axios.get('http://localhost:4000/request/all-request').then(res => {
         this.setState({
             helpRequest: res.data,
-            flag: 1
+            // flag: 1
         })
         }).catch((error)=>{
         console.log(error)
@@ -85,7 +83,7 @@ export default class HelperMap extends Component {
     }
 
     async componentDidUpdate(prevProps,prevState){
-        if(this.state.flag!==prevState.flag){
+        if(this.state.helpRequest!==prevState.helpRequest){
             let address_list = [], mobile_list = [], mobile = "", id=0
             for (var y = 0; y < this.state.helpRequest.length; y++) {
                 mobile = String(this.state.helpRequest[y].Mobile)
@@ -212,51 +210,97 @@ export default class HelperMap extends Component {
         }) 
     }
 
-    handleMarkerClick = (e) =>{
-        this.setState({
-            show_info:!this.state.show_block,
-            // mapPosition:{
-            //     lat:e.latLng.lat(),
-            //     lng:e.latLng.lng()
-            // }
-        })
+    handleActiveMarker = (marker) => {
+        if (marker === this.state.activeMarker) {
+            return;
+          }
+          this.setState({activeMarker:marker});
     }
 
     // handle radio box filter
     handleAll = (e) =>{
         axios.get('http://localhost:4000/request/all-request').then(res => {
         this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
+    
+    handleFood = async(e) => {
+        await axios.get('http://localhost:4000/request/food-request').then(res => {
+        this.setState({Helpdetail: res.data})}).catch((error)=>{console.log(error)})
 
-    handleFood = (e) => {
-        //console.log("done")
-        axios.get('http://localhost:4000/request/food-request').then(res => {
-        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
+        let request_list=[];
+        for(var i=0;i<this.state.Helpdetail.length;i++){
+        let id = this.state.Helpdetail[i].RequestID
+        await axios.get(`http://localhost:4000/request/request-detail/${id}`).then(res => {
+        request_list.push(res.data)}).catch((error)=>{console.log(error)})
+        }
+        console.log(request_list)
+        await this.setState({helpRequest:request_list})
+    }
 
-    handleMedicine = (e) => {
-        //console.log("done")
-        axios.get('http://localhost:4000/request/medicine-request').then(res => {
-        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
-    
-    handleHospital = (e) => {
-        //console.log("done")
-        axios.get('http://localhost:4000/request/hospital-request').then(res => {
-        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
-    
-    handleHome = (e) => {
-        //console.log("done")
-        axios.get('http://localhost:4000/request/home-request').then(res => {
-        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
-    
-    handleBed = (e) => {
-        //console.log("done")
-        axios.get('http://localhost:4000/request/bed-request').then(res => {
-        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
-    
-    handleOther = (e) => {
-        //console.log("done")
-        axios.get('http://localhost:4000/request/other-request').then(res => {
-        this.setState({helpRequest: res.data, flag:1})}).catch((error)=>{console.log(error)})}
-    
+    handleMedicine = async(e) => {
+        await axios.get('http://localhost:4000/request/medicine-request').then(res => {
+        this.setState({Helpdetail: res.data})}).catch((error)=>{console.log(error)})
+      
+        let request_list=[];
+        for(var i=0;i<this.state.Helpdetail.length;i++){
+          let id = this.state.Helpdetail[i].RequestID
+          await axios.get(`http://localhost:4000/request/request-detail/${id}`).then(res => {
+           request_list.push(res.data)}).catch((error)=>{console.log(error)})
+        }
+        await this.setState({helpRequest:request_list})
+      }
+        
+      handleHospital = async(e) => {
+        await axios.get('http://localhost:4000/request/hospital-request').then(res => {
+        this.setState({Helpdetail: res.data})}).catch((error)=>{console.log(error)})
+      
+        let request_list=[];
+        for(var i=0;i<this.state.Helpdetail.length;i++){
+          let id = this.state.Helpdetail[i].RequestID
+          await axios.get(`http://localhost:4000/request/request-detail/${id}`).then(res => {
+           request_list.push(res.data)}).catch((error)=>{console.log(error)})
+        }
+        await this.setState({helpRequest:request_list})
+      }
+      
+      handleHome = async(e) => {
+        await axios.get('http://localhost:4000/request/home-request').then(res => {
+        this.setState({Helpdetail: res.data})}).catch((error)=>{console.log(error)})
+      
+        let request_list=[];
+        for(var i=0;i<this.state.Helpdetail.length;i++){
+          let id = this.state.Helpdetail[i].RequestID
+          await axios.get(`http://localhost:4000/request/request-detail/${id}`).then(res => {
+           request_list.push(res.data)}).catch((error)=>{console.log(error)})
+        }
+        await this.setState({helpRequest:request_list})
+      }
+      
+      handleBed = async(e) => {
+        await axios.get('http://localhost:4000/request/bed-request').then(res => {
+        this.setState({Helpdetail: res.data})}).catch((error)=>{console.log(error)})
+        
+        let request_list=[];
+        for(var i=0;i<this.state.Helpdetail.length;i++){
+          let id = this.state.Helpdetail[i].RequestID
+          await axios.get(`http://localhost:4000/request/request-detail/${id}`).then(res => {
+           request_list.push(res.data)}).catch((error)=>{console.log(error)})
+        }
+        await this.setState({helpRequest:request_list})
+      }
+      
+      handleOther = async(e) => {
+        await axios.get('http://localhost:4000/request/other-request').then(res => {
+        this.setState({Helpdetail: res.data})}).catch((error)=>{console.log(error)})
+      
+        let request_list=[];
+        for(var i=0;i<this.state.Helpdetail.length;i++){
+          let id = this.state.Helpdetail[i].RequestID
+          await axios.get(`http://localhost:4000/request/request-detail/${id}`).then(res => {
+           request_list.push(res.data)}).catch((error)=>{console.log(error)})
+        }
+        await this.setState({helpRequest:request_list})
+      }
+      
     onClickName = async(e) => {
         console.log(e.target.value)
         await this.setState({vic_mobile:e.target.value})
@@ -272,29 +316,39 @@ export default class HelperMap extends Component {
         const markers = [];
         for (let i=0; i<this.state.place.length; i++){
             markers.push(
-                <Marker draggable={false}
-                        position={{lat: parseFloat(this.state.place[i].lat), 
-                                    lng: parseFloat(this.state.place[i].lng)}}
-                        onClick={this.handleMarkerClick}
-                >
-                    {this.state.show_info === true && (
-                    <InfoWindow>
-                    <p><button style={{background:"#ffffff", border:"0"}} onClick={this.onClickName} value={this.state.place[i].mobile}>{this.state.place[i].name}</button> 
-                    <br/> 
-                    {this.state.place[i].mobile}
-                    </p>
-                    </InfoWindow>
-                    )}
-                </Marker>
+                {
+                    id:i+1,
+                    name:this.state.place[i].name,
+                    mobile:this.state.place[i].mobile,
+                    // value:this.state.place[i].mobile,
+                    position:{lat:parseFloat(this.state.place[i].lat),lng: parseFloat(this.state.place[i].lng)}
+                }
             )
         }
 
         const MapWithAMarker = withScriptjs(withGoogleMap(props =>
             <GoogleMap
               defaultZoom={18}
+              onClick={() => this.setState({activeMarker:""})}
               defaultCenter={{ lat: this.state.mapPosition.lat, lng: this.state.mapPosition.lng }}
             >
-              {markers}
+            {markers.map(({ id, name, mobile, position }) => (
+            <Marker
+            key={id}
+            position={position}
+            onClick={() => this.handleActiveMarker(id)}
+            >
+            {this.state.activeMarker === id ? (
+                <InfoWindow onCloseClick={() => this.setState({activeMarker:""})}>
+                <div>
+                <p><button style={{background:"#ffffff", border:"0"}} onClick={this.onClickName} value={mobile}>
+                    ชื่อ : {name}</button></p>
+                <p>ช่องทางติดต่อ : {mobile}</p>
+                </div>
+                </InfoWindow>
+            ) : null}
+            </Marker>
+            ))}
             </GoogleMap>
           ));
 
@@ -302,9 +356,9 @@ export default class HelperMap extends Component {
         <div>
             <Header Mobile={this.state.Mobile}/>
             <div class="container-lg" style={{width:"100%"}}>
-            <div style={{margin:"8rem 0 0 15%", display:"flex"}}>
+            <div style={{margin:"4rem 0 0 15%", display:"flex"}}>
             <h2 style={{fontFamily:"Kanit", color:"#FFB172", textAlign:"left", fontSize:"1.5vw", 
-                        fontWeight:"bold"}}>เขตที่ต้องการจะค้นหา</h2>
+                        fontWeight:"bold"}}>ค้นหาผู้ขอความช่วยเหลือด้วยเขต</h2>
             <AutoComplete class="rounded-pill"
             style = {{ width:"50%", height:"2vw", marginLeft:"5%", fontSize:"1.5vw",
                     border:"2px solid #B4B6BB", fontFamily:"Kanit"}}
