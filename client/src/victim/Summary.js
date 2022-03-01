@@ -227,7 +227,7 @@ export default function Summary(props) {
     if (count_Other != 0) {
       let data_Item = {
         RequestID: requestID,
-        Helpcode: name_Other,
+        Helpcode: "106",
         Count: count_Other,
         Option: option_Other,
         Status: status_Other,
@@ -384,7 +384,7 @@ export default function Summary(props) {
                     fontSize: "1.3vw",
                   }}
                 >
-                  {count_Medicine}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;วัน
+                  {count_Medicine}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ชุด
                 </Typography>
               </Box>
               <TextField
@@ -440,7 +440,7 @@ export default function Summary(props) {
                     fontSize: "1.3vw",
                   }}
                 >
-                  {count_Bed}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;วัน
+                  {count_Bed}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;เตียง
                 </Typography>
               </Box>
               <TextField
@@ -486,7 +486,7 @@ export default function Summary(props) {
                     fontSize: "1.3vw",
                   }}
                 >
-                  จำนวนผู่ป่วยที่ต้องการรถนำส่งโรงพยาบาล
+                  จำนวนผู้ป่วยที่ต้องการรถนำส่งโรงพยาบาล
                 </Typography>
 
                 <Typography
@@ -496,7 +496,7 @@ export default function Summary(props) {
                     fontSize: "1.3vw",
                   }}
                 >
-                  {count_Hospital}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;วัน
+                  {count_Hospital}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;คน
                 </Typography>
               </Box>
               <TextField
@@ -542,7 +542,7 @@ export default function Summary(props) {
                     fontSize: "1.3vw",
                   }}
                 >
-                  จำนวนผู่ป่วยที่ต้องการรถนำส่งภูมิลำเนา
+                  จำนวนผู้ป่วยที่ต้องการรถนำส่งภูมิลำเนา
                 </Typography>
 
                 <Typography
@@ -552,7 +552,7 @@ export default function Summary(props) {
                     fontSize: "1.3vw",
                   }}
                 >
-                  {count_Home}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;วัน
+                  {count_Home}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;คน
                 </Typography>
               </Box>
               <TextField
