@@ -45,7 +45,7 @@ router.route("/all-request-no-status").get((req, res, next) => {
   });
 });
 
-// Get all request with waiting
+// Get all RequestID with waiting
 router.route("/all-request").get((req, res, next) => {
   RequestSchema.find({ Status: "รอการช่วยเหลือ" }, (error, data) => {
     if (error) {
@@ -53,7 +53,40 @@ router.route("/all-request").get((req, res, next) => {
     } else {
       res.json(data);
     }
-  });
+  })
+});
+
+// Get all RequestID accept from helper
+router.route("/accept/:id").get((req, res, next) => {
+  RequestSchema.findOne({ RequestID:req.params.id}, (error, data) => {
+    if (error) {
+      return next(error);
+    } else {
+      res.json(data);
+    }
+  })
+});
+
+// Get Helpcode from RequestID with wait for help status
+router.route("/all-request-helpcode/:RequestID").get((req, res, next) => {
+  RequestDetailSchema.find({ $and: [{ RequestID: req.params.RequestID }, { Status: "รอการช่วยเหลือ" }] }, (error, data) => {
+    if (error) {
+      return next(error);
+    } else {
+      res.json(data);
+    }
+  })
+});
+
+// Get Helpcode from RequestID with accept help status
+router.route("/all-accept-helpcode/:RequestID").get((req, res, next) => {
+  RequestDetailSchema.find({ RequestID: req.params.RequestID }, (error, data) => {
+    if (error) {
+      return next(error);
+    } else {
+      res.json(data);
+    }
+  })
 });
 
 // Get all request with helping
@@ -103,8 +136,8 @@ router.route("/request/:mobile").get((req, res, next) => {
 // For Radio box filter
 // Get food request
 router.route("/food-request").get((req, res, next) => {
-  RequestSchema.find(
-    { $and: [{ Food: true }, { Status: "รอการช่วยเหลือ" }] },
+  RequestDetailSchema.find(
+    { $and: [{ Helpcode: 101 }, { Status: "รอการช่วยเหลือ" }] },
     (error, data) => {
       if (error) {
         return next(error);
@@ -115,7 +148,7 @@ router.route("/food-request").get((req, res, next) => {
   );
 });
 
-// Getfood request with no status
+// Get food request with no status
 router.route("/food-request-no-status").get((req, res, next) => {
   RequestDetailSchema.find({ Helpcode: "101" }, (error, data) => {
     if (error) {
@@ -128,8 +161,8 @@ router.route("/food-request-no-status").get((req, res, next) => {
 
 // Get medicine request
 router.route("/medicine-request").get((req, res, next) => {
-  RequestSchema.find(
-    { $and: [{ Medicine: true }, { Status: "รอการช่วยเหลือ" }] },
+  RequestDetailSchema.find(
+    { $and: [{ Helpcode: 102 }, { Status: "รอการช่วยเหลือ" }] },
     (error, data) => {
       if (error) {
         return next(error);
@@ -153,8 +186,8 @@ router.route("/medicine-request-no-status").get((req, res, next) => {
 
 // Get hospital request
 router.route("/hospital-request").get((req, res, next) => {
-  RequestSchema.find(
-    { $and: [{ Hospital: true }, { Status: "รอการช่วยเหลือ" }] },
+  RequestDetailSchema.find(
+    { $and: [{ Helpcode: 104 }, { Status: "รอการช่วยเหลือ" }] },
     (error, data) => {
       if (error) {
         return next(error);
@@ -178,8 +211,8 @@ router.route("/hospital-request-no-status").get((req, res, next) => {
 
 // Get home request
 router.route("/home-request").get((req, res, next) => {
-  RequestSchema.find(
-    { $and: [{ Home: true }, { Status: "รอการช่วยเหลือ" }] },
+  RequestDetailSchema.find(
+    { $and: [{ Helpcode: 105 }, { Status: "รอการช่วยเหลือ" }] },
     (error, data) => {
       if (error) {
         return next(error);
@@ -203,8 +236,8 @@ router.route("/home-request-no-status").get((req, res, next) => {
 
 // Get bed request
 router.route("/bed-request").get((req, res, next) => {
-  RequestSchema.find(
-    { $and: [{ Bed: true }, { Status: "รอการช่วยเหลือ" }] },
+  RequestDetailSchema.find(
+    { $and: [{ Helpcode: 103 }, { Status: "รอการช่วยเหลือ" }] },
     (error, data) => {
       if (error) {
         return next(error);
@@ -228,8 +261,8 @@ router.route("/bed-request-no-status").get((req, res, next) => {
 
 // Get other request
 router.route("/other-request").get((req, res, next) => {
-  RequestSchema.find(
-    { $and: [{ Other: { $ne: "" } }, { Status: "รอการช่วยเหลือ" }] },
+  RequestDetailSchema.find(
+    { $and: [{ Helpcode: 106 }, { Status: "รอการช่วยเหลือ" }] },
     (error, data) => {
       if (error) {
         return next(error);
@@ -251,9 +284,20 @@ router.route("/other-request-no-status").get((req, res, next) => {
   });
 });
 
-// get request detail with request id
+// get request with request id
 router.route(`/request-detail/:id`).get((req, res, next) => {
-  RequestSchema.findOne({ _id: req.params.id }, (error, data) => {
+  RequestSchema.findOne({ RequestID: req.params.id }, (error, data) => {
+    if (error) {
+      return next(error);
+    } else {
+      res.json(data);
+    }
+  });
+});
+
+// get request detail with request id
+router.route(`/request-detail-detail/:id`).get((req, res, next) => {
+  RequestDetailSchema.find({ RequestID: req.params.id }, (error, data) => {
     if (error) {
       return next(error);
     } else {
@@ -276,7 +320,7 @@ router.route(`/request-detailed/:id`).get((req, res, next) => {
 // update status for accept help from helper
 router.route(`/update-help/:RequestID`).put((req, res, next) => {
   RequestSchema.findOneAndUpdate(
-    { _id: req.params.RequestID },
+    { RequestID: req.params.RequestID },
     {
       $set: req.body,
     },
@@ -290,10 +334,112 @@ router.route(`/update-help/:RequestID`).put((req, res, next) => {
   );
 });
 
-// update status & Status Text
-router.route(`/update-status/:RequestID`).put((req, res, next) => {
-  RequestSchema.findOneAndUpdate(
-    { _id: req.params.RequestID },
+// update status for accept help from helper to RequestDetailSchema
+router.route(`/update-help-detail/:RequestID`).put((req, res, next) => {
+  RequestDetailSchema.updateMany(
+    { RequestID: req.params.RequestID },
+    {
+      $set: req.body,
+    },
+    (error, data) => {
+      if (error) {
+        return next(error);
+      } else {
+        res.json(data);
+      }
+    }
+  );
+});
+
+// update status food helpcode in RequestDetailSchema
+router.route(`/update-food-detail/:RequestID`).put((req, res, next) => {
+  RequestDetailSchema.findOneAndUpdate(
+    { $and: [{ Helpcode: 101 }, { RequestID: req.params.RequestID }] },
+    {
+      $set: req.body,
+    },
+    (error, data) => {
+      if (error) {
+        return next(error);
+      } else {
+        res.json(data);
+      }
+    }
+  );
+});
+
+// update status medicine helpcode in RequestDetailSchema
+router.route(`/update-medicine-detail/:RequestID`).put((req, res, next) => {
+  RequestDetailSchema.findOneAndUpdate(
+    { $and: [{ Helpcode: 102 }, { RequestID: req.params.RequestID }] },
+    {
+      $set: req.body,
+    },
+    (error, data) => {
+      if (error) {
+        return next(error);
+      } else {
+        res.json(data);
+      }
+    }
+  );
+});
+
+// update status bed helpcode in RequestDetailSchema
+router.route(`/update-bed-detail/:RequestID`).put((req, res, next) => {
+  RequestDetailSchema.findOneAndUpdate(
+    { $and: [{ Helpcode: 103 }, { RequestID: req.params.RequestID }] },
+    {
+      $set: req.body,
+    },
+    (error, data) => {
+      if (error) {
+        return next(error);
+      } else {
+        res.json(data);
+      }
+    }
+  );
+});
+
+// update status hospital helpcode in RequestDetailSchema
+router.route(`/update-hospital-detail/:RequestID`).put((req, res, next) => {
+  RequestDetailSchema.findOneAndUpdate(
+    { $and: [{ Helpcode: 104 }, { RequestID: req.params.RequestID }] },
+    {
+      $set: req.body,
+    },
+    (error, data) => {
+      if (error) {
+        return next(error);
+      } else {
+        res.json(data);
+      }
+    }
+  );
+});
+
+// update status home helpcode in RequestDetailSchema
+router.route(`/update-home-detail/:RequestID`).put((req, res, next) => {
+  RequestDetailSchema.findOneAndUpdate(
+    { $and: [{ Helpcode: 105 }, { RequestID: req.params.RequestID }] },
+    {
+      $set: req.body,
+    },
+    (error, data) => {
+      if (error) {
+        return next(error);
+      } else {
+        res.json(data);
+      }
+    }
+  );
+});
+
+// update status other helpcode in RequestDetailSchema
+router.route(`/update-other-detail/:RequestID`).put((req, res, next) => {
+  RequestDetailSchema.findOneAndUpdate(
+    { $and: [{ Helpcode: 106 }, { RequestID: req.params.RequestID }] },
     {
       $set: req.body,
     },

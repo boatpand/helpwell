@@ -64,115 +64,163 @@ export default function CardItem(props) {
     date,
   } = props;
   // console.log(RequestID);
-  const [flag, setFlag] = useState(false);
+  const [flag, setFlag] = useState(null);
 
   const [Request, setRequest] = useState([]);
   const [Request_Detail, setRequest_Detail] = useState([]);
 
+  const [Helpcode_state, setHelpcode_state] = useState([]);
+  const [Otherhelp_state, setOtherhelp_state] = useState([]);
+  const [Option_state, setOption_state] = useState([]);
+  const [RequestID_state, setRequestID_state] = useState([]);
+  const [Helptopic, setHelptopic] = useState("");
+
   useEffect(() => {
-    async function FetchRequestDetail() {
+    const FetchRequestDetail = async () => {
+      let Helpdetail_list = [];
+      let Otherhelp = [];
       await axios
-        .get(`http://localhost:4000/request/request/${Mobile}`)
+        .get(`http://localhost:4000/request/request-detail-detail/${RequestID}`)
         .then((res) => {
-          setRequest(res.data);
+          // setRequest_Detail(res.data);
+          Helpdetail_list.push(res.data);
+          console.log("res: ", res.data);
         })
         .catch((err) => {
           Promise.reject(err);
         });
-      await axios
-        .get(`http://localhost:4000/request/request-detailed/${RequestID}`)
-        .then((res) => {
-          // console.log("detail is ", res.data);
-          setRequest_Detail(res.data);
-          // console.log(Request_Detail[0].RequestID);
-        })
-        .catch((err) => {
-          Promise.reject(err);
-        });
-      await setFlag(true);
+      // Helpdetail_list.push(Request_Detail);
+      // console.log("Helpdetail_list: ", Helpdetail_list);
+
+      if (Other === "") {
+        Otherhelp.push("ไม่มี");
+      } else {
+        Otherhelp.push(Other);
+      }
+
+      let helpcode = [];
+      let helpcode_list = [];
+      let option = [];
+      let option_list = [];
+      let request_id = [];
+      let request_id_list = [];
+      for (var i = 0; i < Helpdetail_list.length; i++) {
+        for (var j = 0; j < Helpdetail_list[i].length; j++) {
+          helpcode.push(Helpdetail_list[i][j].Helpcode);
+          option.push(Helpdetail_list[i][j].Option);
+          request_id.push(Helpdetail_list[i][j].RequestID);
+        }
+        helpcode_list.push(helpcode);
+        option_list.push(option);
+        request_id_list.push(request_id);
+        helpcode = [];
+        option = [];
+        request_id = [];
+      }
+      console.log(helpcode_list);
+      console.log(request_id_list);
+
+      await setHelpcode_state(helpcode_list);
+      await setOtherhelp_state(Otherhelp);
+      await setOption_state(option_list);
+      await setRequestID_state(request_id_list);
+      await setFlag("1")
+
+      //   const eventTable = () => {
+      //     var topics = [];
+      //     var t ="";
+      //     console.log(Helpcode_state)
+      //     for (var y = 0; y < Helpcode_state.length; y++) {
+      //         if (Helpcode_state[y].indexOf("101") >-1) {
+      //           t= t+"อาหาร"+" "
+      //         }
+      //         if (Helpcode_state[y].indexOf("102") >-1) {
+      //           t= t+"ยา"+" "
+      //         }
+      //         if (Helpcode_state[y].indexOf("103") >-1) {
+      //           t= t+"เตียง"+" "
+      //         }
+      //         if (Helpcode_state[y].indexOf("104") >-1) {
+      //           t= t+"รถนำส่งโรงพยาบาล"+" "
+      //         }
+      //         if (Helpcode_state[y].indexOf("105") >-1) {
+      //           t= t+"รถนำส่งภูมิลำเนา"+" "
+      //         }
+      //         if (Otherhelp_state[y]!=="ไม่มี") {
+      //           t= t+this.state.Otherhelp_state[y]+" "
+      //         }
+
+      //       console.log(RequestID_state[y][0])
+      //       var tmp = {
+      //         help:t,
+      //         // Victim_Mobile: this.state.helpRequest[y].Mobile,
+      //         RequestID: RequestID_state[y][0],
+      //         // Status: this.state.helpRequest[y].Status,
+      //         // Status_Text: this.state.helpRequest[y].Status_Text,
+      //         // date: this.state.helpRequest[y].date,
+      //       }
+      //       t=""
+      //       topics.push(tmp);
+      //     }
+      //     console.log(topics);
+      //     // topics.reverse()
+      //     return topics.map((res,i)=>{
+      //       return <Profile_accor obj={res} key={i} Mobile={Mobile}/>
+      //     });
+      // }
     }
     FetchRequestDetail();
   }, []);
 
-  useEffect(() => {
-    console.log("Request Detail: ", Request_Detail);
-    Extract_Detail();
-  }, [flag]);
-
-  // console.log("Request_Detail[0].RequestID: ",Request_Detail[0].RequestID);
-  const [res, setRes] = useState([]);
-  var help_count = [];
-
-  const Extract_Detail = () => {
-    console.log("Request.length: ", Request.length);
-    console.log("Request_Detail.length: ", Request_Detail.length);
-    for (var i = 0; i < Request.length; i++) {
-      for (var j = 0; j < Request_Detail.length; j++) {
-        if (Request[i].RequestID == Request_Detail[j].RequestID) {
-          let code = Request_Detail[j].Helpcode; // 101, 102, ..., 105, VARCHAR
-          if (code == "101") {
-            help_count.push({
-              key: "อาหาร",
-              value: Request_Detail[j].Count,
-            });
-          }
-          else if (code == "102") {
-            help_count.push({
-              key: "ยา",
-              value: Request_Detail[j].Count,
-            });
-          }
-          else if (code == "103") {
-            help_count.push({
-              key: "หาเตียง",
-              value: Request_Detail[j].Count,
-            });
-          }
-          else if (code == "104") {
-            help_count.push({
-              key: "รถนำส่งโรงพยาบาล",
-              value: Request_Detail[j].Count,
-            });
-          }
-          else if (code == "105") {
-            help_count.push({
-              key: "รถนำส่งลำเนา",
-              value: Request_Detail[j].Count,
-            });
-          }
-          else if (code != '') {
-            help_count.push({
-              key: code,
-              value: Request_Detail[j].Count,
-            });
-          }
-          // setRes((res) => [...res, code]); // res = ['101', '102'] ตามรอบที่ i
-        }
+  function eventTable() {
+    var topics = [];
+    var t = "";
+    console.log("Event Table");
+    console.log(Helpcode_state);
+    for (var y = 0; y < Helpcode_state.length; y++) {
+      if (Helpcode_state[y].indexOf("101") > -1) {
+        t = t + "อาหาร" + " ";
       }
-      let data = [
-        {
-          Mobile: Mobile,
-          RequestID: RequestID,
-          Other: Other,
-          Status: Status,
-          Status_Text: Status_Text,
-          date: date,
-          Helpcode: help_count, //['101', '102']
-        },
-      ];
-      console.log("res: ", res);
-      console.log("tmp: ", help_count);
+      if (Helpcode_state[y].indexOf("102") > -1) {
+        t = t + "ยา" + " ";
+      }
+      if (Helpcode_state[y].indexOf("103") > -1) {
+        t = t + "เตียง" + " ";
+      }
+      if (Helpcode_state[y].indexOf("104") > -1) {
+        t = t + "รถนำส่งโรงพยาบาล" + " ";
+      }
+      if (Helpcode_state[y].indexOf("105") > -1) {
+        t = t + "รถนำส่งภูมิลำเนา" + " ";
+      }
+      if (Otherhelp_state[y] !== "ไม่มี") {
+        t = t + Otherhelp_state[y] + " ";
+      }
 
-      <Typography>Card Item</Typography>
-      data.map((datas) => {
-        return <Profile_accor {...datas}></Profile_accor>;
-      });
+      // console.log(RequestID_state[y][0])
+      console.log(t);
+      var tmp = {
+        help: t,
+        // Victim_Mobile: this.state.helpRequest[y].Mobile,
+        RequestID: RequestID_state[y][0],
+        // Status: this.state.helpRequest[y].Status,
+        // Status_Text: this.state.helpRequest[y].Status_Text,
+        // date: this.state.helpRequest[y].date,
+      };
+      t = "";
+      topics.push(tmp); // topic= [{},{}]
     }
-  };
+    console.log(topics);
+    // topics.reverse()
+    return topics.map((res, i) => {
+      return <Profile_accor {...res} />;
+    });
+  }
 
   return (
     <ThemeProvider theme={theme_vic}>
-      {Extract_Detail()}
+      {flag === "1" ? eventTable() : null}
+      {/* {Extract_Detail()} */}
       {/* <Grid item xs={12}>
         <Accordion style={{ width: "100%" }}>
           <AccordionSummary

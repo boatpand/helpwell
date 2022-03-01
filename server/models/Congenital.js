@@ -5,7 +5,7 @@ let CongenitalSchema = new Schema(
   {
     Mobile: {type: String},
     Disease: {type: String},
-    Other: {type: String}
+    // Other: {type: String}
   },
   {
     collection: "Congenital",

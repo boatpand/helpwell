@@ -37,31 +37,128 @@ const useStyles = makeStyles((theme) => ({
 export default function Profile_accor(props) {
   const classes = useStyles();
   const {
-    Mobile,
-    Food,
-    count_Food,
-    Medicine,
-    count_Medicine,
-    Bed,
-    count_Bed,
-    Hospital,
-    count_Hospital,
-    Home,
-    count_Home,
-    Other,
-    count_Other,
-    Option,
-    Status,
-    Status_Text,
+    // Mobile,
+    // Food,
+    // count_Food,
+    // Medicine,
+    // count_Medicine,
+    // Bed,
+    // count_Bed,
+    // Hospital,
+    // count_Hospital,
+    // Home,
+    // count_Home,
+    // Other,
+    // count_Other,
+    // Option,
+    // Status,
+    // Status_Text,
 
     // Mobile,
     RequestID,
     // Other,
     // Status,
     // Status_Text,
-    date,
+    // date,
+    help,
   } = props;
-  
+
+  const [Request_Detail, setRequest_Detail] = useState([]);
+  const [Detail, setDetail] = useState([]);
+  const [date, setDate] = useState("");
+  const [Status, setStatus] = useState("");
+  const [flag, setFlag] = useState(false);
+  // console.log("Profile_Accor: ", RequestID);
+
+  useEffect(() => {
+    async function FetchData() {
+      await axios
+        .get(`http://localhost:4000/request/request-detail/${RequestID}`)
+        .then((res) => {
+          setStatus(res.data.Status);
+          setDate(res.data.date);
+          console.log(res.data.date);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+      await axios
+        .get(`http://localhost:4000/request/request-detail-detail/${RequestID}`)
+        .then((res) => {
+          setDetail(res.data);
+          // console.log("Detail: ", res.data);
+        })
+        .catch((err) => {
+          Promise.reject(err);
+        });
+      await setFlag(true);
+    }
+    FetchData();
+  }, []);
+
+  useEffect(async () => {
+    let details = [];
+    let tmp = {};
+    // console.log("Detail is ", Detail);
+    for (var i = 0; i < Detail.length; i++) {
+      if (Detail[i].Helpcode === "101") {
+        tmp = {
+          help: "อาหาร",
+          option: Detail[i].Option,
+          count: Detail[i].Count,
+          status: Detail[i].Status,
+        };
+      }
+      if (Detail[i].Helpcode === "102") {
+        tmp = {
+          help: "ยา",
+          option: Detail[i].Option,
+          count: Detail[i].Count,
+          status: Detail[i].Status,
+        };
+      }
+      if (Detail[i].Helpcode === "103") {
+        tmp = {
+          help: "เตียง",
+          option: Detail[i].Option,
+          count: Detail[i].Count,
+          status: Detail[i].Status,
+        };
+      }
+      if (Detail[i].Helpcode === "104") {
+        tmp = {
+          help: "รถนำส่งโรงพยาบาล",
+          option: Detail[i].Option,
+          count: Detail[i].Count,
+          status: Detail[i].Status,
+        };
+      }
+      if (Detail[i].Helpcode === "105") {
+        tmp = {
+          help: "รถนำส่งภูมิลำเนา",
+          option: Detail[i].Option,
+          count: Detail[i].Count,
+          status: Detail[i].Status,
+        };
+      }
+      if (Detail[i].Helpcode === "106") {
+        tmp = {
+          help: "อื่นๆ",
+          option: Detail[i].Option,
+          count: Detail[i].Count,
+          status: Detail[i].Status,
+        };
+      }
+      details.push(tmp);
+    }
+    // console.log(detail);
+    await setRequest_Detail(details);
+    console.log(Request_Detail);
+    await setFlag(false);
+  }, [flag == true]);
+
+  const ShowDetail = () => {};
+
   return (
     <ThemeProvider theme={theme_vic}>
       <Grid item xs={12}>
@@ -83,26 +180,34 @@ export default function Profile_accor(props) {
                 fontSize: "1.3vw",
               }}
             >
-              ความช่วยเหลือที่ต้องการ :&nbsp;&nbsp;
+              ความช่วยเหลือที่ต้องการ :&nbsp;&nbsp;{help}
             </Typography>
             <div className={classes.spancer} />
 
             <div className={classes.status}>
-              {/* Status*/}
+              {/* Status */}
               {Status === "รอการช่วยเหลือ" ? (
-                  <Typography
-                    color="text.primary"
-                    className={classes.status}
-                    style={{ color: "#ffc107", fontFamily: "Kanit", fontSize: "1.2vw" }}
-                  >
-                    {Status}
-                  </Typography>        
+                <Typography
+                  color="text.primary"
+                  className={classes.status}
+                  style={{
+                    color: "#ffc107",
+                    fontFamily: "Kanit",
+                    fontSize: "1.2vw",
+                  }}
+                >
+                  {Status}
+                </Typography>
               ) : null}
               {Status === "กำลังช่วยเหลือ" ? (
                 <Typography
                   color="text.primary"
                   className={classes.status}
-                  style={{ color: "#adb5bd", fontFamily: "Kanit" , fontSize: "1.2vw" }}
+                  style={{
+                    color: "#adb5bd",
+                    fontFamily: "Kanit",
+                    fontSize: "1.2vw",
+                  }}
                 >
                   {Status}
                 </Typography>
@@ -111,12 +216,17 @@ export default function Profile_accor(props) {
                 <Typography
                   color="text.primary"
                   className={classes.status}
-                  style={{ color: "#198754", fontFamily: "Kanit", fontSize: "1.2vw"  }}
+                  style={{
+                    color: "#198754",
+                    fontFamily: "Kanit",
+                    fontSize: "1.2vw",
+                  }}
                 >
                   {Status}
                 </Typography>
               ) : null}
 
+              {/* Date */}
               <Typography
                 style={{
                   color: "#6c757d",
@@ -137,6 +247,7 @@ export default function Profile_accor(props) {
                   " น."}
               </Typography>
             </div>
+
             {/* {Food ? (
               <Typography
                 style={{
@@ -152,7 +263,98 @@ export default function Profile_accor(props) {
             {/* {Extract_Detail()} */}
           </AccordionSummary>
           <AccordionDetails>
-            {/* Food */}
+            {Request_Detail.map((infos) => {
+              return (
+                <>
+                  {infos.help == "อาหาร" ? (
+                    <div style={{ width: "100%",display: "block" }}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          m: 2,
+                        }}
+                      >
+                        <Typography
+                          style={{
+                            color: "#2F4A8A",
+                            fontFamily: "Kanit",
+                            fontSize: "1.2vw",
+                            flexShrink: 0 
+                          }}
+                        >
+                          จำนวนอาหารที่ต้องการ
+                        </Typography>
+                        <Typography
+                          style={{
+                            color: "#2F4A8A",
+                            fontFamily: "Kanit",
+                            fontSize: "1.2vw",
+                            flexShrink: 0
+                          }}
+                        >
+                          {infos.count} วัน
+                        </Typography>
+                      </Box>
+                    </div>
+                  ) : null}
+                  <br />
+
+                  {infos.help == "เตียง" ? (
+                    <div style={{ width: "100%",display: "block" }}>
+                      <br />
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          m: 2,
+                        }}
+                      >
+                        <Typography
+                          style={{
+                            color: "#2F4A8A",
+                            fontFamily: "Kanit",
+                            fontSize: "1.2vw",
+                          }}
+                        >
+                          จำนวนเตียงที่ต้องการขอ
+                        </Typography>
+                        <Typography
+                          style={{
+                            color: "#2F4A8A",
+                            fontFamily: "Kanit",
+                            fontSize: "1.2vw",
+                          }}
+                        >
+                          {infos.count} เตียง
+                        </Typography>
+                      </Box>
+                    </div>
+                  ) : null}
+
+                  
+                  {/* <Typography
+                    style={{
+                      color: "#2F4A8A",
+                      fontFamily: "Kanit",
+                      fontSize: "1.2vw",
+                    }}
+                  >
+                    {infos.help}
+                  </Typography>
+                  <Typography
+                    style={{
+                      color: "#2F4A8A",
+                      fontFamily: "Kanit",
+                      fontSize: "1.2vw",
+                    }}
+                  >
+                    {infos.count}
+                  </Typography> */}
+                </>
+              );
+            })}
+            {/* Food
             {Food ? (
               <div style={{ width: "100%" }}>
                 <Box
@@ -176,9 +378,8 @@ export default function Profile_accor(props) {
                   </Typography>
                 </Box>
               </div>
-            ) : null}
+            ) : null} */}
           </AccordionDetails>
-          <hr />
         </Accordion>
       </Grid>
 

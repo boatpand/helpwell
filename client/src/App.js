@@ -61,12 +61,12 @@ function App() {
           <Route exact path="/signup-helper2" component={SignupHelper2}/>
           <Route exact path="/helper-otp" component={HelperOtp}/>
 
-          <HelperRoute exact path="/helper"  component={Helper}/>
-          <HelperRoute exact path="/accept-request/:id" component={EventDetail}/>
-          <HelperRoute exact path="/helpermap" component={HelperMap}/>
-          <HelperRoute exact path="/:RequestID/navigation" component={Navigation}/>
-          <HelperRoute exact path="/helperprofile/:mobile" component={HelperProfile}/>
-          <HelperRoute exact path="/helperprofile/edit-profile/:mobile" component={HelperEditProfile}/>
+          <Route exact path="/helper"  component={Helper}/>
+          <Route exact path="/accept-request/:id" component={EventDetail}/>
+          <Route exact path="/helpermap" component={HelperMap}/>
+          <Route exact path="/:RequestID/navigation" component={Navigation}/>
+          <Route exact path="/helperprofile/:mobile" component={HelperProfile}/>
+          <Route exact path="/helperprofile/edit-profile/:mobile" component={HelperEditProfile}/>
           <Route exact path="/helper/history/:mobile" component={History}/>
 
           <Route exact path="/victims" component={Help} />
