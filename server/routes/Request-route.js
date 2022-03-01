@@ -45,6 +45,7 @@ router.route("/all-request-no-status").get((req, res, next) => {
   });
 });
 
+
 // Get all RequestID with waiting
 router.route("/all-request").get((req, res, next) => {
   RequestSchema.find({ Status: "รอการช่วยเหลือ" }, (error, data) => {
@@ -148,7 +149,7 @@ router.route("/food-request").get((req, res, next) => {
   );
 });
 
-// Get food request with no status
+// Getfood request with no status
 router.route("/food-request-no-status").get((req, res, next) => {
   RequestDetailSchema.find({ Helpcode: "101" }, (error, data) => {
     if (error) {
@@ -306,6 +307,7 @@ router.route(`/request-detail-detail/:id`).get((req, res, next) => {
   });
 });
 
+
 // get request detail with request id
 router.route(`/request-detailed/:id`).get((req, res, next) => {
   RequestDetailSchema.find({ RequestID: req.params.id }, (error, data) => {
@@ -317,7 +319,7 @@ router.route(`/request-detailed/:id`).get((req, res, next) => {
   });
 });
 
-// update status for accept help from helper
+// update status for accept help from helper to RequestSchema
 router.route(`/update-help/:RequestID`).put((req, res, next) => {
   RequestSchema.findOneAndUpdate(
     { RequestID: req.params.RequestID },
