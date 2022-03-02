@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@mui/material/styles";
-import theme_vic from "./theme_vic";
-import Profile_text from "./Profile_text";
+import theme_admin from "../admin/theme_admin"
+import Profile_text from "../victim/Profile_text";
+import Helper_text from "./Helper_text";
 import {
   Card,
   Grid,
@@ -35,27 +36,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Profile_accor(props) {
+export default function Helper_accor(props) {
   const classes = useStyles();
   const {
-    // Mobile,
-    // Food,
-    // count_Food,
-    // Medicine,
-    // count_Medicine,
-    // Bed,
-    // count_Bed,
-    // Hospital,
-    // count_Hospital,
-    // Home,
-    // count_Home,
-    // Other,
-    // count_Other,
-    // Option,
-    // Status,
-    // Status_Text,
-
-    // Mobile,
+    
     RequestID,
     // Other,
     // Status,
@@ -161,10 +145,8 @@ export default function Profile_accor(props) {
     await setFlag(false);
   }, [flag == true]);
 
-  const ShowDetail = () => {};
-
   return (
-    <ThemeProvider theme={theme_vic}>
+    <ThemeProvider theme={theme_admin}>
       <Grid item xs={12}>
         <Accordion style={{ width: "100%" }}>
           <AccordionSummary
@@ -179,7 +161,7 @@ export default function Profile_accor(props) {
           >
             <Typography
               style={{
-                color: "#2F4A8A",
+                color: "#FFB172",
                 fontFamily: "Kanit",
                 fontSize: "1.3vw",
               }}
@@ -251,32 +233,17 @@ export default function Profile_accor(props) {
                   " น."}
               </Typography>
             </div>
-
-            {/* {Food ? (
-              <Typography
-                style={{
-                  color: "#2F4A8A",
-                  fontFamily: "Kanit",
-                  fontSize: "1.2vw",
-                }}
-              >
-                &nbsp;อาหาร&nbsp;
-                {Extract_Detail()}
-              </Typography>
-            ) : null} */}
-            {/* {Extract_Detail()} */}
           </AccordionSummary>
           <hr />
           <AccordionDetails>
           <Grid
               container
-            
               justify="center"
               alignItems="center"
               display="block"
             >
             {Request_Detail.map((infos) => {
-              return <Profile_text {...infos} />;
+              return <Helper_text {...infos} />;
             })}
             </Grid>
             {/* {infos.help == "อาหาร" ? (

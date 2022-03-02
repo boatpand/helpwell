@@ -60,7 +60,6 @@ export default function Accordion_helper(props) {
   } = props;
 
   const [accept_help, setAccept_help] = useState([]);
-
   useEffect(() => {
     axios
       .get(`http://localhost:4000/accept/status/${Mobile}`)
@@ -72,7 +71,7 @@ export default function Accordion_helper(props) {
         Promise.reject(err);
       });
   }, []);
-  console.log("card_helper : ", accept_help)
+  console.log("card_helper : ", accept_help);
 
   return (
     <ThemeProvider theme={theme_admin}>
@@ -89,46 +88,70 @@ export default function Accordion_helper(props) {
             }}
           >
             {isOrg ? (
-              <Typography fontFamily="Kanit" sx={{ flexShrink: 0 }}>
+              <Typography
+                fontFamily="Kanit"
+                sx={{ flexShrink: 0 }}
+                style={{ fontSize: "1.2vw", color: "#FFB172" }}
+              >
                 [องค์กร]&nbsp;:&nbsp;{Org_Name}
               </Typography>
             ) : (
-              <Typography fontFamily="Kanit">
+              <Typography
+                fontFamily="Kanit"
+                style={{ fontSize: "1.2vw", color: "#FFB172" }}
+              >
                 [บุคคล]&nbsp;:&nbsp;{Firstname}&nbsp;&nbsp;{Lastname}
               </Typography>
             )}
           </AccordionSummary>
           <AccordionDetails>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography fontFamily="Kanit" sx={{ flexShrink: 0 }}>
-                เบอร์โทรศัพท์&nbsp;:&nbsp;{Mobile}
-              </Typography>
-              {isOrg ? (
-                <Typography fontFamily="Kanit" sx={{ flexShrink: 0 }}>
-                  ชื่อผู้รับชอบ&nbsp;:&nbsp;{Firstname}&nbsp;&nbsp;{Lastname}
-                </Typography>
-              ) : null}
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography fontFamily="Kanit">
-                ที่อยู่ : &nbsp;&nbsp;&nbsp;{House_No}&nbsp;&nbsp;ซอย&nbsp;
-                {Soi}&nbsp;&nbsp;ถนน&nbsp;
-                {Road}&nbsp;&nbsp;แขวง&nbsp;{Subdistrict}&nbsp;&nbsp;เขต&nbsp;
-                {District}&nbsp;&nbsp;
-                {Province}&nbsp;&nbsp;
-                {ZIP_Code}
-              </Typography>
-            </Box>
+            <Grid container>
+              <Grid item xs={12}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography
+                    fontFamily="Kanit"
+                    sx={{ flexShrink: 0 }}
+                    style={{ fontSize: "1.2vw", color: "#FFB172" }}
+                  >
+                    เบอร์โทรศัพท์&nbsp;:&nbsp;{Mobile}
+                  </Typography>
+                  {isOrg ? (
+                    <Typography
+                      fontFamily="Kanit"
+                      sx={{ flexShrink: 0 }}
+                      style={{ fontSize: "1.2vw", color: "#FFB172" }}
+                    >
+                      ชื่อผู้รับชอบ&nbsp;:&nbsp;{Firstname}&nbsp;&nbsp;
+                      {Lastname}
+                    </Typography>
+                  ) : null}
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography
+                    fontFamily="Kanit"
+                    style={{ fontSize: "1.2vw", color: "#FFB172" }}
+                  >
+                    ที่อยู่ : &nbsp;&nbsp;&nbsp;{House_No}&nbsp;&nbsp;ซอย&nbsp;
+                    {Soi}&nbsp;&nbsp;ถนน&nbsp;
+                    {Road}&nbsp;&nbsp;แขวง&nbsp;{Subdistrict}
+                    &nbsp;&nbsp;เขต&nbsp;
+                    {District}&nbsp;&nbsp;
+                    {Province}&nbsp;&nbsp;
+                    {ZIP_Code}
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
           </AccordionDetails>
           <hr />
           <AccordionDetails>
@@ -146,7 +169,11 @@ export default function Accordion_helper(props) {
                   justifyContent: "space-between",
                 }}
               >
-                <Typography variant="h6" fontFamily="Kanit">
+                <Typography
+                  variant="h6"
+                  fontFamily="Kanit"
+                  style={{ color: "#FFB172" }}
+                >
                   รายการการช่วยเหลือ
                 </Typography>
               </Box>

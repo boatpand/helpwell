@@ -35,9 +35,6 @@ export default function Profile_vic(props) {
   const [info, setInfo] = useState("");
   const [congenital, setCongenital] = useState("-");
   const [request, setRequest] = useState([]);
-  const [RequestID, setRequestID] = useState([]);
-  const [flag, setFlag] = useState(false);
-  const [Request_Detail, setRequest_Detail] = useState([]);
 
   useEffect(() => {
     axios
@@ -66,29 +63,9 @@ export default function Profile_vic(props) {
       .catch((err) => {
         Promise.reject(err);
       });
-    setFlag(true)
   }, []);
 
-  useEffect(() => {
-    // console.log("Flag: ", flag)
-    // console.log("RequestID: ",RequestID)
-    // axios
-    //     .get(`http://localhost:4000/request/request-detailed/${RequestID}`)
-    //     .then((res) => {
-    //       console.log("detail is ", res.data);
-    //       setRequest_Detail(res.data);
-    //       // console.log(Request_Detail[0].RequestID);
-    //     })
-    //     .catch((err) => {
-    //       Promise.reject(err);
-    //     });
-
-  }, [flag])
-
   
-
-  // console.log("Profile_info : ", info);
-  // console.log("Profile_request : ", request);
   return (
     <ThemeProvider theme={theme_vic}>
       <Header_Vic Mobile={Mobile} />

@@ -221,8 +221,8 @@ export default function Info(props) {
 
     let mo_acc = {
       "01": 0,
-      "02": null,
-      "03": null,
+      "02": 0,
+      "03": 0,
       "04": null,
       "05": null,
       "06": null,

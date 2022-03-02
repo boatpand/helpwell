@@ -102,44 +102,88 @@ export default function Accordion_vic(props) {
               flexShrink: 0,
             }}
           >
-            <Typography fontFamily="Kanit">
+            <Typography
+              fontFamily="Kanit"
+              style={{
+                color: "#2F4A8A",
+                fontFamily: "Kanit",
+                fontSize: "1.2vw",
+              }}
+            >
               {Firstname}&nbsp;&nbsp;{Lastname}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography fontFamily="Kanit" sx={{ flexShrink: 0 }}>
-                เบอร์โทรศัพท์&nbsp;:&nbsp;{Mobile}
-              </Typography>
-              <Typography fontFamily="Kanit">อายุ&nbsp;:&nbsp;{Age}</Typography>
+            <Grid container>
+              <Grid item xs={12}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography
+                  sx={{ flexShrink: 0 }}
+                  style={{
+                    color: "#2F4A8A",
+                    fontFamily: "Kanit",
+                    fontSize: "1.2vw",
+                  }}
+                >
+                  เบอร์โทรศัพท์&nbsp;:&nbsp;{Mobile}
+                </Typography>
+                <Typography
+                  style={{
+                    color: "#2F4A8A",
+                    fontFamily: "Kanit",
+                    fontSize: "1.2vw",
+                  }}
+                >
+                  อายุ&nbsp;:&nbsp;{Age}
+                </Typography>
 
-              <Typography fontFamily="Kanit">
-                เพศ&nbsp;:&nbsp;{Gender}
-              </Typography>
-              <Typography fontFamily="Kanit">
-                โรคประจำตัว&nbsp;:&nbsp;{congenital.Disease}
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography fontFamily="Kanit">
-                ที่อยู่ : &nbsp;&nbsp;&nbsp;{House_No}&nbsp;&nbsp;ซอย&nbsp;
-                {Soi}&nbsp;&nbsp;ถนน&nbsp;
-                {Road}&nbsp;&nbsp;แขวง&nbsp;{Subdistrict}&nbsp;&nbsp;เขต&nbsp;
-                {District}&nbsp;&nbsp;
-                {Province}&nbsp;&nbsp;
-                {ZIP_Code}
-              </Typography>
-            </Box>
+                <Typography
+                  style={{
+                    color: "#2F4A8A",
+                    fontFamily: "Kanit",
+                    fontSize: "1.2vw",
+                  }}
+                >
+                  เพศ&nbsp;:&nbsp;{Gender}
+                </Typography>
+                <Typography
+                  style={{
+                    color: "#2F4A8A",
+                    fontFamily: "Kanit",
+                    fontSize: "1.2vw",
+                  }}
+                >
+                  โรคประจำตัว&nbsp;:&nbsp;{congenital.Disease}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography
+                  style={{
+                    color: "#2F4A8A",
+                    fontFamily: "Kanit",
+                    fontSize: "1.2vw",
+                  }}
+                >
+                  ที่อยู่ : &nbsp;&nbsp;&nbsp;{House_No}&nbsp;&nbsp;ซอย&nbsp;
+                  {Soi}&nbsp;&nbsp;ถนน&nbsp;
+                  {Road}&nbsp;&nbsp;แขวง&nbsp;{Subdistrict}&nbsp;&nbsp;เขต&nbsp;
+                  {District}&nbsp;&nbsp;
+                  {Province}&nbsp;&nbsp;
+                  {ZIP_Code}
+                </Typography>
+              </Box>
+              </Grid>
+            </Grid>
           </AccordionDetails>
           <hr />
           <AccordionDetails>
@@ -157,7 +201,13 @@ export default function Accordion_vic(props) {
                   justifyContent: "space-between",
                 }}
               >
-                <Typography variant="h6" fontFamily="Kanit">
+                <Typography
+                  variant="h6"
+                  fontFamily="Kanit"
+                  style={{
+                    color: "#2F4A8A",
+                  }}
+                >
                   รายการขอความช่วยเหลือ
                 </Typography>
               </Box>
