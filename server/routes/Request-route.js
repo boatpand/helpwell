@@ -276,7 +276,7 @@ router.route("/other-request").get((req, res, next) => {
 
 // Get other request with no status
 router.route("/other-request-no-status").get((req, res, next) => {
-  RequestDetailSchema.find({ Helpcode: { $ne: "" } }, (error, data) => {
+  RequestDetailSchema.find({ Helpcode: "106" }, (error, data) => {
     if (error) {
       return next(error);
     } else {

@@ -86,7 +86,7 @@ export default function Database_helper(props) {
                 pathname: `/admin/database/victims`,
                 state: { Mobile: Mobile },
               }}
-              style={{textDecorationLine:"none", fontFamily:"Kanit"}}
+              style={{textDecorationLine:"none", fontFamily:"Kanit", fontSize: "1.2vw"}}
             >
               <Chip label="victim" variant="outlined" />
             </Link>
@@ -95,7 +95,7 @@ export default function Database_helper(props) {
                 pathname: `/admin/database/helpers`,
                 state: { Mobile: Mobile },
               }}
-              style={{textDecorationLine:"none", fontFamily:"Kanit"}}
+              style={{textDecorationLine:"none", fontFamily:"Kanit", fontSize: "1.2vw"}}
             >
             <Chip label="helper" variant="outlined"/>
             </Link>
