@@ -229,7 +229,7 @@ class EventDetail extends Component {
             //   this.setState({wait:false, all:true})
             // }
             tmp={
-              help:"อื่นๆ",
+              help:this.state.Other,
               option:this.state.Detail[i].Option,
               count:this.state.Detail[i].Count,
               status:this.state.Detail[i].Status,
